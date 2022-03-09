@@ -2,7 +2,7 @@
   "name": "cyclops",
   "version": "1.0.0",
   "description": "",
-  "main": "index.tsx",
+  "main": "./src/index.tsx",
   "scripts": {
     "dev": "concurrently \"NODE_ENV=development nodemon server/server.js\" \"NODE_ENV=development webpack serve --open\"",
     "build-prod": "webpack --mode production",
@@ -34,6 +34,7 @@
     "html-webpack-plugin": "^5.5.0",
     "jest": "^27.5.1",
     "nodemon": "^2.0.15",
+    "postcss": "^8.4.8",
     "prettier": "^2.5.1",
     "sass-loader": "^12.6.0",
     "style-loader": "^3.3.1",
@@ -46,10 +47,11 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "postcss": "^8.4.8",
+    "express": "^4.17.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hot-loader": "^4.13.0",
-    "react-router-dom": "^6.2.2"
+    "react-router-dom": "^6.2.2",
+    "sass": "^1.49.9"
   }
 }

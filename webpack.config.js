@@ -2,14 +2,17 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const entry = path.join(__dirname, '/src/index.tsx')
+console.log('ENTRY: ', entry)
+console.log('ENTRY: ', entry)
 
 module.exports = {
-  entry: path.join(__dirname, '/src/index.tsx'),
+  entry: path.resolve(__dirname, '/src/index.tsx'),
 
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/dist',
-    filename: 'bundle.ts', //  TS or TSX or JS?
+    // publicPath: '/dist', // NEEDED?
+    filename: 'bundle.js', //  TS or TSX or JS?
   },
 
   devtool: 'eval-source-map',
@@ -20,22 +23,22 @@ module.exports = {
     // // match the output path
     // contentBase: path.resolve(__dirname, 'dist'),
     // enable HMR on the devServer
-    hot: true,
+    hot: true, 
     // match the output 'publicPath'
     // publicPath: '/',
     // fallback to root for other urls
-    historyApiFallback: true,
+    historyApiFallback: true, 
 
-    headers: { 'Access-Control-Allow-Origin': '*' },
+    headers: { 'Access-Control-Allow-Origin': '*' }, 
     proxy: {
       '/api/**': {
         target: 'http://localhost:3000/',
         secure: false,
       },
-      '/': {
-        target: 'http://localhost:3000/',
-        secure: false,
-      },
+      /* '/': { 
+      //   target: 'http://localhost:3000/',
+      //   secure: false,
+       }, */
     },
   },
   module: {
@@ -56,14 +59,18 @@ module.exports = {
       },
       {
         test: /\.ts(x)?$/,
-        loader: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        // toggle loader and use
+        use: {
+          loader: 'ts-loader',
+        }
       }
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: __dirname + './src/index.html',
+      template: __dirname + '/src/index.html', // COME BACK TO THIS
+      filename: 'index.html'
     }),
   ],
   resolve: {
