@@ -19,13 +19,17 @@ module.exports = {
         'backgroundC' : { //navy
           100: '#548da8', 
           200: '#275c75',
-          300: '#203549', 
+          300: '#203549',
+          400: '#03223f', 
         },
         'accentC': {      //lilac
           100: '#856fa8', // ?? not sure yet 
         }  
-      }
-    },  
+      },
+      fontFamily: {
+        logo: ['Hubballi', 'sans-serif']
+      },
+    }  
   },
   plugins: [],
 };

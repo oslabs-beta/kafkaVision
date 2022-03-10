@@ -5,7 +5,21 @@
 @tailwind utilities;
 
 body {
-  background-image: linear-gradient(to bottom right, #203549 50%, #275c75);
+  background-image: linear-gradient(
+    to bottom right,
+    #03223f,
+    #203549 70%,
+    #275c75
+  );
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Hubballi&display=swap");
+
+@layer base {
+  @font-face {
+    font-family: "Hubballi";
+    src: font-url(
+      "https://fonts.googleapis.com/css2?family=Hubballi&display=swap"
+    );
+  }
+}
