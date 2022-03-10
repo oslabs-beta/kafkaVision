@@ -1,10 +1,15 @@
 import { hot } from "react-hot-loader/root";
 import * as React from 'react';
-import Sidebar from './Components/Sidebar';
-import Header from './Components/Header'
-import HealthMetricsContainer from './Components/HealthMetricsContainer'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
+// IMPORTED COMPONENTS/PAGES ----------------------------------
+import Sidebar from './Components/Sidebar';
+import Header from './Components/Header'
+import HealthMetricsContainer from './Containers/HealthMetricsContainer'
+import RelationshipsContainer from './Containers/RelationshipsContainer'
+import ConnectClusterPage from './ConnectClusterPage'
+import LoginPage from './LoginPage'
+// ------------------------------------------------------
 
 interface Props {
    name:
@@ -20,14 +25,31 @@ class App extends React.Component<Props> {
           <div className="text-2xl text-white bg-black">
             <Header/>
           </div>
-          <Switch>
 
-          <div className="flex text-white bg-red">
-            <Sidebar/>
-            {/* <HealthMetricsContainer/>    */}
-          </div>
-            
+          <Switch> 
+            <Route exact path='/'> {/* is it best for this to be the homepage "/" ? */}
+              <LoginPage/>
+            </Route>
+
+            <Route exact path='/connectCluster'>
+              <ConnectClusterPage/>
+            </Route>
+
+            <Route exact path='/health'>
+              <div className="flex text-white">
+                <Sidebar/>
+              </div>
+              <HealthMetricsContainer/>
+            </Route>
+
+            <Route exact path='/componentRelationships'>
+            <div className="flex text-white">
+                <Sidebar/>
+              </div>
+              <RelationshipsContainer/>
+            </Route>
           </Switch>
+
 
         </div> {/* remove this div?*/}
 
