@@ -25,7 +25,7 @@ class App extends React.Component<Props> {
     const { name } = this.props;
     return (
       <BrowserRouter>
-        <div className="bg-yellow"> {/* remove this div?*/}
+        <div> {/* remove this div?*/}
           <div className="text-2xl text-white bg-black">
             <Header/>
           </div>
@@ -35,32 +35,46 @@ class App extends React.Component<Props> {
             <HealthMetricsChart/>
           </div> */}
 
-          <Switch> 
-            <Route exact path='/'> {/* is it best for this to be the homepage "/" ? */}
-              <LoginPage/>
-            </Route>
+            <Switch> 
+              <Route exact path='/'> 
+                <LoginPage/>
+              </Route>
 
-            <Route exact path='/connectCluster'>
-              <ConnectClusterPage/>
-            </Route>
+              <Route exact path='/connectCluster'>
+              <div className="grid grid-cols-6 bg-red-900 h-screen">
+                  <div className="flex text-white bg-blue-400 col-span-1">
+                    <Sidebar/>
+                  </div>
+                  <div className="col-span-5 bg-white">
+                    <ConnectClusterPage/>
+                  </div>
+                </div>
+              </Route>
 
-            <Route exact path='/health'>
-              <div className="flex text-white">
-                <Sidebar/>
-              </div>
-              <HealthMetricsContainer/>
-            </Route>
+              <Route exact path='/health'>
+                <div className="grid grid-cols-6 bg-red-900 h-screen">
+                  <div className="flex text-white bg-blue-400 col-span-1">
+                    <Sidebar/>
+                  </div>
+                  <div className="col-span-5 bg-white">
+                    <HealthMetricsContainer/>
+                  </div>
+                </div>
+              </Route>
 
-            <Route exact path='/componentRelationships'>
-            <div className="flex text-white">
-                <Sidebar/>
-              </div>
-              <RelationshipsContainer/>
-            </Route>
-          </Switch>
+              <Route exact path='/componentRelationships'>
+              <div className="grid grid-cols-6 bg-red-900 h-screen">
+                  <div className="flex text-white bg-blue-400 col-span-1">
+                    <Sidebar/>
+                  </div>
+                  <div className="col-span-5 bg-white">
+                    <RelationshipsContainer/>
+                  </div>
+                </div>
+              </Route>
+            </Switch>
 
-
-        </div> {/* remove this div?*/}
+        </div>
 
       </BrowserRouter>
     );

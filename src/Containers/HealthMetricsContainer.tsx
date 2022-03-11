@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 const HealthMetricsContainer = () => {
     return(
         <div>
-            <div> Health Metrics Area! </div>
+            <div className="font-bold text-xl m-2"> Health Metrics Area! </div>
             <div>
-                <Link to="/connectCluster"> Connect Cluster Page </Link>
+                {/* <Link to="/connectCluster"> Connect Cluster Page </Link>
                 <Link className="bg-white" to="/"> Login Page </Link>
-                <Link  to="/componentRelationships"> Component Relationships Page </Link>
+                <Link  to="/componentRelationships"> Component Relationships Page </Link> */}
             </div>
             {/* <HealthMetricsChart/> */}
         </div>
