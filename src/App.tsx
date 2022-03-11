@@ -11,6 +11,10 @@ import ConnectClusterPage from './ConnectClusterPage'
 import LoginPage from './LoginPage'
 // ------------------------------------------------------
 
+// TESTING DONUTCHART ------------------------------------------
+ import HealthMetricsChart from './chartComponents/HealthMetricsChart';
+// -------------------------------------------------
+
 interface Props {
    name:
     string
@@ -25,6 +29,11 @@ class App extends React.Component<Props> {
           <div className="text-2xl text-white bg-black">
             <Header/>
           </div>
+
+          {/* testing chartjs */}
+          {/* <div className="h-32">
+            <HealthMetricsChart/>
+          </div> */}
 
           <Switch> 
             <Route exact path='/'> {/* is it best for this to be the homepage "/" ? */}
