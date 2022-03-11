@@ -41,7 +41,14 @@ class App extends React.Component<Props> {
               </Route>
 
               <Route exact path='/connectCluster'>
-                <ConnectClusterPage/>
+              <div className="grid grid-cols-6 bg-red-900 h-screen">
+                  <div className="flex text-white bg-blue-400 col-span-1">
+                    <Sidebar/>
+                  </div>
+                  <div className="col-span-5 bg-white">
+                    <ConnectClusterPage/>
+                  </div>
+                </div>
               </Route>
 
               <Route exact path='/health'>
