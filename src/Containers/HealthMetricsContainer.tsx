@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HealthMetricsChart from '../chartComponents/HealthMetricsChart';
 
-const prometheusLink = 'https://3000-kayhill-cpdemo-tef8qr1qio6.ws-us34.gitpod.io/'
+const prometheusLink = 'https://9090-kayhill-cpdemo-tef8qr1qio6.ws-us34.gitpod.io/'
 
 const HealthMetricsContainer = () => {
   // dummy state:

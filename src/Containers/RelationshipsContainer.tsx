@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
+const prometheusLink = 'https://9090-kayhill-cpdemo-tef8qr1qio6.ws-us34.gitpod.io/'
 
 
 const RelationshipsContainer = () => {
@@ -11,6 +12,33 @@ const RelationshipsContainer = () => {
   for (let i = 1; i <= topics.length; i +=1){
       options.push(<option value="topic{i}"> Topic {i} </option>)
   }
+
+
+  const reqParamBroker = {
+    method: "POST", 
+    headers: {
+      "Content-Type": "application/json"
+    }, 
+    body: JSON.stringify({
+      query: `count(kafka_server_replicamanager_leadercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})`
+    }),
+  }
+
+  useEffect(() => {
+    fetch(prometheusLink + '1/api/v1/query', reqParamBroker)// 'api/v1/query?query=kafka_controller_kafkacontroller_activecontrollercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"} > 0', reqParamBroker)
+      .then(data => data.json())
+      .then(data => {
+        console.log('ROB DATA: ', data) 
+      })
+      .catch(e => {
+        console.log('ERROR!!!!', e);
+      })
+  }, []);
+
+
+
+
+
 
   return(
     <div className='flex-auto justify-center'>
