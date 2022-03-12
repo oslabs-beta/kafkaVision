@@ -16,7 +16,7 @@ const HealthMetricsContainer = () => {
 
   return(
     <div className='flex-auto justify-center'>
-      <div className="font-bold text-xl text-center m-10 border-2 border-white rounded bg-backgroundC-400"> 
+      <div className="font-bold text-xl text-center height-max m-10 border-2 border-white rounded bg-backgroundC-400"> 
         <h2 className="m-4 text-center">Health Dashboard</h2>
 
           <div>

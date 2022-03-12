@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 body {
-  background-image: linear-gradient(
+  background-color: linear-gradient(
     to bottom right,
     #03223f,
     #203549 70%,
