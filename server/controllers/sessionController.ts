@@ -1,4 +1,4 @@
-import db from '../models/sessionModel'
+import Session from '../models/sessionModel'
 
 const sessionController = {};
 

@@ -1,4 +1,4 @@
-import db from '../models/userModel'
+import User from '../models/userModel'
 
 const userController = {};
 
