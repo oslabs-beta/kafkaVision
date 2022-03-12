@@ -43,7 +43,7 @@ const HealthMetricsChart = () => {
   // }, []);
 
   return (
-    <div className="h-1/6 w-1/6">
+    <div className="h-1/2 w-1/2">
       <Doughnut data={data}/>
     </div>
   )
