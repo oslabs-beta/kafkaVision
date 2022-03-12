@@ -19,12 +19,11 @@ class App extends React.Component<Props> {
   render() {
     const { name } = this.props;
     return (
+      <div>
       <BrowserRouter>
-        <div>
-          {' '}
-          {/* remove this div?*/}
-          <div className="text-2xl text-white bg-black">
-            <Header />
+        <div> {/* remove this div?*/}
+          <div className="text-2xl text-fontGray-75 bg-zinc-900">
+            <Header/>
           </div>
           <Switch>
             <Route exact path="/">
@@ -33,24 +32,38 @@ class App extends React.Component<Props> {
 
             <Route exact path="/connectCluster">
               <div className="grid grid-cols-6 bg-red-900 h-screen">
-                <div className="flex text-white bg-blue-400 col-span-1">
-                  <Sidebar />
+                  <div className="flex text-white bg-blue-400 col-span-1">
+                    <Sidebar/>
+                  </div>
+                  <div className="col-span-5 bg-zinc-900">
+                    <ConnectClusterPage/>
+                  </div>
                 </div>
-                <div className="col-span-5 bg-black">
-                  <ConnectClusterPage />
+              </Route>
+
+              <Route exact path='/health'>
+                <div className="grid grid-cols-6 bg-red-900 h-screen">
+                  <div className="flex text-white bg-blue-400 col-span-1">
+                    <Sidebar/>
+                  </div>
+                  <div className="col-span-5 bg-zinc-900">
+                    <HealthMetricsContainer/>
+                  </div>
                 </div>
-              </div>
             </Route>
 
             <Route exact path="/health">
               <div className="grid grid-cols-6 bg-red-900 h-screen">
-                <div className="flex text-white bg-blue-400 col-span-1">
-                  <Sidebar />
+                  <div className="flex text-white bg-blue-400 col-span-1">
+                    <Sidebar/>
+                  </div>
+                  <div className="col-span-5 bg-zinc-900">
+                    <RelationshipsContainer/>
+                  </div>
                 </div>
                 <div className="col-span-5 bg-white">
                   <HealthMetricsContainer />
                 </div>
-              </div>
             </Route>
 
             <Route exact path="/componentRelationships">
@@ -66,6 +79,7 @@ class App extends React.Component<Props> {
           </Switch>
         </div>
       </BrowserRouter>
+      </div>
     );
   }
 }

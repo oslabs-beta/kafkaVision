@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Chart, Tooltip, Title, ArcElement, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, Line } from 'react-chartjs-2';
 Chart.register( Tooltip, Title, ArcElement, Legend);
 
-
+//DOUGHNUT ====================================
 const data = {
   datasets: [{
     data: [10, 20, 30],
@@ -20,6 +20,10 @@ const data = {
       'Blue'
   ]
 };
+
+
+//LINE=============================================
+
 
 const HealthMetricsChart = () => {
   // const [data, setData] = useState();
@@ -50,6 +54,12 @@ const HealthMetricsChart = () => {
 }
 
 export default HealthMetricsChart;
+
+
+
+
+
+
 
 
 
