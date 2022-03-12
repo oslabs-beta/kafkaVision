@@ -14,21 +14,21 @@ const RelationshipsContainer = () => {
 
   return(
     <div className='flex-auto justify-center'>
-      <div className="m-10 border-2 border-white rounded bg-backgroundC-400"> 
+      <div className="m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75"> 
         <h1 className="font-bold text-xl m-4 text-center">Cluster Relations</h1>  
 
-        <div className="border-2 border-white rounded m-5 bg-backgroundC-300">
+        <div className="border-2 border-seafoam/40 rounded m-5 bg-slateBlue/50">
           <p className='m-3'>Please Select a Topic:</p>
 
           {/* Drop Down Menu */}
-          <select className="text-sm text-left mx-5" name="topic" id="topic">
+          <select className="text-sm text-left mx-5 border border-limeGreen/50 rounded bg-zinc-900" name="topic" id="topic">
               {/* <option value="topic1"> Topic 1 </option>
               <option value="topic2"> Topic 2 </option>
               <option value="topic3"> Topic 3 </option> */}
               {options}
           </select>
 
-          <div className='border border-white rounded m-3 bg-backgroundC-200/50'>
+          <div className='border border-slateBlue rounded m-3 bg-zinc-800'>
             <p>cluster graph</p>
           </div>
         </div>

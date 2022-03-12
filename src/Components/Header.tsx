@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 const Header = () => {
   return (
     // header
-    <div className="bg-darkIndigo flex justify-between items-center h-15">
+    <div className="bg-darkIndigo/75 flex justify-between items-center h-15">
 
       {/* logo */}
       {/* <div className="justify-items-end py-5 px-3 font-bold text-textC-100/75 text-3xl">kafkavision</div> */}

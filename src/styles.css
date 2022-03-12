@@ -5,12 +5,7 @@
 @tailwind utilities;
 
 body {
-  background-color: linear-gradient(
-    to bottom right,
-    #03223f,
-    #203549 70%,
-    #275c75
-  );
+  background-color: #18181b;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Hubballi&display=swap");

@@ -12,7 +12,9 @@ module.exports = {
         lightGray: '#455a6d',
         slateBlue: '#22404c',
         darkIndigo: '#1d3051',
-        darkBlue: '#152D49'
+        darkBlue: '#152D49',
+        // default background
+        //  zinc-900
 
         // 'textC': {        //lilac toned gray
         //   100: '#D9E2EC', 
@@ -53,6 +55,5 @@ slateBlue: '#22404c'
 darkIndigo: '#1d3051',
 darkBlue: '#152D49'
 
-// default background
- gray-50
+
 */

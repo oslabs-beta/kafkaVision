@@ -22,7 +22,7 @@ class App extends React.Component<Props> {
     return (
       <BrowserRouter>
         <div> {/* remove this div?*/}
-          <div className="text-2xl text-white bg-black">
+          <div className="text-2xl text-fontGray-75 bg-zinc-900">
             <Header/>
           </div>
 
@@ -36,7 +36,7 @@ class App extends React.Component<Props> {
                   <div className="flex text-white bg-blue-400 col-span-1">
                     <Sidebar/>
                   </div>
-                  <div className="col-span-5 bg-white">
+                  <div className="col-span-5 bg-zinc-900">
                     <ConnectClusterPage/>
                   </div>
                 </div>
@@ -47,7 +47,7 @@ class App extends React.Component<Props> {
                   <div className="flex text-white bg-blue-400 col-span-1">
                     <Sidebar/>
                   </div>
-                  <div className="col-span-5 bg-white">
+                  <div className="col-span-5 bg-zinc-900">
                     <HealthMetricsContainer/>
                   </div>
                 </div>
@@ -58,7 +58,7 @@ class App extends React.Component<Props> {
                   <div className="flex text-white bg-blue-400 col-span-1">
                     <Sidebar/>
                   </div>
-                  <div className="col-span-5 bg-white">
+                  <div className="col-span-5 bg-zinc-900">
                     <RelationshipsContainer/>
                   </div>
                 </div>
