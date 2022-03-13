@@ -17,15 +17,15 @@ userController.createUser = async (req, res, next) => {
 		res.locals.user = username;
 		return next();
 	} catch (err) {
-    const defaultErr = {
+    const defaultError = {
       log: 'Express error handler caught an error in userController.createUser middleware',
       status: 500,
       message: {
-        err: `An error occurred inside a middleware named userController.createUser : ${err}`,
+        err: `An error occurred inside a middleware named userController.createUser : ${err}`
       },
     };
-    return next(defaultErr);
-  }
+    return next(defaultError);
+  };
 };
 
 userController.verifyUser = async (req, res, next) => {
@@ -45,14 +45,14 @@ userController.verifyUser = async (req, res, next) => {
     }
     next();
 	} catch (err) {
-    const defaultErr = {
+    const defaultError = {
       log: 'Express error handler caught an error in userController.verifyUser middleware',
       status: 401,
       message: {
         err: `An error occurred inside a middleware named userController.verifyUser middleware: ${err}`,
       },
     };
-    return next(defaultErr);
+    return next(defaultError);
   }
 
 }
