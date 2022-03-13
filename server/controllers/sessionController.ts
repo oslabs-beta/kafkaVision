@@ -1,5 +1,5 @@
-import Session from '../models/sessionModel'
+import Session from '../models/sessionModel';
 
-const sessionController = {};
+const sessionController: any = {};
 
 export default sessionController;
