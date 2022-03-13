@@ -6,7 +6,8 @@ import cors  from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { connect, ConnectOptions} from 'mongoose';
+import mongoose from 'mongoose';
+const { connect } = mongoose;
 
 const port = 3333;
 
@@ -25,11 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const MONGO_URI = 'mongodb+srv://codesmith:admin@cluster0.jmtot.mongodb.net/kafkaVision?retryWrites=true&w=majority'
 
-connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    dbName: 'kafkaVision',
-  } as ConnectOptions)
+connect(MONGO_URI)
     .then(() => {
       console.log('Connected to MongoDB');
     })

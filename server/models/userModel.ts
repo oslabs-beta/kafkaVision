@@ -1,4 +1,5 @@
-import { Schema, model, Document } from 'mongoose';
+import mongoose from 'mongoose';
+const { Schema, model, Document } = mongoose;
 const bcrypt = require('bcryptjs');
 const SALT_WORK_FACTOR = 10;
 
