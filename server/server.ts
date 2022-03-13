@@ -1,7 +1,7 @@
 import express, {Request,Response,Application} from 'express';
 //import express = require('express');
-import userController from './controllers/userController';
-import sessionController from './controllers/sessionController';
+import * as userController from './controllers/userController';
+import * as sessionController from './controllers/sessionController';
 import cors  from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -45,7 +45,7 @@ app.get('/', (req: express.Request, res: express.Response):void => {
 // Signup
 app.post(
   '/signup',
-  userController.createUser,
+  // userController.createUser,
   (req: express.Request, res: express.Response) => {
     res.status(200).send(res.locals.user);
   }
@@ -54,8 +54,8 @@ app.post(
 // Login
 app.post(
   '/login',
-  userController.verifyUser,
-  sessionController.startSession,
+  // userController.verifyUser,
+  // sessionController.startSession,
   (req: express.Request, res: express.Response) => {
     res.status(200).json(res.locals.user);
   }
