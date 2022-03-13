@@ -1,13 +1,17 @@
-import express from 'express';
+import express, {Request,Response,Application} from 'express';
+//import express = require('express');
 import userController from './controllers/userController';
 import sessionController from './controllers/sessionController';
-import cors from 'cors';
-import { connect, ConnectOptions} from 'mongoose';
+import cors  from 'cors';
 import path from 'path';
-// import dirname from 'path'
-// import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { connect, ConnectOptions} from 'mongoose';
 
-const port = 3000;
+const port = 3333;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app: express.Application = express();
 
@@ -33,8 +37,10 @@ connect(MONGO_URI, {
       console.log(`Error found inside the mongoose connect method: ${err}`)
     );
 
-app.get('/', (req: express.Request, res: express.Response) => {
-   res.status(200).sendFile('/Users/Neel/Codesmith/projects/OSP/kafkavision/public/index.html')});
+app.use(express.static(path.join(__dirname, '../dist')));
+
+app.get('/', (req: express.Request, res: express.Response):void => {
+    res.status(200).sendFile(path.join(__dirname, '../dist/index.html'))});
 
 // Signup
 app.post(
@@ -55,6 +61,8 @@ app.post(
   }
 );
 
+app.get('/test', (req: express.Request, res: express.Response) => {
+  res.status(200).json('backend working')});
 //type of error object
 type errorType = {
     log: string;
@@ -84,7 +92,7 @@ app.use(
     }
   );
 
-app.listen(port, () => console.log(`Server running on port ${port}`)
+app.listen(port, ():void => console.log(`Server running on port ${port}`)
 );
 
 export default app;
