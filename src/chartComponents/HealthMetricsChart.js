@@ -1,5 +1,5 @@
 import React from 'react';
-import CPUGraph from './graphs/CPUGraph';
+import CPUGraph from './graphs/CPUGraph.js';
 
 
 const HealthMetricsChart = () => {

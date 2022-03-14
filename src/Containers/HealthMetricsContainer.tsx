@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import HealthMetricsChart from '../chartComponents/HealthMetricsChart';
+//import HealthMetricsChart from '../chartComponents/HealthMetricsChart';
 
-const prometheusLink = 'https://kayhill-cpdemo-yancrykfc9b.ws-us34.gitpod.io/' //SUNDAY!
-//kafka_controller_kafkacontroller_globaltopiccount 
+const promLink = 'https://9090-kayhill-cpdemo-gu20vu7pevi.ws-us34.gitpod.io/api/v1/query?query=sum(kafka_server_replicamanager_partitioncount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234kafka_server_kafkaserver_linux_system_cpu_utilization)"})' //MONDAY!
+// const promLink = 'https://9090-kayhill-cpdemo-gu20vu7pevi.ws-us34.gitpod.io/api/v1/query?query=kafka_controller_kafkacontroller_activecontrollercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"} > 0';
+
+
+// https://9090-kayhill-cpdemo-gu20vu7pevi.ws-us34.gitpod.io/query?query=kafka_controller_kafkacontroller_activecontrollercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"} > 0
 
 const HealthMetricsContainer = () => {
   // dummy state:
@@ -19,15 +22,28 @@ const HealthMetricsContainer = () => {
   const reqParamBroker = {
     method: "POST", 
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin" : "*"
     }, 
     body: JSON.stringify({
       query: `sum(kafka_server_replicamanager_partitioncount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234kafka_server_kafkaserver_linux_system_cpu_utilization)"})`
     }),
   }
 
-  useEffect(() => {
-    fetch(prometheusLink + 'api/v1/query?query=sum(kafka_server_replicamanager_partitioncount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234kafka_server_kafkaserver_linux_system_cpu_utilization)"})', reqParamBroker)
+  // useEffect(() => {
+  //   fetch(proxy + promLink)
+  //     .then(data => data.json())
+  //     .then(data => {
+  //       console.log('DATA: ', data) 
+
+  //     })
+  //     .catch(e => {
+  //       console.log('ERROR!!!!', e);
+  //     })
+  // }, []);
+
+  const test = () => {
+    fetch(promLink)
       .then(data => data.json())
       .then(data => {
         console.log('DATA: ', data) 
@@ -35,8 +51,10 @@ const HealthMetricsContainer = () => {
       })
       .catch(e => {
         console.log('ERROR!!!!', e);
-      })
-  }, []);
+      });
+  }
+
+  test();
 
   return(
     <div className='flex-auto justify-center'>
@@ -48,7 +66,7 @@ const HealthMetricsContainer = () => {
             <div className='rounded m-5 border border-slateBlue bg-zinc-800'>
               <p className='m-3'>Overall Cluster Health</p>
               <div className='flex items-center justify-center m-8'>
-                <HealthMetricsChart/>
+               {/* <HealthMetricsChart/> */}
               </div>
             </div>
 

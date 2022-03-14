@@ -12,6 +12,7 @@ const LineChart = () => {
       method: "POST", 
       headers: {
         "Content-Type": "application/json"
+
       }, 
       body: JSON.stringify({
         query: `query:"irate(process_cpu_seconds_total{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"}[5m])*100`,
@@ -68,13 +69,13 @@ const LineChart = () => {
         width={600}
         options={{
           maintainAspectRatio: false, 
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-              }
-            }]
-          },
+          // scales: {
+          //   yAxes: [{
+          //     ticks: {
+          //       beginAtZero: true,
+          //     }
+          //   }]
+          // },
           legend: {
             labels: {
               fontColor: 'fontGray' //should override global font property but just make sure
