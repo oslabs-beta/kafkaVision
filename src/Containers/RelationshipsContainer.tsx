@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 const prometheusLink = 'https://9090-kayhill-cpdemo-tef8qr1qio6.ws-us34.gitpod.io/'
-
+import FlowChart from '../Components/FlowChart.jsx';
 
 const RelationshipsContainer = () => {
 
@@ -60,12 +60,15 @@ const RelationshipsContainer = () => {
             <p>cluster graph</p>
           </div>
         </div>
-
+        
         <div>
             {/* <Link to="/connectCluster"> Connect Cluster Page </Link>
             <Link to="/health"> Health Metrics Page </Link>
             <Link to="/"> Login Page </Link> */}
         </div>
+      </div>
+      <div>
+        <FlowChart />
       </div>
     </div>
   )
