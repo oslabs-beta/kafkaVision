@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HealthMetricsChart from '../chartComponents/HealthMetricsChart';
 
-const prometheusLink = 'https://9090-kayhill-cpdemo-tef8qr1qio6.ws-us34.gitpod.io/'
+const prometheusLink = 'https://kayhill-cpdemo-yancrykfc9b.ws-us34.gitpod.io/' //SUNDAY!
+//kafka_controller_kafkacontroller_globaltopiccount 
 
 const HealthMetricsContainer = () => {
   // dummy state:
@@ -21,15 +22,16 @@ const HealthMetricsContainer = () => {
       "Content-Type": "application/json"
     }, 
     body: JSON.stringify({
-      query: `query=kafka_controller_kafkacontroller_activecontrollercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"} > 0"`
+      query: `sum(kafka_server_replicamanager_partitioncount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234kafka_server_kafkaserver_linux_system_cpu_utilization)"})`
     }),
   }
 
   useEffect(() => {
-    fetch(prometheusLink + 'api/v1/query?query=kafka_controller_kafkacontroller_activecontrollercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"} > 0', reqParamBroker)
+    fetch(prometheusLink + 'api/v1/query?query=sum(kafka_server_replicamanager_partitioncount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234kafka_server_kafkaserver_linux_system_cpu_utilization)"})', reqParamBroker)
       .then(data => data.json())
       .then(data => {
         console.log('DATA: ', data) 
+
       })
       .catch(e => {
         console.log('ERROR!!!!', e);
