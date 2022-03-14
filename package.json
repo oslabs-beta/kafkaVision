@@ -16,10 +16,12 @@
     "test": "jest --verbose"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "@babel/preset-typescript": "^7.16.7",
     "chart.js": "^3.7.1",
     "cors": "^2.8.5",
     "express": "^4.17.3",
+    "mongoose": "^6.2.6",
     "react": "^17.0.2",
     "react-chartjs-2": "^4.0.1",
     "react-dom": "^17.0.2",
@@ -34,6 +36,7 @@
     "@babel/preset-react": "^7.16.7",
     "@hot-loader/react-dom": "^17.0.2",
     "@types/cors": "^2.8.12",
+    "@types/mongoose": "^5.11.97",
     "@types/express": "^4.17.13",
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.21",
