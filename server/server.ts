@@ -1,7 +1,6 @@
 import express, {Request,Response,Application} from 'express';
-import userController from './controllers/userController.js';
-import sessionController from './controllers/sessionController.js';
-import kafkaRouter from './routes/kafkaRouter.js'
+import kafkaRouter from './routes/kafkaRouter.js';
+import userRouter from './routes/userRouter.js';
 import cors  from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -22,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/kafka', kafkaRouter);
+app.use('/api/user', userRouter)
 
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -42,27 +42,18 @@ app.use(express.static(path.join(__dirname, '../dist')));
 app.get('/', (req: express.Request, res: express.Response):void => {
     res.status(200).sendFile(path.join(__dirname, '../dist/index.html'))});
 
-// Signup
-app.post(
-  '/signup',
-  // userController.createUser,
-  (req: express.Request, res: express.Response) => {
-    res.status(200).send(res.locals.user);
-  }
-);
+// add react router routes
+app.get('/connectcluster', (req: express.Request, res: express.Response):void => {
+  res.status(200).sendFile(path.join(__dirname, '../dist/index.html'))});
 
-// Login
-app.post(
-  '/login',
-  userController.verifyUser,
-  sessionController.startSession,
-  (req: express.Request, res: express.Response) => {
-    res.status(200).json(res.locals.user);
-  }
-);
+app.get('/connectCluster', (req: express.Request, res: express.Response):void => {
+  res.status(200).sendFile(path.join(__dirname, '../dist/index.html'))});
 
-app.get('/test', (req: express.Request, res: express.Response) => {
-  res.status(200).json('backend working')});
+app.get('/health', (req: express.Request, res: express.Response):void => {
+  res.status(200).sendFile(path.join(__dirname, '../dist/index.html'))});
+
+app.get('/componentRelationships', (req: express.Request, res: express.Response):void => {
+  res.status(200).sendFile(path.join(__dirname, '../dist/index.html'))});
 //type of error object
 type errorType = {
     log: string;
@@ -70,7 +61,7 @@ type errorType = {
     message: { err: string };
   };
   //404 error handler
-  app.use('*', (req, res) => {
+  app.use('/*', (req, res) => {
     res.sendStatus(404);
   });
   //global error handler
