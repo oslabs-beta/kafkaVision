@@ -1,18 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Link } from 'react-router-dom';
 const prometheusLink = 'https://9090-kayhill-cpdemo-tef8qr1qio6.ws-us34.gitpod.io/'
 import FlowChart from '../Components/FlowChart.jsx';
+import BrokerDiagram from '../Components/brokerDiagram';
+import { globalStateContext } from '../App';
 
 const RelationshipsContainer = () => {
 
   // dummy state:
-  const [topics, setTopics] = useState([1, 2, 3, 4, 5]);
+  // const [topics, setTopics] = useState([1, 2, 3, 4, 5]);
+  const {globalState, setGlobalState} = useContext(globalStateContext);
 
   const options = [];
-  for (let i = 1; i <= topics.length; i +=1){
-      options.push(<option value="topic{i}"> Topic {i} </option>)
+  for (let i = 1; i <= globalState.coreData.length; i +=1){
+      options.push(<option value={i}> {globalState.coreData[i-1].topic}</option>)
   }
-
 
   const reqParamBroker = {
     method: "POST", 
@@ -36,10 +38,6 @@ const RelationshipsContainer = () => {
   }, []);
 
 
-
-
-
-
   return(
     <div className='flex-auto justify-center'>
       <div className="m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75"> 
@@ -49,7 +47,7 @@ const RelationshipsContainer = () => {
           <p className='m-3'>Please Select a Topic:</p>
 
           {/* Drop Down Menu */}
-          <select className="text-sm text-left mx-5 border border-limeGreen/50 rounded bg-zinc-900" name="topic" id="topic">
+          <select onChange={e => setGlobalState( (prevState: any) => { return  {...prevState, selectedState: e.target.value}})} className="text-sm text-left mx-5 border border-limeGreen/50 rounded bg-zinc-900" name="topic" id="topic">
               {/* <option value="topic1"> Topic 1 </option>
               <option value="topic2"> Topic 2 </option>
               <option value="topic3"> Topic 3 </option> */}
@@ -69,6 +67,9 @@ const RelationshipsContainer = () => {
       </div>
       <div>
         <FlowChart />
+      </div>
+      <div>
+        <BrokerDiagram />
       </div>
     </div>
   )
