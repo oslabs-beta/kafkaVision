@@ -1,15 +1,19 @@
+// import mongoose from 'mongoose';
 import mongoose from 'mongoose';
 const { Schema, model, Document } = mongoose;
-const bcrypt = require('bcryptjs');
+import bcrypt from 'bcryptjs';
 const SALT_WORK_FACTOR = 10;
 
-
+// Document interface
 interface Users extends Document{
     username: string;
     password: string;
+    cluster: string;
+    validatePassword(password: string): boolean;
 }
 
-const UserSchema: Schema<Users> = new Schema({
+// Schema
+const UserSchema = new Schema<Users>({
     username: {
       type: String,
       required: true,
@@ -19,33 +23,34 @@ const UserSchema: Schema<Users> = new Schema({
       type: String,
       required: true,
     },
+    cluster: {
+      type: String,
+      required: false,
+      unique: false,
+    }
   });
 
-UserSchema.pre<Users>('save',
-    function (this: Users, next: (err?: Error | undefined) => void) {
-        // hash password if it is new or modified
-        if (!this.isModified('password')) return next();
 
-        // generate salt
-        bcrypt.genSalt(SALT_WORK_FACTOR, function (err: Error, salt: any) {
-            if (err) return next(err);
+UserSchema.pre('save',
+    async function (next: (err?: Error | any) => void) {
 
-            // has password using salt
-            bcrypt.hash(this.password, salt, function (err: Error, hash: string) {
-                if (err) return next(err);
+    const thisObj = this as Users;
 
-                this.password = hash;
-                next();
-            });
-        });
+    if (!this.isModified('password')) {
+        return next();
     }
-);
 
-UserSchema.methods.comparePassword = function(candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-        if (err) return cb(err);
-        cb(null, isMatch);
-    });
+    try {
+        const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+        thisObj.password = await bcrypt.hash(thisObj.password, salt);
+        return next();
+    } catch (err) {
+        return next(err);
+    }
+});
+
+UserSchema.methods.validatePassword = async function (pass: string) {
+    return bcrypt.compare(pass, this.password);
 };
 
 const Users = model<Users>('users', UserSchema)

@@ -1,6 +1,8 @@
-import Session from '../models/sessionModel';
+import Session from '../models/sessionModel.js';
+import * as types from '../types';
 
-const sessionController: any = {};
+const sessionController: Record<string, types.middlewareFunction> = {};
+
 
 sessionController.startSession = async (req, res, next) => {
 	try {
@@ -27,6 +29,5 @@ sessionController.startSession = async (req, res, next) => {
 	};
 };
 
-
-
 export default sessionController;
+
