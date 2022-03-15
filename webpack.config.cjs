@@ -45,7 +45,7 @@ const config = {
     static: {
       directory: './dist',
     },
-    proxy: { '/api': 'http://localhost:3333' },
+    proxy: { '*': 'http://localhost:3333' },
   },
   plugins: [
     new HtmlWebpackPlugin({

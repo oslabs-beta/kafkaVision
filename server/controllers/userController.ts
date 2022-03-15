@@ -22,7 +22,7 @@ userController.createUser = async (req, res, next) => {
       log: 'Express error handler caught an error in userController.createUser middleware',
       status: 500,
       message: {
-        err: `An error occurred inside a middleware named userController.createUser : ${err}`
+        err: `An error occurred inside a middleware named userController.createUser : ${req.body.username} + ${err}`
       },
     };
     return next(defaultError);
@@ -52,7 +52,7 @@ userController.verifyUser = async (req, res, next) => {
       log: 'Express error handler caught an error in userController.verifyUser middleware',
       status: 401,
       message: {
-        err: `An error occurred inside a middleware named userController.verifyUser middleware: ${err}`,
+        err: `An error occurred inside a middleware named userController.verifyUser middleware: ${req.body.username} + ${req.body.password} + ${err}`,
       },
     };
     return next(defaultError);
