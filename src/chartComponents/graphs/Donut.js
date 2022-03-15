@@ -1,31 +1,31 @@
-import React, { useEffect } from 'react';
-import { Chart, Tooltip, Title, ArcElement, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
-Chart.register( Tooltip, Title, ArcElement, Legend);
+// import React, { useEffect } from 'react';
+// import { Chart, Tooltip, Title, ArcElement, Legend } from 'chart.js';
+// import { Doughnut } from 'react-chartjs-2';
+// Chart.register( Tooltip, Title, ArcElement, Legend);
 
 
-//DOUGHNUT ====================================
-const data = {
-  datasets: [{
-    data: [10, 20, 30],
-    backgroundColor: [
-      'red', 
-      'blue',
-      'yellow'
-    ]
-  }],
-  // These labels appear in the legend and in the tooltips when hovering different arcs
-  labels: [
-    'Red',
-    'Yellow',
-    'Blue'
-  ]
-};
+// //DOUGHNUT ====================================
+// const data = {
+//   datasets: [{
+//     data: [10, 20, 30],
+//     backgroundColor: [
+//       'red', 
+//       'blue',
+//       'yellow'
+//     ]
+//   }],
+//   // These labels appear in the legend and in the tooltips when hovering different arcs
+//   labels: [
+//     'Red',
+//     'Yellow',
+//     'Blue'
+//   ]
+// };
 
-const DonutGraph = () => {
+// const DonutGraph = () => {
   
 
-  const [data, setData] = useState();
+//   const [data, setData] = useState();
 
   // useEffect(() => {
   //   const fetchData = () => {
@@ -45,16 +45,16 @@ const DonutGraph = () => {
   //   fetchData();
   // }, []);
 
-  return (
-    <div className="h-1/2 w-1/2">
-      <Doughnut 
-        data={data}
-        />
-    </div>
-  )
-};
+//   return (
+//     <div className="h-1/2 w-1/2">
+//       <Doughnut 
+//         data={data}
+//         />
+//     </div>
+//   )
+// };
 
-export default DonutGraph;
+// export default DonutGraph;
 
 
 
