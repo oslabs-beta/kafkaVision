@@ -131,7 +131,7 @@ const CPUGraph = () => {
 
   return (
     <div styles={{width:'600', length:'400'}} className='bg-red-900'>
-      <div>test</div>
+      <div>CPU Usage</div>
       {/* <div>{JSON.stringify(CPUData)}</div> */}
       <Line data={CPU} options={chartOptions}/>  
     </div>
