@@ -57,7 +57,45 @@ userController.verifyUser = async (req, res, next) => {
     };
     return next(defaultError);
   }
-
 }
 
+userController.addCluster = async (req, res, next) => {
+	try {
+		// add cluster to user
+		const { username, cluster } = req.body;
+		await User.updateOne({ username }, {
+			$push: { clusters: cluster }
+		})
+		return next();
+	} catch (err) {
+    const defaultError = {
+      log: 'Express error handler caught an error in userController.addCluster middleware',
+      status: 500,
+      message: {
+        err: `An error occurred inside a middleware named userController.createUser : ${err}`
+      },
+    };
+    return next(defaultError);
+  }
+}
+
+userController.deleteCluster = async (req, res, next) => {
+	try {
+		// add cluster to user
+		const { username, cluster } = req.body;
+		await User.updateOne({ username }, {
+			$pull: { clusters: cluster }
+		})
+		return next();
+	} catch (err) {
+		const defaultError = {
+			log: 'Express error handler caught an error in userController.addCluster middleware',
+			status: 500,
+			message: {
+				err: `An error occurred inside a middleware named userController.createUser : ${err}`
+			},
+		};
+		return next(defaultError);
+	};
+}
 export default userController;

@@ -6,51 +6,51 @@ const SALT_WORK_FACTOR = 10;
 
 // Document interface
 interface Users extends Document{
-    username: string;
-    password: string;
-    cluster: string;
-    validatePassword(password: string): boolean;
+  username: string;
+  password: string;
+  clusters: [string];
+  validatePassword(password: string): boolean;
 }
 
 // Schema
 const UserSchema = new Schema<Users>({
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    cluster: {
-      type: String,
-      required: false,
-      unique: false,
-    }
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  clusters: {
+    type: [String],
+    required: false,
+    unique: false,
+  }
   });
 
 
 UserSchema.pre('save',
-    async function (next: (err?: Error | any) => void) {
+  async function (next: (err?: Error | any) => void) {
 
-    const thisObj = this as Users;
+  const thisObj = this as Users;
 
-    if (!this.isModified('password')) {
-        return next();
-    }
+  if (!this.isModified('password')) {
+      return next();
+  }
 
-    try {
-        const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
-        thisObj.password = await bcrypt.hash(thisObj.password, salt);
-        return next();
-    } catch (err) {
-        return next(err);
-    }
+  try {
+      const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+      thisObj.password = await bcrypt.hash(thisObj.password, salt);
+      return next();
+  } catch (err) {
+      return next(err);
+  }
 });
 
 UserSchema.methods.validatePassword = async function (pass: string) {
-    return bcrypt.compare(pass, this.password);
+  return bcrypt.compare(pass, this.password);
 };
 
 const Users = model<Users>('users', UserSchema)
