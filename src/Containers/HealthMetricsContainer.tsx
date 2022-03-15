@@ -123,7 +123,6 @@ const HealthMetricsContainer = () => {
               <p className='m-3'>Overall Cluster Health</p>
               <div className='flex items-center justify-center m-8'>
                <HealthMetricsChart/>
-               
               </div>
             </div>
 

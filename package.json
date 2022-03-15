@@ -21,6 +21,7 @@
     "chart.js": "^3.7.1",
     "cors": "^2.8.5",
     "express": "^4.17.3",
+    "kafkajs": "^1.16.0",
     "mongoose": "^6.2.6",
     "react": "^17.0.2",
     "react-chartjs-2": "^4.0.1",
