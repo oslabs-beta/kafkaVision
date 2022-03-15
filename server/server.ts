@@ -46,14 +46,12 @@ app.get('/', (req: express.Request, res: express.Response):void => {
 app.get('/connectcluster', (req: express.Request, res: express.Response):void => {
   res.status(200).sendFile(path.join(__dirname, '../dist/index.html'))});
 
-app.get('/connectCluster', (req: express.Request, res: express.Response):void => {
-  res.status(200).sendFile(path.join(__dirname, '../dist/index.html'))});
-
 app.get('/health', (req: express.Request, res: express.Response):void => {
   res.status(200).sendFile(path.join(__dirname, '../dist/index.html'))});
 
 app.get('/componentRelationships', (req: express.Request, res: express.Response):void => {
   res.status(200).sendFile(path.join(__dirname, '../dist/index.html'))});
+
 //type of error object
 type errorType = {
     log: string;

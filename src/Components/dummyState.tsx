@@ -1,4 +1,5 @@
 const dummyState: any = {
+    isLoggedIn: false,
     URL:null,
     selectedState:1,
     coreData:[

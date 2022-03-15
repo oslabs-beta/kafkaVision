@@ -51,6 +51,7 @@ const LoginPage = () => {
       .then(
         (user) => {
           setStatus('');
+          //setGlobalState({isLoggedIn: true, user_id: `$user`})
         },
         (error) => {
           setStatus('Sorry, that username is already taken.');

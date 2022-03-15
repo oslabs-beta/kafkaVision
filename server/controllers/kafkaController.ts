@@ -3,7 +3,7 @@ import * as types from '../types';
 
 const kafkaController: Record<string, types.middlewareFunction> = {};
 
-// const bootstrap = 'demo.saamsa.io:29093'
+//const bootstrap = 'kayhill-cpdemo-kyrt8dklw5r.ws-us34.gitpod.io:19091'
 
 // on page load
 kafkaController.fetchTopics = (req, res, next) => {
@@ -17,6 +17,7 @@ kafkaController.fetchTopics = (req, res, next) => {
     admin.connect();
     admin.listTopics().then((data) => {
       //  [ 'topic-1', 'topic-2', 'topic-3', ... ]
+      console.log(data);
       res.locals.data = data;
       return next();
     });
