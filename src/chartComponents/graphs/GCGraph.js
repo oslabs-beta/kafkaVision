@@ -26,7 +26,7 @@ ChartJS.register(
 const queryLink = 'https://9090-kayhill-cpdemo-4gbgmdfwzzh.ws-us34.gitpod.io/api/v1/query?query='; //TUESDAY 3PM
 // let query = '';
 
-const JVMGraph = () => {
+const GCGraph = () => {
   const [CPU, setCPU] = useState({
     // labels: ['CPU Usage'],
     labels: [1, 2, 3, 4, 5, 6],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -58,7 +58,7 @@ const JVMGraph = () => {
 
   useEffect( () => {
     //JVM Memory
-    const query = 'sum without(area)(jvm_memory_bytes_used{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})';
+    const query = 'sum without(gc)(rate(jvm_gc_collection_seconds_sum{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"}[5m]))';
 
     const useFetch = async () => {
       try {
@@ -66,7 +66,7 @@ const JVMGraph = () => {
         const CPUData = await json.json();
         console.log(CPUData.data.result[0].value[1])
         setCPUData(prevState => {
-          console.log("jvm state changed")
+          console.log("GC state changed")
           console.log(prevState)
           let broker1NewState = prevState[0];
           let broker2NewState = prevState[1];
@@ -132,11 +132,11 @@ const JVMGraph = () => {
 
   return (
     <div styles={{width:'600', length:'400'}} className='bg-red-900'>
-      <div>JVM Memory Usage</div>
+      <div>Time Spent in GC</div>
       {/* <div>{JSON.stringify(CPUData)}</div> */}
       <Line data={CPU} options={chartOptions}/>  
     </div>
   )
 }
 
-export default JVMGraph;
+export default GCGraph;
