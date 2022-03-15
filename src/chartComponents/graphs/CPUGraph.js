@@ -23,7 +23,7 @@ ChartJS.register(
 )
 
 //Don't forget to change the query link!
-const queryLink = 'https://9090-kayhill-cpdemo-fdie0tpzrnk.ws-us34.gitpod.io/api/v1/query?query='; //TUESDAY 12PM
+const queryLink = 'https://9090-kayhill-cpdemo-4gbgmdfwzzh.ws-us34.gitpod.io/api/v1/query?query='; //TUESDAY 3PM
 // let query = '';
 
 const CPUGraph = () => {
@@ -71,53 +71,46 @@ const CPUGraph = () => {
   //   []
   // );
 
-  useEffect( () => {
-    const query = 'irate(process_cpu_seconds_total{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"}[5m])*100';
+//   useEffect( () => {
+//     const query = 'irate(process_cpu_seconds_total{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"}[5m])*100';
 
-    const useFetch = async () => {
-      try {
-        const json = await fetch(queryLink + query)
-        const CPUData = await json.json();
-        console.log(CPUData.data.result[0].value[1])
-        setCPUData(prevState => {
-          console.log("prev state")
-          console.log(prevState)
-          let newState = [...prevState]
-          console.log(newState)
-          if (newState.length > 7) newState.shift();
-          newState.push(CPUData.data.result[0].value[1]);
-          return newState
-        })
-      }
-      catch (error){
-        console.log('ERROR IN CPU GRAPH FETCH: ', error)
-      }
-    }
+//     const useFetch = async () => {
+//       try {
+//         const json = await fetch(queryLink + query)
+//         const CPUData = await json.json();
+//         console.log(CPUData.data.result[0].value[1])
+//         setCPUData(prevState => {
+//           console.log("prev state")
+//           console.log(prevState)
+//           let newState = [...prevState]
+//           console.log(newState)
+//           if (newState.length > 7) newState.shift();
+//           newState.push(CPUData.data.result[0].value[1]);
+//           return newState
+//         })
+//       }
+//       catch (error){
+//         console.log('ERROR IN CPU GRAPH FETCH: ', error)
+//       }
+//     }
 
-    const timeoutMethod = setInterval(() => {
-      useFetch();
-    }, 2000);
+//     const timeoutMethod = setInterval(() => {
+//       useFetch();
+//     }, 2000);
 
-    useFetch();
+//     useFetch();
 
-    return () => clearInterval(timeoutMethod);
-  }, []
-)
-
-
+//     return () => clearInterval(timeoutMethod);
+//   }, []
+// )
 
 
   useEffect(() => {
-    query = 'irate(process_cpu_seconds_total{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"}[5m])*100';
-    fetch(queryLink + query)
-      .then(data => data.json())
-      .then(result => {
-        console.log('CPU GRAPH DATA: ', result);
         setCPU({
           labels: ['CPU Usage'],
           datasets: [{
             label: 'Broker 1',
-            data: CPUData,
+            data: [19, 29, 30, 40, 30, 20], // CPUData
             backgroundColor: ['rgba(255, 99, 132, 0.2)'],
             borderColor: ['rgba(255, 99, 132, 1)'],
             borderWidth: 1
@@ -129,6 +122,7 @@ const CPUGraph = () => {
             borderColor:' red',
           }],
         });
+
         setChartOptions({
           responsive: true,
           maintainAspectRatio: false,
@@ -142,11 +136,7 @@ const CPUGraph = () => {
             }
           }
         })
-      })
-      .catch(err => {
-        console.log('ERROR IN CPU GRAPH USEEFFECT: ', err);
-      });
-    }, []);
+      }, []);
 
 
 
