@@ -1,6 +1,7 @@
 import express, {Request,Response,Application} from 'express';
 import userController from './controllers/userController.js';
 import sessionController from './controllers/sessionController.js';
+import kafkaRouter from './routes/kafkaRouter.js'
 import cors  from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -20,6 +21,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/api/kafka', kafkaRouter);
 
 import * as dotenv from "dotenv";
 dotenv.config();
