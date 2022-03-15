@@ -1,7 +1,6 @@
 import express, {Request,Response,Application} from 'express';
-//import express = require('express');
-import * as userController from './controllers/userController';
-import * as sessionController from './controllers/sessionController';
+import userController from './controllers/userController.js';
+import sessionController from './controllers/sessionController.js';
 import cors  from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -16,17 +15,19 @@ const __dirname = dirname(__filename);
 
 const app: express.Application = express();
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
-
 app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const MONGO_URI = 'mongodb+srv://codesmith:admin@cluster0.jmtot.mongodb.net/kafkaVision?retryWrites=true&w=majority'
 
-connect(MONGO_URI)
+import * as dotenv from "dotenv";
+dotenv.config();
+
+// non-undefined assertion operator to account for undefined type
+const db: string = process.env.MONGO_URI!;
+
+connect(db)
     .then(() => {
       console.log('Connected to MongoDB');
     })
@@ -51,8 +52,8 @@ app.post(
 // Login
 app.post(
   '/login',
-  // userController.verifyUser,
-  // sessionController.startSession,
+  userController.verifyUser,
+  sessionController.startSession,
   (req: express.Request, res: express.Response) => {
     res.status(200).json(res.locals.user);
   }

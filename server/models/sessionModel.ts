@@ -6,7 +6,7 @@ interface Sessions {
     createdAt: Date;
 }
 
-const SessionSchema: Schema<Sessions> = new Schema({
+const SessionSchema = new Schema<Sessions>({
     username: {
         type: String,
         required: true,

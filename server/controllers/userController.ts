@@ -1,7 +1,8 @@
-import User from '../models/userModel';
-const bcrypt = require('bcryptjs');
+import User from '../models/userModel.js';
+import bcrypt from 'bcryptjs';
+import * as types from '../types';
 
-const userController: any = {};
+const userController: Record<string, types.middlewareFunction> = {};
 
 userController.createUser = async (req, res, next) => {
 	try {
@@ -33,7 +34,9 @@ userController.verifyUser = async (req, res, next) => {
 		const { username, password } = req.body;
 		const user = await User.findOne({ username });
 		// check if inputted password matches the hashed password
-		let hashedPass: string, matched: string;
+		let hashedPass: string;
+		let matched: boolean = false;
+
 		if (user) {
 			hashedPass = user?.password;
 			matched = bcrypt.compareSync(password, hashedPass);
