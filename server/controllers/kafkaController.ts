@@ -15,7 +15,7 @@ kafkaController.fetchTopics = (req, res, next) => {
     });
     const admin = instance.admin();
     admin.connect();
-    admin.listTopics().then((data) => {
+    admin.listTopics().then((data: any) => {
       //  [ 'topic-1', 'topic-2', 'topic-3', ... ]
       res.locals.data = data;
       return next();
@@ -43,7 +43,7 @@ kafkaController.fetchTopicMetadata = (req, res, next) => {
     });
     const admin = instance.admin();
     admin.connect();
-    admin.fetchTopicMetadata({ topics: [`${topic}`] }).then((data) => {
+    admin.fetchTopicMetadata({ topics: [`${topic}`] }).then((data: any) => {
       // { "topics" : [ "name", "partitions": [{}]]}
       res.locals.data = data;
       return next();
@@ -71,7 +71,7 @@ kafkaController.fetchTopicOffsets = (req, res, next) => {
     });
     const admin = instance.admin();
     admin.connect();
-    admin.fetchTopicOffsets(`${topic}`).then((data) => {
+    admin.fetchTopicOffsets(`${topic}`).then((data: any) => {
       //  // [
       //   { partition: 0, offset: '31004', high: '31004', low: '421' },
       //   { partition: 1, offset: '54312', high: '54312', low: '3102' },
@@ -104,7 +104,7 @@ kafkaController.describeCluster = (req, res, next) => {
     });
     const admin = instance.admin();
     admin.connect();
-    admin.describeCluster().then((data) => {
+    admin.describeCluster().then((data: any) => {
       //  [ 'topic-1', 'topic-2', 'topic-3', ... ]
       res.locals.data = data;
       return next();
@@ -131,7 +131,7 @@ kafkaController.listGroups = (req, res, next) => {
     });
     const admin = instance.admin();
     admin.connect();
-    admin.listGroups().then((data) => {
+    admin.listGroups().then((data: any) => {
       //  [ 'topic-1', 'topic-2', 'topic-3', ... ]
       res.locals.data = data;
       return next();

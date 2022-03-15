@@ -107,7 +107,8 @@ const CPUGraph = () => {
 
   useEffect(() => {
         setCPU({
-          labels: ['CPU Usage'],
+          // labels: ['CPU Usage'],
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
           datasets: [{
             label: 'Broker 1',
             data: [19, 29, 30, 40, 30, 20], // CPUData
