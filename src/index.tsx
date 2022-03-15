@@ -5,4 +5,4 @@ import App from './App';
 import "./styles.css"; //importing into div tree
 
 var mountNode = document.getElementById("root"); //changed from app
-ReactDOM.render(<App name="Jane" />, mountNode);
+ReactDOM.render(<App />, mountNode);
