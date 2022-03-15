@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 const prometheusLink = 'https://9090-kayhill-cpdemo-tef8qr1qio6.ws-us34.gitpod.io/'
-import FlowChart from '../Components/FlowChart.jsx';
+
 
 const RelationshipsContainer = () => {
 
@@ -25,7 +25,7 @@ const RelationshipsContainer = () => {
   }
 
   useEffect(() => {
-    fetch(prometheusLink + '1/api/v1/query', reqParamBroker)// 'api/v1/query?query=kafka_controller_kafkacontroller_activecontrollercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"} > 0', reqParamBroker)
+    fetch(prometheusLink + '1/api/v1/query?query=count(kafka_server_replicamanager_leadercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})', reqParamBroker)// 'api/v1/query?query=kafka_controller_kafkacontroller_activecontrollercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"} > 0', reqParamBroker)
       .then(data => data.json())
       .then(data => {
         console.log('ROB DATA: ', data) 
@@ -60,15 +60,12 @@ const RelationshipsContainer = () => {
             <p>cluster graph</p>
           </div>
         </div>
-        
+
         <div>
             {/* <Link to="/connectCluster"> Connect Cluster Page </Link>
             <Link to="/health"> Health Metrics Page </Link>
             <Link to="/"> Login Page </Link> */}
         </div>
-      </div>
-      <div>
-        <FlowChart />
       </div>
     </div>
   )
