@@ -1,5 +1,6 @@
 //import { hot } from 'react-hot-loader/root';
-import * as React from 'react';
+import * as React from 'react'; // GET HELP WITH THIS
+// const {useState} = React;
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // IMPORTED COMPONENTS/PAGES ----------------------------------
@@ -9,15 +10,24 @@ import HealthMetricsContainer from './Containers/HealthMetricsContainer';
 import RelationshipsContainer from './Containers/RelationshipsContainer';
 import ConnectClusterPage from './ConnectClusterPage';
 import LoginPage from './LoginPage';
+import dummyState from './Components/dummyState';
 // ------------------------------------------------------
 
-interface Props {
-  name: string;
-}
+// interface Props {
+//   name: string;
+// }
+export const globalStateContext = React.createContext(dummyState); // Best to initialize with null?
 
-class App extends React.Component<Props> {
-  render() {
-    const { name } = this.props;
+const App = () => {//extends React.Component<Props> {
+  // render() {
+  //   console.log('react below');
+  //   console.log(React.useState);
+  //   const { name } = this.props; // leftover code
+  //   const selected = 1;
+
+    const [globalState, setGlobalState] = React.useState(dummyState);
+    // const context = { globalState, setGlobalState}; // needs to be in single object to pass down as context's value?
+
     return (
       <div>
       <BrowserRouter>
@@ -40,8 +50,8 @@ class App extends React.Component<Props> {
                   </div>
                 </div>
               </Route>
-
-              <Route exact path='/health'>
+              <globalStateContext.Provider value={{globalState, setGlobalState}}>
+              {/* <Route exact path='/health'>
                 <div className="grid grid-cols-6 bg-red-900 h-screen">
                   <div className="flex text-white bg-blue-400 col-span-1">
                     <Sidebar/>
@@ -50,15 +60,12 @@ class App extends React.Component<Props> {
                     <HealthMetricsContainer/>
                   </div>
                 </div>
-            </Route>
+            </Route> */}
 
             <Route exact path="/health">
               <div className="grid grid-cols-6 bg-red-900 h-screen">
                   <div className="flex text-white bg-blue-400 col-span-1">
                     <Sidebar/>
-                  </div>
-                  <div className="col-span-5 bg-zinc-900">
-                    <RelationshipsContainer/>
                   </div>
                 </div>
                 <div className="col-span-5 bg-white">
@@ -76,12 +83,13 @@ class App extends React.Component<Props> {
                 </div>
               </div>
             </Route>
+            </globalStateContext.Provider>
           </Switch>
         </div>
       </BrowserRouter>
       </div>
     );
-  }
+  // }
 }
 
 export default App;
