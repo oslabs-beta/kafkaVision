@@ -24,7 +24,7 @@ ChartJS.register(
 )
 
 //Don't forget to change the query link!
-const queryLink = 'https://9090-kayhill-cpdemo-4gbgmdfwzzh.ws-us34.gitpod.io/api/v1/query?query='; //TUESDAY 3PM
+const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WEDNESDAY 2PM
 // let query = '';
 
 const JVMGraph = () => {
@@ -102,15 +102,15 @@ const JVMGraph = () => {
       datasets: [{
         label: 'Broker 1',
         data: CPUData[0],
-        backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-        borderColor: ['rgba(255, 99, 132, 1)'],
+        backgroundColor: ['#d2fdbb'], //lime green
+        borderColor: ['#7cb55e'], //dark green
         borderWidth: 1
       },
       {
         label: 'Broker 2',
         data: CPUData[1],
-        backgroundColor: 'orange', 
-        borderColor:' red',
+        backgroundColor: '#22404c',  //slateBlue
+        borderColor: '#03dac5', //seafoam
       }],
     });
 
@@ -123,16 +123,24 @@ const JVMGraph = () => {
         }, 
         title: {
           display: true, 
-          text: 'CPU Usage',
         }
-      }
+      }, 
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Memory (MiB)',
+          }
+        },
+      },  
     })
   }, [CPUData]);
 
 
 
   return (
-    <div styles={{width:'600', length:'400'}} className='bg-red-900'>
+    <div styles={{width:'600', length:'400'}} className='bg-zinc-800 p-5 border border-fontGray/70 rounded'>
       <div>JVM Memory Usage</div>
       {/* <div>{JSON.stringify(CPUData)}</div> */}
       <Line data={CPU} options={chartOptions}/>  
