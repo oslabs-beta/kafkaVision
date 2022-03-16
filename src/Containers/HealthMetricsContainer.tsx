@@ -139,28 +139,38 @@ const HealthMetricsContainer = () => {
 
           {/* Topic Metrics */}
           <div className='border border-slateBlue rounded m-5 bg-zinc-800'>
-            <p className='m-3'>Topic Metrics</p>
+            <p className='m-5'>Topic Metrics</p>
   
-            {/* Drop Down Menu */}
-            <div className='text-sm text-left mx-5'>
-              <p>Please Select a Topic:</p>
-              <select className='my-1 bg-zinc-900 border rounded border-slateBlue' name="topic" id="topic">
-                {/* <option value="topic1"> Topic 1 </option>
-                <option value="topic2"> Topic 2 </option>
-                <option value="topic3"> Topic 3 </option> */}
-                {options}
-              </select>
+            {/* Drop Down Menu way down below!*/}
+            
           
               {/* List of metrics */}
-              <ul className='bg-buttonC-300 rounded my-2 p-4 text-sm font-light divide-y-2 divide-fontGray/50'>
-                {/* text placeholders */}
-                <li>Global Topic Count: {topics}</li>
-                <li>Global Online Partitions: {partitions} </li>
-                <li>Active Controllers: {controllers}</li>
-                <li>Brokers Online: {brokers}</li>
-                <li>Under Replicated Partitions: {underReplicated}</li>
-              </ul>
-            </div> 
+                <div className='grid grid-cols-3  rounded gap-5 p-5 text-sm font-light divide-fontGray/50'>
+                  <div className='bg-slateBlue/70 p-5 rounded border border-seafoam/50'>
+                    <div className='text-xs text-seafoam/70 font-bold'>Global Topic Count: </div>
+                    <div className='text-7xl text-limeGreen'>{topics} </div>
+                  </div>
+
+                  <div className='bg-slateBlue/70 p-5 rounded border border-seafoam'>
+                    <div className='text-xs text-seafoam/70 font-bold'>Global Online Partitions: </div>
+                    <div className='text-7xl text-limeGreen'>{partitions} </div>
+                  </div>
+
+                  <div className='bg-slateBlue/70 p-5 rounded border border-seafoam'>
+                    <div className='text-xs text-seafoam/70 font-bold'>Active Controllers: </div>
+                    <div className='text-7xl text-limeGreen'>{controllers} </div>
+                  </div>
+
+                  <div className='bg-slateBlue/70 p-5 rounded border border-seafoam'>
+                    <div className='text-xs text-seafoam/70 font-bold'>Brokers Online: </div>
+                    <div className='text-7xl text-limeGreen'>{brokers} </div>
+                  </div>
+
+                  <div className='bg-slateBlue/70 p-5 rounded border border-seafoam'>
+                    <div className='text-xs text-seafoam/70 font-bold'>Under Replicated Partitions: </div>
+                    <div className='text-7xl text-limeGreen'>{underReplicated} </div>
+                  </div>
+                </div>
           </div>
         </div> 
     </div>

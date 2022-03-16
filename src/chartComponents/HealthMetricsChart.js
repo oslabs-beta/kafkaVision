@@ -27,7 +27,7 @@ const HealthMetricsChart = () => {
       <div> 
       {/* CPU USAGE GRAPHS */}
       <div className="w-full h-full grid grid-cols-2 px-2 py-1 ">
-        <div className="col-span-1">
+        <div className="col-span-1 bg-zinc-800 p-5 border border-fontGray/70 rounded">
           <CPUGraph/>
         </div>
         <div className="col-span-1 bg-zinc-800 p-5 border border-fontGray/70 rounded">
