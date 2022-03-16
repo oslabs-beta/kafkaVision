@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import HealthMetricsChart from '../chartComponents/HealthMetricsChart';
+import { appContext } from '../App';
 
 //Don't forget to change the query link!
 const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WEDNESDAY 2PM
 const queryRange = '';
 let query = '';
  
-
 const HealthMetricsContainer = () => {  
+  
+  //UNPACK APP (CONNECTION) STATE (TO GET PROMETHEUS URL)
+  const appState = useContext(appContext);
+  const [connectionState, setConnectionState] = appState.connection;
+  const queryLink = connectionState.url_prometheus;
+  const connectionStatus = connectionState.isConnected; // semantic variable
+
+  // LOCAL STATE
   const [topics, setTopics] = useState(0);
   const [controllers, setControllers] = useState(0);
   const [brokers, setBrokers] = useState(0);
   const [partitions, setPartitions] = useState(0);
   const [underReplicated, setUnderReplicated] = useState(0);
-  
-
 
   //CONTROLLERS
   useEffect(() => {
@@ -37,7 +43,6 @@ const HealthMetricsContainer = () => {
       })
   }, [controllers]);
   
-
 
   //BROKERS
   useEffect(() => {
@@ -95,8 +100,6 @@ const HealthMetricsContainer = () => {
         options.push(<option value="topic{i}"  key={i}> Topic {i} </option>)
   };
  
-
-
   //UNDERREPLICATED PARTITIONS
   useEffect(() => {
     query = 'sum(kafka_server_replicamanager_underreplicatedpartitions{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})';
@@ -111,33 +114,86 @@ const HealthMetricsContainer = () => {
       });
   }, [underReplicated]);
 
+  let renderedContent:any;
+  if (connectionStatus === false){
+    renderedContent = (
+      <div className='flex-auto justify-center'>
+        <div className="m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75">
+          Please Connect to see this page
+        </div>
+      </div>
+      )
+  } else {
+    renderedContent = (
+      <div className="font-bold text-xl text-center height-max m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75"> 
+        <h2 className="m-4 text-center">Health Dashboard</h2>
+        <div className="border-2 border-seafoam/40 rounded m-5 grid grid-rows-2  bg-slateBlue/50">
+
+          {/* Overall Cluster Health */}
+          <div className='rounded m-5 border border-slateBlue bg-zinc-800'>
+            <p className='m-3'>Overall Cluster Health</p>
+            <div className='flex items-center justify-center m-8'>
+             <HealthMetricsChart/>
+            </div>
+          </div>
+
+          {/* Topic Metrics */}
+          <div className='border border-slateBlue rounded m-5 bg-zinc-800'>
+            <p className='m-3'>Topic Metrics</p>
+  
+            {/* Drop Down Menu */}
+            <div className='text-sm text-left mx-5'>
+              <p>Please Select a Topic:</p>
+              <select className='my-1 bg-zinc-900 border rounded border-slateBlue' name="topic" id="topic">
+                {/* <option value="topic1"> Topic 1 </option>
+                <option value="topic2"> Topic 2 </option>
+                <option value="topic3"> Topic 3 </option> */}
+                {options}
+              </select>
+          
+              {/* List of metrics */}
+              <ul className='bg-buttonC-300 rounded my-2 p-4 text-sm font-light divide-y-2 divide-fontGray/50'>
+                {/* text placeholders */}
+                <li>Global Topic Count: {topics}</li>
+                <li>Global Online Partitions: {partitions} </li>
+                <li>Active Controllers: {controllers}</li>
+                <li>Brokers Online: {brokers}</li>
+                <li>Under Replicated Partitions: {underReplicated}</li>
+              </ul>
+            </div> 
+          </div>
+        </div> 
+    </div>
+    )
+  }
 
   return(
     <div className='flex-auto justify-center'>
-      <div className="font-bold text-xl text-center height-max m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75"> 
+      {renderedContent}
+      {/* <div className="font-bold text-xl text-center height-max m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75"> 
         <h2 className="m-4 text-center">Health Dashboard</h2>
-          <div className="border-2 border-seafoam/40 rounded m-5 grid grid-rows-2  bg-slateBlue/50">
+          <div className="border-2 border-seafoam/40 rounded m-5 grid grid-rows-2  bg-slateBlue/50"> */}
 
             {/* Overall Cluster Health */}
-            <div className='rounded m-5 border border-slateBlue bg-zinc-800'>
+            {/* <div className='rounded m-5 border border-slateBlue bg-zinc-800'>
               <p className='m-3'>Overall Cluster Health</p>
               <div className='flex items-center justify-center m-8'>
                <HealthMetricsChart/>
               </div>
-            </div>
+            </div> */}
 
             {/* Topic Metrics */}
-            <div className='border border-slateBlue rounded m-5 bg-zinc-800'>
-              <p className='m-3'>Topic Metrics</p>
+            {/* <div className='border border-slateBlue rounded m-5 bg-zinc-800'>
+              <p className='m-3'>Topic Metrics</p> */}
               
     
               {/* Drop Down Menu way down below */}
         
             
                 {/* List of metrics */}
-                <ul className='bg-buttonC-300 rounded my-2 p-4 text-sm font-light divide-y-2 divide-fontGray/50'>
+                {/* <ul className='bg-buttonC-300 rounded my-2 p-4 text-sm font-light divide-y-2 divide-fontGray/50'> */}
                   {/* text placeholders */}
-                  <li>Global Topic Count: {topics}</li>
+                  {/* <li>Global Topic Count: {topics}</li>
                   <li>Global Online Partitions: {partitions} </li>
                   <li>Active Controllers: {controllers}</li>
                   <li>Brokers Online: {brokers}</li>
@@ -145,14 +201,8 @@ const HealthMetricsContainer = () => {
                 </ul>
                
             </div>
-
           </div>
-          <div>
-              {/* <Link to="/connectCluster"> Connect Cluster Page </Link>
-              <Link className="bg-white" to="/"> Login Page </Link>
-              <Link  to="/componentRelationships"> Component Relationships Page </Link> */}
-          </div>  
-      </div> 
+      </div>  */}
     </div>
   )
 };

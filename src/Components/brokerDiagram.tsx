@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { globalStateContext } from '../App';
+import { appContext } from '../App';
 
 const BrokerDiagram = () => {
 

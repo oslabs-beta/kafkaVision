@@ -1,25 +1,20 @@
 import React, {useContext, useEffect} from 'react';
 import ReactFlow, { SmoothStepEdge } from 'react-flow-renderer';
-import { globalStateContext } from '../App';
-
-// const dummyData = {
-//     producers: ["Producer 1", "Producer 2", "Producer 3", "Producer 4"],
-//     Topic: 'Topic 1... let\'s go!',
-//     consumers: ["Consumer 1", "Consumer 2" ],
-//     connector: ["Connecter X"]
-// }
+import { appContext } from '../App';
 
 const height_adjustable = 600;
 const width_adjustable = 900;
 
-
 const FlowChart= () => {    
 
     // const global_state = useContext(globalStateContext);
-    const {globalState, setGlobalState} = useContext(globalStateContext);
+    // const {globalState, setGlobalState} = useContext(globalStateContext);
+    const appState = useContext(appContext);
+    const [globalState, setGlobalState] = appState.global;
 
     const dummyData = globalState.coreData[globalState.selectedState-1];
     console.log(dummyData)
+
     const topic_id = dummyData.producers.length + 1;
     // ^ superfluous variable but helps semantically w/ code below
     useEffect( () => {
