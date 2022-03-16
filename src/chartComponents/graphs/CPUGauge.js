@@ -35,13 +35,6 @@ const CPUGauge = () => {
       backgroundColor: ['rgba(255, 99, 132, 0.2)'],
       borderColor: ['rgba(255, 99, 132, 1)'],
       borderWidth: 1
-    },
-    {
-      label: 'Broker 2',
-      data: [15, 15],
-      backgroundColor: 'orange', 
-      borderColor:' red',
-      borderWidth: 1, 
     }],
   });
 
@@ -80,80 +73,39 @@ const CPUGauge = () => {
   }, []
 )
 
-  //   const useFetch = async () => {
-  //     try {
-  //       const json = await fetch(queryLink + query)
-  //       const CPUData = await json.json();
-  //       console.log(CPUData.data.result[0].value[1])
-  //       setCPUData(prevState => {
-  //         console.log("CPU GAUGE state changed")
-  //         console.log(prevState)
-  //         let broker1NewState = prevState[0];
-  //         let broker2NewState = prevState[1];
-  //         broker1NewState.shift();
-  //         broker2NewState.shift();
-  //         broker1NewState.push(CPUData.data.result[0].value[1]);
-  //         broker2NewState.push(CPUData.data.result[1].value[1]);
-  //         let newState = [ broker1NewState, broker2NewState];
-  //         return newState
-  //       })
-  //     }
-  //     catch (error){
-  //       console.log('ERROR IN CPU GAUGE FETCH: ', error)
-  //     }
-  //   }
-
-  //   const timeoutMethod = setInterval(() => {
-  //     useFetch();
-  //   }, 1000);
-
-  //   useFetch();
-
-  //   return () => clearInterval(timeoutMethod);
-  // }, []
-// )
-
-    
-
-
   useEffect(() => {
     console.log('CPU DATA GAUGE: ', CPUData)
-        setCPU({
-          // labels: ['CPU Usage'],
-          labels: ['Broker1', 'Broker2'],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-            label: 'Broker 1',
-            data: [CPUData[0]], 
-            backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-            borderColor: ['rgba(255, 99, 132, 1)'],
-            borderWidth: 1
-          },
-          {
-            label: 'Broker 2',
-            data: [CPUData[1]],
-            backgroundColor: 'orange', 
-            borderColor:' red',
-          }],
-        });
+    setCPU({
+      // labels: ['CPU Usage'],
+      labels: ['Broker1', 'Broker2'],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        // label: 'Broker 1',
+        data: [CPUData[0], CPUData[1]], 
+        backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+        borderColor: ['rgba(255, 99, 132, 1)'],
+        borderWidth: 1
+      }],
+    });
 
-        setChartOptions({
-          responsive: false,
-          maintainAspectRatio: true,
-          plugins: {
-            legend: {
-              position: "top"
-            }, 
-            title: {
-              display: true, 
-              text: 'CPU Usage Gauge',
-            }
-          }, 
-          scales: {
-            y: {
-              beginAtZero: true,
-            }
-          }, 
-        })
+    setChartOptions({
+      responsive: false,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          display: false, 
+          position: "top"
+        }, 
+        title: {
+          display: true, 
+          // text: 'CPU Usage Gauge',
+        }
+      }, 
+      scales: {
+        y: {
+          beginAtZero: true,
+        }
+      }, 
+    })
       }, [CPUData]);
 
 

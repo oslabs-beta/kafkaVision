@@ -123,9 +123,13 @@ const GCGraph = () => {
         }, 
         title: {
           display: true, 
-          text: 'CPU Usage',
         }
-      }
+      }, 
+      scales: {
+        y: {
+          beginAtZero: true,
+        }
+      }, 
     })
   }, [CPUData]);
 

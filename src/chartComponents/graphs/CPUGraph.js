@@ -125,7 +125,12 @@ const CPUGraph = () => {
           display: true, 
           text: 'CPU Usage',
         }
-      }
+      }, 
+      scales: {
+        y: {
+          beginAtZero: true,
+        }
+      }, 
     })
   }, [CPUData]);
 
