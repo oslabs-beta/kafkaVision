@@ -7,7 +7,7 @@ router.post(
   '/signup',
   userController.createUser,
   (req: express.Request, res: express.Response) => {
-    res.status(200).send(res.locals.user);
+    res.status(200).send(res.locals);
   }
 );
 
@@ -16,7 +16,47 @@ router.post(
   userController.verifyUser,
   sessionController.startSession,
   (req: express.Request, res: express.Response) => {
-    res.status(200).json(res.locals.user);
+    res.status(200).json(res.locals);
+  }
+);
+
+router.post(
+  '/logout',
+  (req: express.Request, res: express.Response) => {
+    res.locals.loggedin = false;
+    res.status(200).json(res.locals.loggedin);
+  }
+);
+
+router.post(
+  '/saveprom',
+  userController.addUrlPrometheus,
+  (req: express.Request, res: express.Response) => {
+    res.status(200).json(res.locals.url_prometheus);
+  }
+);
+
+router.post(
+  '/deleteprom',
+  userController.deleteUrlPrometheus,
+  (req: express.Request, res: express.Response) => {
+    res.status(200).json(res.locals.url_prometheus);
+  }
+);
+
+router.post(
+  '/savekafka',
+  userController.addUrlKafka,
+  (req: express.Request, res: express.Response) => {
+    res.status(200).json(res.locals.url_kafka);
+  }
+);
+
+router.post(
+  '/deletekafka',
+  userController.deleteURLKafka,
+  (req: express.Request, res: express.Response) => {
+    res.status(200).json(res.locals.url_kafka);
   }
 );
 

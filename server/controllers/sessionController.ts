@@ -8,11 +8,11 @@ sessionController.startSession = async (req, res, next) => {
 	try {
 		// check if session exists. If not, create one
 		const session = await Session.findOne({
-			username: res.locals.user
+			username: res.locals.username
 		});
 		if(!session) {
 			const newSession = {
-				username: res.locals.user
+				username: res.locals.username
 			};
 			await Session.create(newSession);
 		};
@@ -30,4 +30,3 @@ sessionController.startSession = async (req, res, next) => {
 };
 
 export default sessionController;
-
