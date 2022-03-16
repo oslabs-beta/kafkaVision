@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import HealthMetricsChart from '../chartComponents/HealthMetricsChart';
 
 //Don't forget to change the query link!
-const queryLink = 'https://9090-kayhill-cpdemo-4gbgmdfwzzh.ws-us34.gitpod.io/api/v1/query?query='; //TUESDAY 3PM
+const queryLink = 'https://kayhill-cpdemo-aki26esh1q7.ws-us34.gitpod.io//api/v1/query?query='; //WEDNESDAY 10AM
 const queryRange = '';
 let query = '';
  
