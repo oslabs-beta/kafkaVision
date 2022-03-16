@@ -128,8 +128,12 @@ const GCGraph = () => {
       scales: {
         y: {
           beginAtZero: true,
-        }
-      }, 
+          title: {
+            display: true,
+            text: '% of Time in GC',
+          }
+        },
+      },  
     })
   }, [CPUData]);
 

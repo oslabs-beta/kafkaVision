@@ -104,7 +104,7 @@ const CPUGraph = () => {
         data: CPUData[0],
         backgroundColor: ['#d2fdbb'], //lime green
         borderColor: ['#7cb55e'], //dark green
-        borderWidth: 1
+        borderWidth: 1,
       },
       {
         label: 'Broker 2',
@@ -129,7 +129,11 @@ const CPUGraph = () => {
       scales: {
         y: {
           beginAtZero: true,
-        }
+          title: {
+            display: true,
+            text: 'Cores',
+          }
+        },
       }, 
     })
   }, [CPUData]);

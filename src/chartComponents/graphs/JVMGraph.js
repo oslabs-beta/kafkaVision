@@ -128,8 +128,12 @@ const JVMGraph = () => {
       scales: {
         y: {
           beginAtZero: true,
-        }
-      }, 
+          title: {
+            display: true,
+            text: 'Memory (MiB)',
+          }
+        },
+      },  
     })
   }, [CPUData]);
 
