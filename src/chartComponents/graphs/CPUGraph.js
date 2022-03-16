@@ -1,141 +1,90 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Chart as ChartJS, 
-  CategoryScale, 
-  LinearScale,
-  PointElement,
-  LineElement,  
-  Title, 
-  Tooltip, 
-  Legend 
-} from 'chart.js';
 import { Line } from 'react-chartjs-2';
-// import { timeStamp } from 'console';
-
-ChartJS.register(
-  CategoryScale, 
-  LinearScale, 
-  PointElement, 
-  LineElement,
-  Title, 
-  Tooltip, 
-  Legend,
-)
-
-//Don't forget to change the query link!
-const queryLink = 'https://9090-kayhill-cpdemo-4gbgmdfwzzh.ws-us34.gitpod.io/api/v1/query?query='; //TUESDAY 3PM
-// let query = '';
-
-const CPUGraph = () => {
-  const [CPU, setCPU] = useState({
-    // labels: ['CPU Usage'],
-    labels: [1, 2, 3, 4, 5, 6],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [{
-      label: 'Broker 1',
-      data: [5, 5, 5, 5, 5, 5],
-      backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-      borderColor: ['rgba(255, 99, 132, 1)'],
-      borderWidth: 1
-    },
-    {
-      label: 'Broker 2',
-      data: [0,0,0,0,0,0],
-      backgroundColor: 'orange', 
-      borderColor:' red',
-    }],
-  });
-
-  const [chartOptions, setChartOptions] = useState({});
-
-  const dataForGraph = [];
-  const indexTracker = 0;
-
-  const [CPUData, setCPUData] = useState([[10, 10, 10, 10, 10, 10, 10, 10, 10, 10], [15, 15, 15, 15, 15, 15, 15, 15, 15, 15]]);
-
-  // const controller = new AbortController();
 
 
+const LineChart = () => {
+  const CPUState = () => {
+    const [CPUData, setCPUData] = useState();
+  }
 
-  useEffect( () => {
-    const query = 'irate(process_cpu_seconds_total{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"}[5m])*100';
+    //logic for producing CPU Usage
+    const req = {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json"
 
-    const useFetch = async () => {
-      try {
-        const json = await fetch(queryLink + query)
-        const CPUData = await json.json();
-        console.log(CPUData.data.result[0].value[1])
-        setCPUData(prevState => {
-          console.log("state changed")
-          console.log(prevState)
-          let broker1NewState = prevState[0];
-          let broker2NewState = prevState[1];
-          broker1NewState.shift();
-          broker2NewState.shift();
-          broker1NewState.push(CPUData.data.result[0].value[1]);
-          broker2NewState.push(CPUData.data.result[1].value[1]);
-          let newState = [ broker1NewState, broker2NewState];
-          return newState
-        })
-      }
-      catch (error){
-        console.log('ERROR IN CPU GRAPH FETCH: ', error)
-      }
+      }, 
+      body: JSON.stringify({
+        query: `query:"irate(process_cpu_seconds_total{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"}[5m])*100`,
+      }),
     }
+  
 
-    const timeoutMethod = setInterval(() => {
-      useFetch();
-    }, 1000);
+  //fetch request
+  fetch('link')
+    .then(res => {
+      console.log('CPU DATA: ', res);
+      //manipulate data 
 
-    useFetch();
+    })
+    .catch(err => {
+      console.log('CPU DATA ERROR: ', err)
+    })
 
-    return () => clearInterval(timeoutMethod);
-  }, []
-)
-
-
-  useEffect(() => {
-        setCPU({
-          // labels: ['CPU Usage'],
-          labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+  return (
+    <div>
+      <Line
+        data={{
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
           datasets: [{
-            label: 'Broker 1',
-            data: CPUData[0],
-            backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-            borderColor: ['rgba(255, 99, 132, 1)'],
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
             borderWidth: 1
           },
           {
-            label: 'Broker 2',
-            data: CPUData[1],
+            label: 'Quantity',
+            data: [47, 52, 67, 58, 9, 50],
             backgroundColor: 'orange', 
             borderColor:' red',
-          }],
-        });
-
-        setChartOptions({
-          responsive: false,
-          maintainAspectRatio: true,
-          plugins: {
-            legend: {
-              position: "top"
-            }, 
-            title: {
-              display: true, 
-              text: 'CPU Usage',
+          }
+          ],
+        }}
+        height={400}
+        width={600}
+        options={{
+          maintainAspectRatio: false, 
+          // scales: {
+          //   yAxes: [{
+          //     ticks: {
+          //       beginAtZero: true,
+          //     }
+          //   }]
+          // },
+          legend: {
+            labels: {
+              fontColor: 'fontGray' //should override global font property but just make sure
             }
           }
-        })
-      }, [CPUData]);
-
-
-
-  return (
-    <div styles={{width:'600', length:'400'}} className='bg-red-900'>
-      <div>CPU Usage</div>
-      {/* <div>{JSON.stringify(CPUData)}</div> */}
-      <Line data={CPU} options={chartOptions}/>  
+        }}
+      />  
     </div>
   )
 }
 
-export default CPUGraph;
+export default LineChart;

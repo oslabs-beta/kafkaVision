@@ -1,14 +1,14 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { Link } from 'react-router-dom';
+const prometheusLink = 'https://9090-kayhill-cpdemo-tef8qr1qio6.ws-us34.gitpod.io/'
 import FlowChart from '../Components/FlowChart.jsx';
 import BrokerDiagram from '../Components/brokerDiagram';
 import { globalStateContext } from '../App';
 
-//Don't forget to change this!!
-const queryLink = 'https://9090-kayhill-cpdemo-u6pja23ru48.ws-us34.gitpod.io/api/v1/query?query=';
-let query = '';
-
 const RelationshipsContainer = () => {
+
+  // dummy state:
+  // const [topics, setTopics] = useState([1, 2, 3, 4, 5]);
   const {globalState, setGlobalState} = useContext(globalStateContext);
 
   const options = [];
@@ -27,16 +27,16 @@ const RelationshipsContainer = () => {
   }
 
   useEffect(() => {
-    query = '1/api/v1/query?query=count(kafka_server_replicamanager_leadercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})';
-    fetch(queryLink + query, reqParamBroker)
+    fetch(prometheusLink + '1/api/v1/query?query=count(kafka_server_replicamanager_leadercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})', reqParamBroker)// 'api/v1/query?query=kafka_controller_kafkacontroller_activecontrollercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"} > 0', reqParamBroker)
       .then(data => data.json())
       .then(data => {
         console.log('ROB DATA: ', data) 
       })
       .catch(e => {
-        console.log('ERROR IN RELATIONSHIP QUERY USEEFFECT: ', e);
+        console.log('ERROR!!!!', e);
       })
   }, []);
+
 
   return(
     <div className='flex-auto justify-center'>
