@@ -11,11 +11,11 @@ userController.createUser = async (req, res, next) => {
 			username,
 			password,
 		};
-		const user = await User.findOne({ username });
+		const oldUser = await User.findOne({ username });
 		// check if username is already in use
-		if (user) return res.status(409).send('This username is already in use');
-		await User.create(newUser);
-		res.locals.user = username;
+		if (oldUser) return res.status(409).send('This username is already in use');
+		const userInfo = await User.create(newUser);
+		res.locals.userInfo = userInfo;
 		return next();
 	} catch (err) {
     const defaultError = {
@@ -32,19 +32,21 @@ userController.createUser = async (req, res, next) => {
 userController.verifyUser = async (req, res, next) => {
 	try {
 		const { username, password } = req.body;
-		const user = await User.findOne({ username });
+		const userInfo = await User.findOne({ username });
 		// check if inputted password matches the hashed password
 		let hashedPass: string;
 		let matched: boolean = false;
 
-		if (user) {
-			hashedPass = user?.password;
+		if (userInfo) {
+			hashedPass = userInfo?.password;
 			matched = bcrypt.compareSync(password, hashedPass);
 		}
-		if (!user || !matched) {
+		if (!userInfo || !matched) {
       throw Error('Incorrect username or password');
     } else {
-      res.locals.user = username;
+			console.log(userInfo)
+      res.locals.username = userInfo.username;
+			res.locals.userID = userInfo._id;
     }
     next();
 	} catch (err) {
@@ -59,40 +61,82 @@ userController.verifyUser = async (req, res, next) => {
   }
 }
 
-userController.addCluster = async (req, res, next) => {
+userController.addUrlKafka = async (req, res, next) => {
 	try {
-		// add cluster to user
-		const { username, cluster } = req.body;
-		await User.updateOne({ username }, {
-			$push: { clusters: cluster }
-		})
+		const { id, url_kafka } = req.body;
+		const userInfo: any = await User.findOneAndUpdate({ id }, {
+			$push: { kafkaClusters: url_kafka },
+		}, { returnOriginal: false })
+		res.locals.url_kafka = userInfo.kafkaClusters;
 		return next();
 	} catch (err) {
     const defaultError = {
-      log: 'Express error handler caught an error in userController.addCluster middleware',
+      log: 'Express error handler caught an error in userController.addUrlKafka middleware',
       status: 500,
       message: {
-        err: `An error occurred inside a middleware named userController.createUser : ${err}`
+        err: `An error occurred inside a middleware named userController.addUrlKafka : ${err}`
       },
     };
     return next(defaultError);
   }
 }
 
-userController.deleteCluster = async (req, res, next) => {
+userController.deleteURLKafka = async (req, res, next) => {
 	try {
-		// add cluster to user
-		const { username, cluster } = req.body;
-		await User.updateOne({ username }, {
-			$pull: { clusters: cluster }
-		})
+		const { id, url_kafka } = req.body;
+		const userInfo: any = await User.findOneAndUpdate({ id }, {
+			$pull: { kafkaClusters: url_kafka }
+		}, { returnOriginal: false })
+		console.log(userInfo)
+		res.locals.url_kafka = userInfo.kafkaClusters;
 		return next();
 	} catch (err) {
 		const defaultError = {
-			log: 'Express error handler caught an error in userController.addCluster middleware',
+			log: 'Express error handler caught an error in userController.deleteURLKafka middleware',
 			status: 500,
 			message: {
-				err: `An error occurred inside a middleware named userController.createUser : ${err}`
+				err: `An error occurred inside a middleware named userController.deleteURLKafka : ${err}`
+			},
+		};
+		return next(defaultError);
+	};
+}
+
+userController.addUrlPrometheus = async (req, res, next) => {
+	try {
+		const { id, url_prometheus } = req.body;
+		const userInfo: any = await User.findOneAndUpdate({ id }, {
+			$push: { prometheusClusters: url_prometheus },
+		}, { returnOriginal: false })
+		res.locals.url_prometheus = userInfo.prometheusClusters;
+		return next();
+	} catch (err) {
+    const defaultError = {
+      log: 'Express error handler caught an error in userController.addUrlPrometheus middleware',
+      status: 500,
+      message: {
+        err: `An error occurred inside a middleware named userController.addUrlPrometheus : ${err}`
+      },
+    };
+    return next(defaultError);
+  }
+}
+
+userController.deleteUrlPrometheus = async (req, res, next) => {
+	try {
+		const { id, url_prometheus } = req.body;
+		const userInfo: any = await User.findOneAndUpdate({ id }, {
+			$pull: { prometheusClusters: url_prometheus }
+		}, { returnOriginal: false })
+		console.log(userInfo)
+		res.locals.url_prometheus = userInfo.prometheusClusters;
+		return next();
+	} catch (err) {
+		const defaultError = {
+			log: 'Express error handler caught an error in userController.deleteUrlPrometheus middleware',
+			status: 500,
+			message: {
+				err: `An error occurred inside a middleware named userController.deleteUrlPrometheus : ${err}`
 			},
 		};
 		return next(defaultError);
