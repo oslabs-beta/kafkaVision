@@ -81,8 +81,8 @@ const CPUGauge = () => {
       datasets: [{
         // label: 'Broker 1',
         data: [CPUData[0], CPUData[1]], 
-        backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-        borderColor: ['rgba(255, 99, 132, 1)'],
+        backgroundColor: '#22404c', //lime green
+        borderColor: '#d2fdbb', //dark green
         borderWidth: 1, 
         
       }],
@@ -117,7 +117,6 @@ const CPUGauge = () => {
 
   return (
     <div>
-      <div>test</div>
       {/* <div>{JSON.stringify(CPUData)}</div> */}
       <Bar data={CPU} options={chartOptions}/>  
     </div>
