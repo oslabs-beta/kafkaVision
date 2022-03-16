@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { 
   Chart as ChartJS, 
   CategoryScale, 
@@ -10,6 +10,7 @@ import {
   Legend 
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { appContext } from '../../App.tsx';
 import regeneratorRuntime from "regenerator-runtime";
 // import { timeStamp } from 'console';
 
@@ -24,10 +25,15 @@ ChartJS.register(
 )
 
 //Don't forget to change the query link!
-const queryLink = 'https://9090-kayhill-cpdemo-4gbgmdfwzzh.ws-us34.gitpod.io/api/v1/query?query='; //TUESDAY 3PM
+// const queryLink = 'https://9090-kayhill-cpdemo-4gbgmdfwzzh.ws-us34.gitpod.io/api/v1/query?query='; //TUESDAY 3PM
 // let query = '';
 
 const CPUGraph = () => {
+  //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
+  const appState = useContext(appContext);
+  const [connectionState, setConnectionState] = appState.connection;
+  const queryLink = connectionState.url_prometheus;
+
   const [CPU, setCPU] = useState({
     // labels: ['CPU Usage'],
     labels: [1, 2, 3, 4, 5, 6],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -52,10 +58,6 @@ const CPUGraph = () => {
   const indexTracker = 0;
 
   const [CPUData, setCPUData] = useState([[10, 10, 10, 10, 10, 10, 10, 10, 10, 10], [15, 15, 15, 15, 15, 15, 15, 15, 15, 15]]);
-
-  // const controller = new AbortController();
-
-
 
   useEffect( () => {
     const query = 'irate(process_cpu_seconds_total{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"}[5m])*100';
@@ -93,7 +95,6 @@ const CPUGraph = () => {
   }, []
 )
 
-
   useEffect(() => {
         setCPU({
           // labels: ['CPU Usage'],
@@ -129,11 +130,9 @@ const CPUGraph = () => {
       }, [CPUData]);
 
 
-
   return (
     <div styles={{width:'600', length:'400'}} className='bg-red-900'>
       <div>CPU Usage</div>
-      {/* <div>{JSON.stringify(CPUData)}</div> */}
       <Line data={CPU} options={chartOptions}/>  
     </div>
   )
