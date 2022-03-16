@@ -24,7 +24,7 @@ ChartJS.register(
 )
 
 //Don't forget to change the query link!
-const queryLink = 'https://9090-kayhill-cpdemo-4gbgmdfwzzh.ws-us34.gitpod.io/api/v1/query?query='; //TUESDAY 3PM
+const queryLink = 'https://9090-kayhill-cpdemo-aki26esh1q7.ws-us34.gitpod.io//api/v1/query?query='; //WED 10AM
 // let query = '';
 
 const CPUGraph = () => {
@@ -58,6 +58,7 @@ const CPUGraph = () => {
 
 
   useEffect( () => {
+    //CPU Usage
     const query = 'irate(process_cpu_seconds_total{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"}[5m])*100';
 
     const useFetch = async () => {
@@ -66,7 +67,7 @@ const CPUGraph = () => {
         const CPUData = await json.json();
         console.log(CPUData.data.result[0].value[1])
         setCPUData(prevState => {
-          console.log("state changed")
+          console.log("CPU state changed")
           console.log(prevState)
           let broker1NewState = prevState[0];
           let broker2NewState = prevState[1];
@@ -95,38 +96,38 @@ const CPUGraph = () => {
 
 
   useEffect(() => {
-        setCPU({
-          // labels: ['CPU Usage'],
-          labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-            label: 'Broker 1',
-            data: CPUData[0],
-            backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-            borderColor: ['rgba(255, 99, 132, 1)'],
-            borderWidth: 1
-          },
-          {
-            label: 'Broker 2',
-            data: CPUData[1],
-            backgroundColor: 'orange', 
-            borderColor:' red',
-          }],
-        });
+    setCPU({
+      // labels: ['CPU Usage'],
+      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'Broker 1',
+        data: CPUData[0],
+        backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+        borderColor: ['rgba(255, 99, 132, 1)'],
+        borderWidth: 1
+      },
+      {
+        label: 'Broker 2',
+        data: CPUData[1],
+        backgroundColor: 'orange', 
+        borderColor:' red',
+      }],
+    });
 
-        setChartOptions({
-          responsive: false,
-          maintainAspectRatio: true,
-          plugins: {
-            legend: {
-              position: "top"
-            }, 
-            title: {
-              display: true, 
-              text: 'CPU Usage',
-            }
-          }
-        })
-      }, [CPUData]);
+    setChartOptions({
+      responsive: false,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: "top"
+        }, 
+        title: {
+          display: true, 
+          text: 'CPU Usage',
+        }
+      }
+    })
+  }, [CPUData]);
 
 
 
