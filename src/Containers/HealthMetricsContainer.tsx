@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-//import HealthMetricsChart from '../chartComponents/HealthMetricsChart';
+import HealthMetricsChart from '../chartComponents/HealthMetricsChart';
 
 //Don't forget to change the query link!
-const queryLink = 'https://9090-kayhill-cpdemo-u6pja23ru48.ws-us34.gitpod.io/api/v1/query?query=';
+const queryLink = 'https://9090-kayhill-cpdemo-4gbgmdfwzzh.ws-us34.gitpod.io/api/v1/query?query='; //TUESDAY 3PM
 const queryRange = '';
 let query = '';
  
@@ -122,8 +122,7 @@ const HealthMetricsContainer = () => {
             <div className='rounded m-5 border border-slateBlue bg-zinc-800'>
               <p className='m-3'>Overall Cluster Health</p>
               <div className='flex items-center justify-center m-8'>
-               {/* <HealthMetricsChart/> */}
-               
+               <HealthMetricsChart/>
               </div>
             </div>
 
