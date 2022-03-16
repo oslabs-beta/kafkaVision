@@ -15,7 +15,7 @@ const HealthMetricsChart = () => {
         </div>
         <div className="bg-green-500 col-span-1">
           second column
-          {/* <CPUGauge/> */}
+          <CPUGauge/>
         </div>
       </div>
 

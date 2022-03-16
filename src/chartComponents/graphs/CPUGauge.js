@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   Chart as ChartJS, 
   CategoryScale, 
-  LinearScale,
   BarElement,
-  LineController, 
+  BarController, 
   Title, 
   Tooltip, 
   Legend 
@@ -15,16 +14,15 @@ import regeneratorRuntime from "regenerator-runtime";
 
 ChartJS.register(
   CategoryScale, 
-  LinearScale, 
   BarElement,
-  LineController,
+  BarController, 
   Title, 
   Tooltip, 
-  Legend,
+  Legend
 )
 
 //Don't forget to change the query link!
-const queryLink = 'https://9090-kayhill-cpdemo-4gbgmdfwzzh.ws-us34.gitpod.io/api/v1/query?query='; //TUESDAY 3PM
+const queryLink = 'https://9090-kayhill-cpdemo-aki26esh1q7.ws-us34.gitpod.io/api/v1/query?query='; //WED 10AM
 // let query = '';
 
 const CPUGauge = () => {
@@ -67,7 +65,7 @@ const CPUGauge = () => {
         setCPUData(newState)
       }
       catch (error){
-        console.log('ERROR IN CPU GRAPH FETCH: ', error)
+        console.log('ERROR IN CPU GAUGE FETCH: ', error)
       }
     }
 
@@ -88,7 +86,7 @@ const CPUGauge = () => {
           labels: ['Broker1', 'Broker2'],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
           datasets: [{
             label: 'Broker 1',
-            data: CPUData[0],
+            data: CPUData[0], 
             backgroundColor: ['rgba(255, 99, 132, 0.2)'],
             borderColor: ['rgba(255, 99, 132, 1)'],
             borderWidth: 1
@@ -112,6 +110,11 @@ const CPUGauge = () => {
               display: true, 
               text: 'CPU Usage',
             }
+          }, 
+          scales: {
+            y: {
+              beginAtZero: true,
+            }
           }
         })
       }, [CPUData]);
@@ -119,7 +122,7 @@ const CPUGauge = () => {
 
 
   return (
-    <div styles={{width:'600', length:'400'}} >
+    <div>
       <div>test</div>
       {/* <div>{JSON.stringify(CPUData)}</div> */}
       <Bar data={CPU} options={chartOptions}/>  
