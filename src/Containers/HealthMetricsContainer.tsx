@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import HealthMetricsChart from '../chartComponents/HealthMetricsChart';
 
 //Don't forget to change the query link!
-const queryLink = 'https://9090-kayhill-cpdemo-aki26esh1q7.ws-us34.gitpod.io/api/v1/query?query='; //WEDNESDAY 10AM
+const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WEDNESDAY 2PM
 const queryRange = '';
 let query = '';
  
@@ -131,15 +131,8 @@ const HealthMetricsContainer = () => {
               <p className='m-3'>Topic Metrics</p>
               
     
-              {/* Drop Down Menu */}
-              <div className='text-sm text-left mx-5'>
-                <p>Please Select a Topic:</p>
-                <select className='my-1 bg-zinc-900 border rounded border-slateBlue' name="topic" id="topic">
-                  {/* <option value="topic1"> Topic 1 </option>
-                  <option value="topic2"> Topic 2 </option>
-                  <option value="topic3"> Topic 3 </option> */}
-                  {options}
-                </select>
+              {/* Drop Down Menu way down below */}
+        
             
                 {/* List of metrics */}
                 <ul className='bg-buttonC-300 rounded my-2 p-4 text-sm font-light divide-y-2 divide-fontGray/50'>
@@ -150,7 +143,7 @@ const HealthMetricsContainer = () => {
                   <li>Brokers Online: {brokers}</li>
                   <li>Under Replicated Partitions: {underReplicated}</li>
                 </ul>
-              </div> 
+               
             </div>
 
           </div>
@@ -165,3 +158,12 @@ const HealthMetricsContainer = () => {
 };
 
 export default HealthMetricsContainer;
+
+{/* <div className='text-sm text-left mx-5'>
+<p>Please Select a Topic:</p>
+<select className='my-1 bg-zinc-900 border rounded border-slateBlue' name="topic" id="topic">
+  {/* <option value="topic1"> Topic 1 </option>
+  <option value="topic2"> Topic 2 </option>
+  <option value="topic3"> Topic 3 </option> */}
+//   {options}
+// </select> */}

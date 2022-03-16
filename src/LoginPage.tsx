@@ -71,7 +71,7 @@ const LoginPage = () => {
 
       <div className=" h-screen relative flex items-center justify-center">
         <form
-          className="relative flex flex-col items-center justify-center bg-blue-800 h-250 w-250 shadow rounded"
+          className="relative flex flex-col items-center justify-center bg-slateBlue/70 shadow rounded border border-slateBlue"
           id="login box"
         >
           <input
@@ -91,8 +91,9 @@ const LoginPage = () => {
             value={password}
           ></input>
           <span>
+         
             <button
-              className="bg-slate-300 m-2 rounded"
+              className='h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50'
               onClick={() => {
                 login(username, password);
                 setUsername('');
@@ -102,7 +103,7 @@ const LoginPage = () => {
               Log in
             </button>
             <button
-              className="bg-slate-300 m-2 rounded"
+              className='h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50'
               onClick={() => {
                 signup(username, password);
                 setUsername('');
