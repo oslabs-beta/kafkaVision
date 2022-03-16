@@ -22,6 +22,7 @@ const HealthMetricsContainer = () => {
   const [brokers, setBrokers] = useState(0);
   const [partitions, setPartitions] = useState(0);
   const [underReplicated, setUnderReplicated] = useState(0);
+  const [offlinePartitions, setOfflinePartitions] = useState(0);
 
   //CONTROLLERS
   useEffect(() => {
@@ -114,6 +115,20 @@ const HealthMetricsContainer = () => {
       });
   }, [underReplicated]);
 
+  //OFFLINE PARTITIONS COUNT
+  useEffect(() => {
+    query = 'sum(kafka_controller_kafkacontroller_offlinepartitionscount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})';
+    fetch(queryLink + query)
+      .then(data => data.json())
+      .then(result => {
+        // console.log('OFFLINE PARTITIONS QUERY: ', result);
+        setOfflinePartitions(result.data.result[0].value[1]);
+      })
+      .catch(err => {
+        console.log('ERROR IN OFFLINE PARTITIONS USEEFFECT: ', err);
+      });
+  }, [offlinePartitions]);
+
   let renderedContent:any;
   if (connectionStatus === false){
     renderedContent = (
@@ -146,30 +161,36 @@ const HealthMetricsContainer = () => {
           
               {/* List of metrics */}
                 <div className='grid grid-cols-3  rounded gap-5 p-5 text-sm font-light divide-fontGray/50'>
-                  <div className='bg-slateBlue/70 p-5 rounded border border-seafoam/50'>
+                  <div className='bg-slateBlue/70 p-5 rounded border border-fontGray/50'>
                     <div className='text-xs text-seafoam/70 font-bold'>Global Topic Count: </div>
                     <div className='text-7xl text-limeGreen/80'>{topics} </div>
                   </div>
 
-                  <div className='bg-slateBlue/70 p-5 rounded border border-seafoam'>
+                  <div className='bg-slateBlue/70 p-5 rounded border '>
                     <div className='text-xs text-seafoam/70 font-bold'>Global Online Partitions: </div>
                     <div className='text-7xl text-limeGreen/80'>{partitions} </div>
                   </div>
 
-                  <div className='bg-slateBlue/70 p-5 rounded border border-seafoam'>
+                  <div className='bg-slateBlue/70 p-5 rounded border'>
                     <div className='text-xs text-seafoam/70 font-bold'>Active Controllers: </div>
                     <div className='text-7xl text-limeGreen/80'>{controllers} </div>
                   </div>
 
-                  <div className='bg-slateBlue/70 p-5 rounded border border-seafoam'>
+                  <div className='bg-slateBlue/70 p-5 rounded border'>
                     <div className='text-xs text-seafoam/70 font-bold'>Brokers Online: </div>
                     <div className='text-7xl text-limeGreen/80'>{brokers} </div>
                   </div>
 
-                  <div className='bg-slateBlue/70 p-5 rounded border border-seafoam'>
+                  <div className='bg-slateBlue/70 p-5 rounded border'>
                     <div className='text-xs text-seafoam/70 font-bold'>Under Replicated Partitions: </div>
                     <div className='text-7xl text-limeGreen/80'>{underReplicated} </div>
                   </div>
+
+                  <div className='bg-slateBlue/70 p-5 rounded border'>
+                    <div className='text-xs text-seafoam/70 font-bold'>Offline Partitions: </div>
+                    <div className='text-7xl text-limeGreen/80'>{offlinePartitions} </div>
+                  </div>
+
                 </div>
           </div>
         </div> 
