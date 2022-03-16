@@ -67,7 +67,7 @@ const App = () => {//extends React.Component<Props> {
                   <div className="flex text-white bg-blue-400 col-span-1">
                     <Sidebar/>
                   </div>
-                  <div className="col-span-5 bg-white">
+                  <div className="col-span-5 bg-zinc-900">
                     <HealthMetricsContainer />
                   </div>
               </div>

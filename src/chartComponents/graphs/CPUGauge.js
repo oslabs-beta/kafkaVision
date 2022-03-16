@@ -31,14 +31,14 @@ const CPUGauge = () => {
     labels: ['Broker1', 'Broker2'],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [{
       label: 'Broker 1',
-      data: [10],
+      data: [10, 10],
       backgroundColor: ['rgba(255, 99, 132, 0.2)'],
       borderColor: ['rgba(255, 99, 132, 1)'],
       borderWidth: 1
     },
     {
       label: 'Broker 2',
-      data: [15],
+      data: [15, 15],
       backgroundColor: 'orange', 
       borderColor:' red',
     }],
@@ -52,32 +52,32 @@ const CPUGauge = () => {
   const [CPUData, setCPUData] = useState([10, 15]);
 
   
-  useEffect( () => {
-    //JVM Memory Used Query
-    const query = 'sum without(area)(jvm_memory_bytes_used{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})';
+//   useEffect( () => {
+//     //JVM Memory Used Query
+//     const query = 'sum without(area)(jvm_memory_bytes_used{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})';
 
-    const useFetch = async () => {
-      try {
-        const json = await fetch(queryLink + query)
-        const CPUData = await json.json(); // duplicate name but ok because it's in LEC
-        // console.log(CPUData.data.result[0].value[1])
-        let newState = [Math.floor(CPUData.data.result[0].value[1]), Math.floor(CPUData.data.result[1].value[1])]
-        setCPUData(newState)
-      }
-      catch (error){
-        console.log('ERROR IN CPU GAUGE FETCH: ', error)
-      }
-    }
+//     const useFetch = async () => {
+//       try {
+//         const json = await fetch(queryLink + query)
+//         const CPUData = await json.json(); // duplicate name but ok because it's in LEC
+//         // console.log(CPUData.data.result[0].value[1])
+//         let newState = [Math.floor(CPUData.data.result[0].value[1]), Math.floor(CPUData.data.result[1].value[1])]
+//         setCPUData(newState)
+//       }
+//       catch (error){
+//         console.log('ERROR IN CPU GAUGE FETCH: ', error)
+//       }
+//     }
 
-    const timeoutMethod = setInterval(() => {
-      useFetch();
-    }, 1000);
+//     const timeoutMethod = setInterval(() => {
+//       useFetch();
+//     }, 1000);
 
-    useFetch();
+//     useFetch();
 
-    return () => clearInterval(timeoutMethod);
-  }, []
-)
+//     return () => clearInterval(timeoutMethod);
+//   }, []
+// )
 
 
   useEffect(() => {
@@ -86,14 +86,14 @@ const CPUGauge = () => {
           labels: ['Broker1', 'Broker2'],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
           datasets: [{
             label: 'Broker 1',
-            data: CPUData[0], 
+            data: [100, 200], //CPUData[0], 
             backgroundColor: ['rgba(255, 99, 132, 0.2)'],
             borderColor: ['rgba(255, 99, 132, 1)'],
             borderWidth: 1
           },
           {
             label: 'Broker 2',
-            data: CPUData[1],
+            data: [300, 400], //CPUData[1],
             backgroundColor: 'orange', 
             borderColor:' red',
           }],
@@ -115,7 +115,8 @@ const CPUGauge = () => {
             y: {
               beginAtZero: true,
             }
-          }
+          }, 
+          // barPercentage: 0,
         })
       }, [CPUData]);
 
