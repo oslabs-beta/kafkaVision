@@ -10,6 +10,7 @@ import {
   Legend 
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import regeneratorRuntime from "regenerator-runtime";
 // import { timeStamp } from 'console';
 
 ChartJS.register(
