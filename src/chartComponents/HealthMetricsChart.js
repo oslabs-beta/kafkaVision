@@ -30,9 +30,9 @@ const HealthMetricsChart = () => {
         <div className="col-span-1">
           <CPUGraph/>
         </div>
-        <div className="bg-green-500 col-span-1">
-          second column
-          {/* <CPUGauge/> */}
+        <div className="col-span-1 bg-zinc-800 p-5 border border-fontGray/70 rounded">
+          CPU Usage Gauge
+          <CPUGauge/>
         </div>
       </div>
 
@@ -42,18 +42,7 @@ const HealthMetricsChart = () => {
           <JVMGraph/>
         </div>
         <div className="bg-zinc-100 col-span-1">
-          second column
-          {/* <JVMGauge/> */}
-        </div>
-      </div>
-
-      <div className="w-full h-full grid grid-cols-2 px-2 py-1">
-        <div className="col-span-1">
           <GCGraph/>
-        </div>
-        <div className="bg-green-500 col-span-1">
-          second column
-          {/* <JVMGauge/> */}
         </div>
       </div>
 

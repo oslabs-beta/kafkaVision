@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   Chart as ChartJS, 
   CategoryScale, 
-  LinearScale,
   BarElement,
-  LineController, 
+  BarController, 
   Title, 
   Tooltip, 
   Legend 
@@ -15,16 +14,15 @@ import regeneratorRuntime from "regenerator-runtime";
 
 ChartJS.register(
   CategoryScale, 
-  LinearScale, 
   BarElement,
-  LineController,
+  BarController, 
   Title, 
   Tooltip, 
-  Legend,
+  Legend
 )
 
 //Don't forget to change the query link!
-const queryLink = 'https://9090-kayhill-cpdemo-4gbgmdfwzzh.ws-us34.gitpod.io/api/v1/query?query='; //TUESDAY 3PM
+const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WED 2PM
 // let query = '';
 
 const CPUGauge = () => {
@@ -33,16 +31,10 @@ const CPUGauge = () => {
     labels: ['Broker1', 'Broker2'],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
     datasets: [{
       label: 'Broker 1',
-      data: [10],
+      data: [10, 10],
       backgroundColor: ['rgba(255, 99, 132, 0.2)'],
       borderColor: ['rgba(255, 99, 132, 1)'],
       borderWidth: 1
-    },
-    {
-      label: 'Broker 2',
-      data: [15],
-      backgroundColor: 'orange', 
-      borderColor:' red',
     }],
   });
 
@@ -51,12 +43,12 @@ const CPUGauge = () => {
   const dataForGraph = [];
   const indexTracker = 0;
 
-  const [CPUData, setCPUData] = useState([10, 15]);
+  const [CPUData, setCPUData] = useState([10, 10], [15, 15]); //changed this from [10, 15]
 
   
   useEffect( () => {
-    //JVM Memory Used Query
-    const query = 'sum without(area)(jvm_memory_bytes_used{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})';
+    //CPU Usage
+    const query = 'irate(process_cpu_seconds_total{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"}[5m])*100';
 
     const useFetch = async () => {
       try {
@@ -67,7 +59,7 @@ const CPUGauge = () => {
         setCPUData(newState)
       }
       catch (error){
-        console.log('ERROR IN CPU GRAPH FETCH: ', error)
+        console.log('ERROR IN CPU GAUGE FETCH: ', error)
       }
     }
 
@@ -81,46 +73,50 @@ const CPUGauge = () => {
   }, []
 )
 
-
   useEffect(() => {
-        setCPU({
-          // labels: ['CPU Usage'],
-          labels: ['Broker1', 'Broker2'],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-            label: 'Broker 1',
-            data: CPUData[0],
-            backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-            borderColor: ['rgba(255, 99, 132, 1)'],
-            borderWidth: 1
-          },
-          {
-            label: 'Broker 2',
-            data: CPUData[1],
-            backgroundColor: 'orange', 
-            borderColor:' red',
-          }],
-        });
+    console.log('CPU DATA GAUGE: ', CPUData)
+    setCPU({
+      // labels: ['CPU Usage'],
+      labels: ['Broker1', 'Broker2'],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        // label: 'Broker 1',
+        data: [CPUData[0], CPUData[1]], 
+        backgroundColor: '#22404c', //lime green
+        borderColor: '#d2fdbb', //dark green
+        borderWidth: 1, 
+        
+      }],
+    });
 
-        setChartOptions({
-          responsive: false,
-          maintainAspectRatio: true,
-          plugins: {
-            legend: {
-              position: "top"
-            }, 
-            title: {
-              display: true, 
-              text: 'CPU Usage',
-            }
+    setChartOptions({
+      responsive: false,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          display: false, 
+          position: "top"
+        }, 
+        title: {
+          display: true, 
+          // text: 'CPU Usage Gauge',
+        }
+      }, 
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Cores',
           }
-        })
+        },
+      },  
+    })
       }, [CPUData]);
 
 
 
   return (
-    <div styles={{width:'600', length:'400'}} >
-      <div>test</div>
+    <div>
       {/* <div>{JSON.stringify(CPUData)}</div> */}
       <Bar data={CPU} options={chartOptions}/>  
     </div>

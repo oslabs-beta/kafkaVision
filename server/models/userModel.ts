@@ -8,7 +8,8 @@ const SALT_WORK_FACTOR = 10;
 interface Users extends Document{
   username: string;
   password: string;
-  clusters: [string];
+  kafkaClusters: [string];
+  prometheusClusters: [string];
   validatePassword(password: string): boolean;
 }
 
@@ -23,12 +24,17 @@ const UserSchema = new Schema<Users>({
     type: String,
     required: true,
   },
-  clusters: {
+  kafkaClusters: {
     type: [String],
     required: false,
-    unique: false,
+    unique: true,
+  },
+  prometheusClusters: {
+    type: [String],
+    required: false,
+    unique: true,
   }
-  });
+});
 
 
 UserSchema.pre('save',
