@@ -1,11 +1,19 @@
 import React from 'react';
-import { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { appContext } from './App';
+
 
 const LoginPage = () => {
+  // Unpack State
+  const appState = useContext(appContext);
+  const [connectionState, setConnectionState] = appState.connection;
+  const [globalState, setGlobalState] = appState.global;
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState(' ');
+  const history = useHistory();
 
   const handleUsernameInput = (event:any) => {
     setUsername(event.target.value);
@@ -26,10 +34,27 @@ const LoginPage = () => {
     })
       .then((res) => res.json())
       .then(
-        (user) => {
-        
-        },
-        (error) => {
+        (userInfo) => {
+          // put more user information into state
+          if (userInfo.err) return           // if so, set the isLoggedIn state to true
+          setGlobalState((prevState: any) => {
+            return { ...prevState,
+              username: userInfo.username,
+              id: userInfo._id,
+              isLoggedIn: true
+            }
+          })
+
+          setConnectionState((prevState: any) => {
+            return { ...prevState,
+              past_URLS_Prometheus: userInfo.prometheusClusters,
+              past_URLS_Kafka: userInfo.kafkaCluster
+            }})
+
+          history.push('/connectCluster');
+        }
+      )
+      .catch((error) => {
           setStatus(
             'An error occured. Please check your credentials and try again.'
           );
@@ -94,7 +119,8 @@ const LoginPage = () => {
          
             <button
               className='h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50'
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 login(username, password);
                 setUsername('');
                 setPassword('');
@@ -104,7 +130,8 @@ const LoginPage = () => {
             </button>
             <button
               className='h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50'
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault;
                 signup(username, password);
                 setUsername('');
                 setPassword('');

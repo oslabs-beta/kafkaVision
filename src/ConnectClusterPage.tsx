@@ -1,14 +1,17 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Link } from 'react-router-dom';
-import { appContext } from './App.js';
+import { Link, useHistory } from 'react-router-dom';
+import { appContext } from './App';
 
 
 const ConnectClusterPage = () => {
-    // const appState = useContext(appContext);
-    // const [connectionState, setConnectionState] = appState.connection;
+    //UNPACKING STATE:
+    const appState = useContext(appContext);
+    const [connectionState, setConnectionState] = appState.connection; // will pull in URLs in stretch
+    const [globalState, setGlobalState] = appState.global;
 
     const [url_kafka, setKafka] = useState('');
     const [url_prometheus, setProm] = useState('');
+    const history = useHistory();
   
     const handleKafkaInput = (event:any) => {
       setKafka(event.target.value);
@@ -24,7 +27,8 @@ const ConnectClusterPage = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               url_prometheus,
-            // need to add user_id (from state)
+              // need to add user_id (from state)
+              id: globalState.id
             }),
           })
         .then((res) => res.json())
@@ -32,10 +36,19 @@ const ConnectClusterPage = () => {
             (data) => {
             // setConnected to Prom to TRUE
             //setConnectionState({url_prometheus = url_prometheus})
-            },
-            (error) => {
-            console.log(error);
+            // CHECK THE CONNECTION LATER
+            setConnectionState((prevState: any) => {
+                return { ...prevState,
+                  url_prometheus,
+                  isConnected: true
+                }
+              })
+              history.push('/health');
             }
+          )
+          .catch((error) => {
+            console.log(error);
+          }
         );
     }
 
@@ -75,7 +88,7 @@ const ConnectClusterPage = () => {
                 <div className='flex'>
                     <label htmlFor="urlKafka">Enter broker port: </label>            
                     <input onChange={handlePromInput} className="m-5" placeholder="Prometheus Port" name="urlProm" type-="text" value={url_prometheus}></input>
-                    <button className="bg-slate-300 m-2 rounded" onClick={()=>{saveProm(url_prometheus); setProm('')}}>Submit</button>
+                    <button className="bg-slate-300 m-2 rounded" onClick={(e)=>{e.preventDefault(); saveProm(url_prometheus); setProm('')}}>Submit</button>
                 </div>       
             </div>
             <div>
