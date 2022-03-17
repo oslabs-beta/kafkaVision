@@ -38,11 +38,15 @@ const ConnectClusterPage = () => {
             //setConnectionState({url_prometheus = url_prometheus})
             // CHECK THE CONNECTION LATER
             setConnectionState((prevState: any) => {
-                return { ...prevState,
-                  url_prometheus,
-                  isConnected: true
-                }
-              })
+              return { ...prevState,
+                url_prometheus,
+                isConnected: true
+              }
+            });
+
+            setGlobalState((prevstate:any) => {
+              return {...prevstate, sidebarTab:1}
+            })
               history.push('/health');
             }
           )
@@ -79,18 +83,18 @@ const ConnectClusterPage = () => {
             <div className="flex place-content-center font-bold text-xl m-5 text-fontGray-75"> 
                 <h1>Connect Kafka Cluster</h1>
             </div>
-                <div className='border rounded m-10 border-seafoam/80 bg-slateBlue/80'>
-                  <div className="flex place-content-center">
-                      <label className="self-center" htmlFor="urlKafka">Enter Broker port: </label>            
-                      <input onChange={handleKafkaInput} placeholder="Kafka Broker Port" name="urlKafka" id="urlKafka" value={url_kafka} className="m-7 rounded bg-slateBlue border border-limeGreen/80" type="text"></input>
-                      <button className='self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50' onClick={(e)=>{e.preventDefault(); saveKafka(url_kafka); setKafka('')}}>Submit</button>
-                  </div>
-                  <div className="flex place-content-center">
-                      <label className="self-center" htmlFor="urlProm">Enter Prometheus port: </label>            
-                      <input onChange={handlePromInput} className="m-5 rounded bg-slateBlue border border-limeGreen/80 " placeholder="Prometheus Port" name="urlProm" type-="text" value={url_prometheus}></input>
-                      <button className='self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50' onClick={(e)=>{e.preventDefault(); saveProm(url_prometheus); setProm('')}}>Submit</button>
-                  </div>  
-                </div>     
+              <div className='border rounded m-10 border-seafoam/80 bg-slateBlue/80'>
+                <div className="flex place-content-center">
+                    <label className="self-center" htmlFor="urlKafka">Enter Broker port: </label>            
+                    <input onChange={handleKafkaInput} placeholder="Kafka Broker Port" name="urlKafka" id="urlKafka" value={url_kafka} className="m-7 rounded bg-slateBlue border border-limeGreen/80" type="text"></input>
+                    <button className='self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50' onClick={(e)=>{e.preventDefault(); saveKafka(url_kafka); setKafka('')}}>Submit</button>
+                </div>
+                <div className="flex place-content-center">
+                    <label className="self-center" htmlFor="urlProm">Enter Prometheus port: </label>            
+                    <input onChange={handlePromInput} className="m-5 rounded bg-slateBlue border border-limeGreen/80 " placeholder="Prometheus Port" name="urlProm" type-="text" value={url_prometheus}></input>
+                    <button className='self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50' onClick={(e)=>{e.preventDefault(); saveProm(url_prometheus); setProm('')}}>Submit</button>
+                </div>  
+              </div>     
         </div>    
     )
 }

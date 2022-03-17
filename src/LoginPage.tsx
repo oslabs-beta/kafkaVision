@@ -89,7 +89,7 @@ const LoginPage = () => {
     <div className=" h-screen bg-gray-900">
       {/* <div> Login Page! </div> */}
       <div className="text-white">
-        <Link to="/connectCluster"> Go Inside... </Link>
+        <Link to="/connectCluster" className="text-slate-900"> Go Inside... </Link>
         {/* <Link to="/health"> Health Metrics Page...   </Link>
                 <Link to="/componentRelationships"> Component Relationships Page...   </Link> */}
       </div>
