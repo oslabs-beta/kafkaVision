@@ -12,6 +12,7 @@ const HealthMetricsContainer = () => {
   
   //UNPACK APP (CONNECTION) STATE (TO GET PROMETHEUS URL)
   const appState = useContext(appContext);
+  const [globalState, setGlobalState] = appState.global;
   const [connectionState, setConnectionState] = appState.connection;
   const queryLink = connectionState.url_prometheus;
   const connectionStatus = connectionState.isConnected; // semantic variable
@@ -118,8 +119,8 @@ const HealthMetricsContainer = () => {
   if (connectionStatus === false){
     renderedContent = (
       <div className='flex-auto justify-center'>
-        <div className="m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75">
-          Please Connect to see this page
+        <div className="m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-slate-800">
+        Please Connect to your <Link className="text-red-800" to='/connectCluster' onClick={() => setGlobalState((prevState:any) => {return {...prevState, sidebarTab:0}})}>Cluster</Link> to see this page
         </div>
       </div>
       )

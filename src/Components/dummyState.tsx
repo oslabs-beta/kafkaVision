@@ -42,9 +42,9 @@ const fakeState: any = {
         url_prometheus: 'https://9090-kayhill-cpdemo-4gbgmdfwzzh.ws-us34.gitpod.io/api/v1/query?query=',
         url_kafka: null,
         isConnected:true,
+        //past_URLS_Prometheus: [],
+        //past_URLS_Kafka: []
     }
 }
-
-
 
 export default fakeState;

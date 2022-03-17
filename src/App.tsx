@@ -30,11 +30,12 @@ const App = () => {//extends React.Component<Props> {
       <div>
       <BrowserRouter>
         <div> {/* remove this div?*/}
+        <appContext.Provider value={providerProps}>
+
           <div className="text-2xl text-fontGray-75 bg-zinc-900">
             <Header/>
           </div>
           <Switch>
-            <appContext.Provider value={providerProps}>
 
             <Route exact path="/">
               <LoginPage />
@@ -73,8 +74,8 @@ const App = () => {//extends React.Component<Props> {
               </div>
             </Route>
 
-            </appContext.Provider>
           </Switch>
+        </appContext.Provider>
         </div>
       </BrowserRouter>
       </div>

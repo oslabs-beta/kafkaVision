@@ -17,7 +17,7 @@ const HealthMetricsChart = () => {
   if (connectionStatus === false){
     renderedContent = (
       <div className='flex-auto justify-center'>
-        <div className="m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75">
+        <div className="m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-slate-800">
           Please Connect to see this page
         </div>
       </div>
