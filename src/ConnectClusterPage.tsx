@@ -1,14 +1,17 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Link } from 'react-router-dom';
-import { appContext } from './App.js';
+import { Link, useHistory } from 'react-router-dom';
+import { appContext } from './App';
 
 
 const ConnectClusterPage = () => {
-    // const appState = useContext(appContext);
-    // const [connectionState, setConnectionState] = appState.connection;
+    //UNPACKING STATE:
+    const appState = useContext(appContext);
+    const [connectionState, setConnectionState] = appState.connection; // will pull in URLs in stretch
+    const [globalState, setGlobalState] = appState.global;
 
     const [url_kafka, setKafka] = useState('');
     const [url_prometheus, setProm] = useState('');
+    const history = useHistory();
   
     const handleKafkaInput = (event:any) => {
       setKafka(event.target.value);
@@ -24,7 +27,8 @@ const ConnectClusterPage = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               url_prometheus,
-            // need to add user_id (from state)
+              // need to add user_id (from state)
+              id: globalState.id
             }),
           })
         .then((res) => res.json())
@@ -32,10 +36,19 @@ const ConnectClusterPage = () => {
             (data) => {
             // setConnected to Prom to TRUE
             //setConnectionState({url_prometheus = url_prometheus})
-            },
-            (error) => {
-            console.log(error);
+            // CHECK THE CONNECTION LATER
+            setConnectionState((prevState: any) => {
+                return { ...prevState,
+                  url_prometheus,
+                  isConnected: true
+                }
+              })
+              history.push('/health');
             }
+          )
+          .catch((error) => {
+            console.log(error);
+          }
         );
     }
 
@@ -70,20 +83,16 @@ const ConnectClusterPage = () => {
                   <div className="flex place-content-center">
                       <label className="self-center" htmlFor="urlKafka">Enter Broker port: </label>            
                       <input onChange={handleKafkaInput} placeholder="Kafka Broker Port" name="urlKafka" id="urlKafka" value={url_kafka} className="m-7 rounded bg-slateBlue border border-limeGreen/80" type="text"></input>
-                      <button className='self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50' onClick={()=>{saveKafka(url_kafka); setKafka('')}}>Submit</button>
+                      <button className='self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50' onClick={(e)=>{e.preventDefault(); saveKafka(url_kafka); setKafka('')}}>Submit</button>
                   </div>
                   <div className="flex place-content-center">
-                      <label className="self-center" htmlFor="urlKafka">Enter Prometheus port: </label>            
+                      <label className="self-center" htmlFor="urlProm">Enter Prometheus port: </label>            
                       <input onChange={handlePromInput} className="m-5 rounded bg-slateBlue border border-limeGreen/80 " placeholder="Prometheus Port" name="urlProm" type-="text" value={url_prometheus}></input>
-                      <button className='self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50' onClick={()=>{saveProm(url_prometheus); setProm('')}}>Submit</button>
+                      <button className='self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50' onClick={(e)=>{e.preventDefault(); saveProm(url_prometheus); setProm('')}}>Submit</button>
                   </div>  
                 </div>     
-            <div>
-                {/* <Link to="/"> Login Page </Link>
-                <Link to="/health"> Health Metrics Page </Link>
-                <Link to="/componentRelationships"> Component Relationships Page </Link> */}
-            </div>
-        </div>    )
+        </div>    
+    )
 }
 
 export default ConnectClusterPage;
