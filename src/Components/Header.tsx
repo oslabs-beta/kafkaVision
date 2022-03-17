@@ -12,9 +12,9 @@ const Header = () => {
 
       {/* github button */}
       <div className="flex justify-right">
-        <a href="https://github.com/oslabs-beta/kafkavision" className="py-1.5 px-3 mr-3 bg-seafoam/75 hover:bg-darkIndigo/50 text-zinc-900 text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300">Github</a> 
+        <a href="https://github.com/oslabs-beta/kafkavision" className="py-1.5 px-3 mr-3 bg-seafoam/80 hover:bg-darkIndigo/50 text-darkIndigo text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300">Github</a> 
 
-        <a href="https://github.com/oslabs-beta/kafkavision" className="py-1.5 px-3 mr-3 bg-seafoam hover:bg-darkIndigo/50 text-zinc-900 text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300">Sign Out</a>
+        <a href="/connectCluster" className="py-1.5 px-3 mr-3 bg-seafoam/80 hover:bg-darkIndigo/50 text-darkIndigo text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300">Sign Out</a>
 
         {/* dark mode toggle button  */}
       </div>  

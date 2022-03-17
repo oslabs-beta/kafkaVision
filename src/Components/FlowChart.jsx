@@ -3,7 +3,7 @@ import ReactFlow, { SmoothStepEdge } from 'react-flow-renderer';
 import { appContext } from '../App';
 
 const height_adjustable = 600;
-const width_adjustable = 900;
+const width_adjustable = 950;
 
 const FlowChart= () => {    
 
@@ -25,16 +25,16 @@ const FlowChart= () => {
     const producers = [];
     const connectingSegments = [];
     for (let i = 1; i<=dummyData.producers.length; i+=1){
-        producers.push( {id:`${i}`, data: { label: dummyData.producers[i-1]}, type:'input', sourcePosition:'right', draggable:false, position: { x:0.2*width_adjustable, y:i*(height_adjustable/(dummyData.producers.length+1))}});
+        producers.push( {id:`${i}`, data: { label: dummyData.producers[i-1]}, type:'input', sourcePosition:'right', draggable:false, position: { x:0.2*width_adjustable, y:i*(height_adjustable/(dummyData.producers.length+1))}, style:{ color:'#1d3051', background:'#ac92d1',}});
         // ^ need to rewrite math for x, y placements
         connectingSegments.push({ id:`e${i}-${topic_id}`, source:`${i}`, target:`${topic_id}`, animated:true, arrowHeadType:'arrowclosed', type:'smoothstep'})
     }
 
-    const topic = { id: `${topic_id}`, data: { label: dummyData.topic }, targetPosition:'left', sourcePosition:'right', position: { x: width_adjustable/2, y: height_adjustable/2 }, draggable:false, style:{ color:'white', background:'purple',} };
+    const topic = { id: `${topic_id}`, data: { label: dummyData.topic }, targetPosition:'left', sourcePosition:'right', position: { x: width_adjustable/2, y: height_adjustable/2 }, draggable:false, style:{ color:'#1d3051', background:'#b2e597',} };
 
     const consumers = [];
     for (let i = 1; i<=dummyData.consumers.length; i+=1){
-        consumers.push( {id:`${topic_id+i}`, data: { label: dummyData.consumers[i-1]}, targetPosition:'left', draggable:false, position: { x:0.8*width_adjustable, y:i*(height_adjustable/(dummyData.consumers.length+1))}});
+        consumers.push( {id:`${topic_id+i}`, data: { label: dummyData.consumers[i-1]}, targetPosition:'left', draggable:false, position: { x:0.8*width_adjustable, y:i*(height_adjustable/(dummyData.consumers.length+1))}, style:{ color:'#1d3051', background:'#7cd6cd',}});
         // ^ need to rewrite math for x, y placements
         connectingSegments.push({ id:`e${topic_id}-${topic_id+i}`, source:`${topic_id}`, target:`${topic_id+i}`, arrowHeadType:'arrowclosed', type:'smoothstep'})
     }
@@ -57,7 +57,7 @@ const FlowChart= () => {
 
     return(
         <div>
-            <ReactFlow elements={elements} className="bg-slate-300" style={{width:width_adjustable, height:height_adjustable}} />
+            <ReactFlow elements={elements} className='bg-darkIndigo/60 border-2 border-slate-500 rounded ' style={{width:width_adjustable, height:height_adjustable}} />
         </div>   
          )
 }

@@ -38,11 +38,12 @@ const RelationshipsContainer = () => {
             <select onChange={e => setGlobalState( (prevState: any) => { return  {...prevState, selectedState: e.target.value}})} className="text-sm text-left mx-5 border border-limeGreen/50 rounded bg-zinc-900" name="topic" id="topic">
                 {options}
             </select>
+            <div className='flex p-6 h-60, w-80'>
+             <FlowChart />
+            </div>
           </div>
         </div>
-        <div>
-          <FlowChart />
-        </div>
+        
       </div>
       )
   }

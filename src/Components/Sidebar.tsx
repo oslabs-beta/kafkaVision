@@ -22,9 +22,13 @@ const Sidebar = () => {
         // put in cool shadows?
         // sizes auto-adjust if the text takes up two lines
         if (i===globalState.sidebarTab){
-            displayedBoxes.push(<Link to={urlsText[i]} key={i} className="bg-limeGreen rounded-2xl text-center text-slateBlue px-10 py-5 m-5 hover:bg-slateBlue/50 hover:text-limeGreen border border-limeGreen hover:rounded-xl hover:border-limeGreen/50 transition-all duration-300" onClick={() => setGlobalState((prevState:any) => {return {...prevState, sidebarTab:i}})}> {buttonText[i]} </Link>)
+            displayedBoxes.push(<Link to={urlsText[i]} key={i} 
+                className="bg-limeGreen/90 rounded-2xl text-center text-slateBlue px-10 py-5 m-5 hover:bg-slateBlue/50 hover:text-limeGreen border border-limeGreen hover:rounded-xl hover:border-limeGreen/50 transition-all duration-300" 
+                onClick={() => setGlobalState((prevState:any) => {return {...prevState, sidebarTab:i}})}> {buttonText[i]} </Link>)
         } else{
-            displayedBoxes.push(<Link to={urlsText[i]} key={i} className="bg-seafoam rounded-2xl text-center text-slateBlue px-10 py-5 m-5 hover:text-seafoam/90  hover:bg-darkBlue/10 hover:border-seafoam hover:rounded-xl transition-all duration-300" onClick={() => setGlobalState((prevState:any) => {return {...prevState, sidebarTab:i}})}> {buttonText[i]} </Link>)
+            displayedBoxes.push(<Link to={urlsText[i]} key={i} 
+                className="bg-seafoam/80 rounded-2xl text-center text-slateBlue px-10 py-5 m-5 hover:text-seafoam/90  hover:bg-darkBlue/10 border border-seafoam/90 hover:border-seafoam/90 hover:rounded-xl transition-all duration-300" 
+                onClick={() => setGlobalState((prevState:any) => {return {...prevState, sidebarTab:i}})}> {buttonText[i]} </Link>)
         }
     }
 

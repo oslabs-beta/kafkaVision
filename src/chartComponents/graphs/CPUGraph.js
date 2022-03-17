@@ -40,15 +40,15 @@ const CPUGraph = () => {
     datasets: [{
       label: 'Broker 1',
       data: [5, 5, 5, 5, 5, 5],
-      backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-      borderColor: ['rgba(255, 99, 132, 1)'],
+      backgroundColor: '#22404c', //lime green
+      borderColor: '#d2fdbb', //dark green
       borderWidth: 1
     },
     {
       label: 'Broker 2',
       data: [0,0,0,0,0,0],
-      backgroundColor: 'orange', 
-      borderColor:' red',
+      backgroundColor: '#22404c', //lime green
+      borderColor: '#d2fdbb', //dark green
     }],
   });
 

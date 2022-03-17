@@ -42,7 +42,7 @@ const App = () => {//extends React.Component<Props> {
 
             <Route exact path="/connectCluster">
               <div className="grid grid-cols-6 h-screen">
-                  <div className="flex text-white bg-blue-400 col-span-1">
+                  <div className="flex col-span-1">
                     <Sidebar/>
                   </div>
                   <div className="col-span-5 bg-zinc-900">
@@ -53,7 +53,7 @@ const App = () => {//extends React.Component<Props> {
 
             <Route exact path="/health">
               <div className="bg-zinc-900 grid grid-cols-6 h-screen">
-                  <div className="flex text-white bg-blue-400 col-span-1">
+                  <div className="flex col-span-1">
                     <Sidebar/>
                   </div>
                   <div className="col-span-5 bg-zinc-900">
@@ -64,10 +64,10 @@ const App = () => {//extends React.Component<Props> {
 
             <Route exact path="/componentRelationships">
               <div className="grid grid-cols-6 h-screen">
-                <div className="flex text-white bg-blue-400 col-span-1">
+                <div className="flex col-span-1">
                   <Sidebar />
                 </div>
-                <div className="col-span-5 bg-white">
+                <div className="col-span-5 bg-zinc-900">
                   <RelationshipsContainer />
                 </div>
               </div>

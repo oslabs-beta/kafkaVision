@@ -32,8 +32,8 @@ const CPUGauge = () => {
     datasets: [{
       label: 'Broker 1',
       data: [10, 10],
-      backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-      borderColor: ['rgba(255, 99, 132, 1)'],
+      backgroundColor: '#22404c', //lime green
+      borderColor: '#d2fdbb', //dark green
       borderWidth: 1
     }],
   });
