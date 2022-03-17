@@ -39,7 +39,7 @@ const fakeState: any = {
         ]
     },
     dummyConnectionState: {
-        url_prometheus: 'https://9090-kayhill-cpdemo-4gbgmdfwzzh.ws-us34.gitpod.io/api/v1/query?query=',
+        url_prometheus: 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query=',
         url_kafka: null,
         isConnected:true,
     }
