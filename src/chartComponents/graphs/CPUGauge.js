@@ -22,7 +22,7 @@ ChartJS.register(
 )
 
 //Don't forget to change the query link!
-const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WED 2PM
+//const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WED 2PM
 // let query = '';
 
 const CPUGauge = () => {
@@ -32,8 +32,8 @@ const CPUGauge = () => {
     datasets: [{
       label: 'Broker 1',
       data: [10, 10],
-      backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-      borderColor: ['rgba(255, 99, 132, 1)'],
+      backgroundColor: '#22404c', //lime green
+      borderColor: '#d2fdbb', //dark green
       borderWidth: 1
     }],
   });
@@ -94,7 +94,7 @@ const CPUGauge = () => {
       plugins: {
         legend: {
           display: false, 
-          position: "top"
+          position: "right"
         }, 
         title: {
           display: true, 

@@ -40,15 +40,15 @@ const CPUGraph = () => {
     datasets: [{
       label: 'Broker 1',
       data: [5, 5, 5, 5, 5, 5],
-      backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-      borderColor: ['rgba(255, 99, 132, 1)'],
+      backgroundColor: '#22404c', //lime green
+      borderColor: '#d2fdbb', //dark green
       borderWidth: 1
     },
     {
       label: 'Broker 2',
       data: [0,0,0,0,0,0],
-      backgroundColor: 'orange', 
-      borderColor:' red',
+      backgroundColor: '#22404c', //lime green
+      borderColor: '#d2fdbb', //dark green
     }],
   });
 
@@ -102,15 +102,15 @@ const CPUGraph = () => {
           datasets: [{
             label: 'Broker 1',
             data: CPUData[0],
-            backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-            borderColor: ['rgba(255, 99, 132, 1)'],
+            backgroundColor: ['#d2fdbb'], //lime green
+            borderColor: ['#7cb55e'], //dark green
             borderWidth: 1
           },
           {
             label: 'Broker 2',
             data: CPUData[1],
-            backgroundColor: 'orange', 
-            borderColor:' red',
+            backgroundColor: '#22404c',  //slateBlue
+            borderColor: '#03dac5', //seafoam
           }],
         });
 
@@ -119,19 +119,28 @@ const CPUGraph = () => {
           maintainAspectRatio: true,
           plugins: {
             legend: {
-              position: "top"
+              position: "bottom"
             }, 
             title: {
               display: true, 
-              text: 'CPU Usage',
-            }
-          }
+              // text: 'CPU Usage',
+            }, 
+          }, 
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Cores',
+              }
+            },
+          },  
         })
       }, [CPUData]);
 
 
   return (
-    <div styles={{width:'600', length:'400'}} className='bg-red-900'>
+    <div styles={{width:'300', length:'300'}}>
       <div>CPU Usage</div>
       <Line data={CPU} options={chartOptions}/>  
     </div>

@@ -86,7 +86,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className=" h-screen">
+    <div className=" h-screen bg-gray-900">
       {/* <div> Login Page! </div> */}
       <div className="text-white">
         <Link to="/connectCluster"> Go Inside... </Link>
@@ -94,58 +94,61 @@ const LoginPage = () => {
                 <Link to="/componentRelationships"> Component Relationships Page...   </Link> */}
       </div>
 
-      <div className=" h-screen relative flex items-center justify-center">
-        <form
-          className="relative flex flex-col items-center justify-center bg-slateBlue/70 shadow rounded border border-slateBlue"
-          id="login box"
-        >
-          <input
-            onChange={handleUsernameInput}
-            className="m-5"
-            type="text"
-            placeholder="username"
-            name="user"
-            value={username}
-          ></input>
-          <input
-            onChange={handlePasswordInput}
-            className="m-5"
-            type="text"
-            placeholder="password"
-            name="password"
-            value={password}
-          ></input>
-          <span>
-         
-            <button
-              className='h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50'
-              onClick={(e) => {
-                e.preventDefault();
-                login(username, password);
-                setUsername('');
-                setPassword('');
-              }}
-            >
-              Log in
-            </button>
-            <button
-              className='h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50'
-              onClick={(e) => {
-                e.preventDefault;
-                signup(username, password);
-                setUsername('');
-                setPassword('');
-              }}
-            >
-              Register
-            </button>
-          </span>
-        </form>
-        {/* <<div className="flex bg-orange-500 w-50 h-50">
-                    <div className="bg-blue-400 w-20 h-20"> Username </div>
-                    <div className="bg-orange-400 w-20 h-20"> Password </div>
-                </div>> */}
-        <br /><span>{status}</span>
+      <div className='bg-darkBlue/80 m-20 border rounded border-limeGreen/70'>
+        <div className="bg-clip-text text-transparent py-4 px-3 bg-gradient-to-r from-slateBlue via-seafoam/75 to-slateBlue text-7xl font-black text-center font-logo">kafkaVision</div>
+        <div className="relative flex items-center justify-center m-3">
+          <form
+            className="relative flex flex-col items-center justify-center bg-slateBlue/70 rounded border border-seafoam/40 m-5"
+            id="login box"
+          >
+            <input
+              onChange={handleUsernameInput}
+              className="m-5 border rounded bg-slateBlue/70 border-limeGreen/80 text-limeGreen/80"
+              type="text"
+              placeholder="username"
+              name="user"
+              value={username}
+            ></input>
+            <input
+              onChange={handlePasswordInput}
+              className="m-4 border rounded bg-slateBlue/70 border-limeGreen/80 text-limeGreen/80"
+              type="text"
+              placeholder="password"
+              name="password"
+              value={password}
+            ></input>
+            <span>
+          
+              <button
+                className='h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50'
+                onClick={(e) => {
+                  e.preventDefault();
+                  login(username, password);
+                  setUsername('');
+                  setPassword('');
+                }}
+              >
+                Log in
+              </button>
+              <button
+                className='h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50'
+                onClick={(e) => {
+                  e.preventDefault();
+                  signup(username, password);
+                  setUsername('');
+                  setPassword('');
+                }}
+              >
+                Register
+              </button>
+            </span>
+          </form>
+          {/* <<div className="flex bg-orange-500 w-50 h-50">
+                      <div className="bg-blue-400 w-20 h-20"> Username </div>
+                      <div className="bg-orange-400 w-20 h-20"> Password </div>
+                  </div>> */}
+          <br /><span>{status}</span>
+        </div>
       </div>
     </div>
   );

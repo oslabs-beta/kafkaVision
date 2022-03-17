@@ -5,7 +5,7 @@ import BrokerDiagram from '../Components/brokerDiagram';
 import { appContext } from '../App';
 
 //Don't forget to change this!!
-const queryLink = 'https://9090-kayhill-cpdemo-u6pja23ru48.ws-us34.gitpod.io/api/v1/query?query=';
+//const queryLink = 'https://9090-kayhill-cpdemo-u6pja23ru48.ws-us34.gitpod.io/api/v1/query?query=';
 let query = '';
 
 const RelationshipsContainer = () => {
@@ -38,11 +38,12 @@ const RelationshipsContainer = () => {
             <select onChange={e => setGlobalState( (prevState: any) => { return  {...prevState, selectedState: e.target.value}})} className="text-sm text-left mx-5 border border-limeGreen/50 rounded bg-zinc-900" name="topic" id="topic">
                 {options}
             </select>
+            <div className='flex p-6 h-60, w-80'>
+             <FlowChart />
+            </div>
           </div>
         </div>
-        <div>
-          <FlowChart />
-        </div>
+        
       </div>
       )
   }

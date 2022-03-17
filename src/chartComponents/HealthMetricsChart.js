@@ -26,26 +26,26 @@ const HealthMetricsChart = () => {
     renderedContent = (
       <div> 
       {/* CPU USAGE GRAPHS */}
-      <div className="w-full h-full grid grid-cols-2 px-2 py-1 ">
-        <div className="col-span-1">
+      <div className="w-fit h-fit grid grid-cols-2 gap-10 ">
+        <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
           <CPUGraph/>
         </div>
-        <div className="col-span-1 bg-zinc-800 p-5 border border-fontGray/70 rounded">
+        <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
           CPU Usage Gauge
           <CPUGauge/>
         </div>
-      </div>
+      {/* </div> */}
 
       {/* JVM MEMORY GRAPHS */}
-      <div className="w-full h-full grid grid-cols-2 px-2 py-1">
-        <div className="col-span-1">
+      {/* <div className="w-full h-full grid grid-cols-2 gap-5"> */}
+        <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
           <JVMGraph/>
         </div>
-        <div className="bg-zinc-100 col-span-1">
+        <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
           <GCGraph/>
         </div>
+      {/* </div> */}
       </div>
-
     </div>
     )
   }
