@@ -45,7 +45,7 @@ const App = () => {//extends React.Component<Props> {
                   <div className="flex col-span-1">
                     <Sidebar/>
                   </div>
-                  <div className="col-span-5 bg-zinc-900">
+                  <div className="col-span-5 bg-gray-900">
                     <ConnectClusterPage/>
                   </div>
                 </div>
@@ -56,7 +56,7 @@ const App = () => {//extends React.Component<Props> {
                   <div className="flex col-span-1">
                     <Sidebar/>
                   </div>
-                  <div className="col-span-5 bg-zinc-900">
+                  <div className="col-span-5 bg-gray-900">
                     <HealthMetricsContainer />
                   </div>
               </div>   
@@ -67,7 +67,7 @@ const App = () => {//extends React.Component<Props> {
                 <div className="flex col-span-1">
                   <Sidebar />
                 </div>
-                <div className="col-span-5 bg-zinc-900">
+                <div className="col-span-5 bg-gray-900">
                   <RelationshipsContainer />
                 </div>
               </div>

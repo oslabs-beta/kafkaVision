@@ -94,7 +94,7 @@ const CPUGauge = () => {
       plugins: {
         legend: {
           display: false, 
-          position: "top"
+          position: "right"
         }, 
         title: {
           display: true, 

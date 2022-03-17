@@ -145,7 +145,7 @@ const HealthMetricsContainer = () => {
         <div className="border-2 border-seafoam/40 rounded m-5 grid grid-rows-2  bg-slateBlue/50">
 
           {/* Overall Cluster Health */}
-          <div className='rounded m-5 border border-slateBlue bg-zinc-800'>
+          <div className='rounded m-5 border border-fontGray/50 bg-zinc-800'>
             <p className='m-3'>Overall Cluster Health</p>
             <div className='flex items-center justify-center m-8'>
              <HealthMetricsChart/>

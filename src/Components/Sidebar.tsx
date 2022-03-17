@@ -23,7 +23,7 @@ const Sidebar = () => {
         // sizes auto-adjust if the text takes up two lines
         if (i===globalState.sidebarTab){
             displayedBoxes.push(<Link to={urlsText[i]} key={i} 
-                className="bg-limeGreen/90 rounded-2xl text-center text-slateBlue px-10 py-5 m-5 hover:bg-slateBlue/50 hover:text-limeGreen border border-limeGreen hover:rounded-xl hover:border-limeGreen/50 transition-all duration-300" 
+                className="bg-limeGreen/80 rounded-2xl text-center text-slateBlue px-10 py-5 m-5 hover:bg-slateBlue/50 hover:text-limeGreen border border-limeGreen hover:rounded-xl hover:border-limeGreen/50 transition-all duration-300" 
                 onClick={() => setGlobalState((prevState:any) => {return {...prevState, sidebarTab:i}})}> {buttonText[i]} </Link>)
         } else{
             displayedBoxes.push(<Link to={urlsText[i]} key={i} 
@@ -33,7 +33,7 @@ const Sidebar = () => {
     }
 
     return(
-            <div className="bg-darkBlue/90 w-full flex flex-col shadow-lg" >{/*"fixed bg-blue-800 top-20 left-0 h-screen grow flex flex-col text-white shadow-lg">*/}
+            <div className="bg-darkIndigo/70 w-full flex flex-col shadow-lg" >{/*"fixed bg-blue-800 top-20 left-0 h-screen grow flex flex-col text-white shadow-lg">*/}
                 {displayedBoxes}
                 {/* <Link to='/'>Sign Out</Link>             */}
             </div>       

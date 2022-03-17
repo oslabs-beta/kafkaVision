@@ -126,7 +126,7 @@ const GCGraph = () => {
       maintainAspectRatio: true,
       plugins: {
         legend: {
-          position: "top"
+          position: "bottom"
         }, 
         title: {
           display: true, 
@@ -147,7 +147,7 @@ const GCGraph = () => {
 
 
   return (
-    <div styles={{width:'600', length:'400'}} className='bg-zinc-800 p-5 border border-fontGray/70 rounded'>
+    <div styles={{width:'600', length:'400'}}>
       <div>Time Spent in GC</div>
       {/* <div>{JSON.stringify(CPUData)}</div> */}
       <Line data={CPU} options={chartOptions}/>  

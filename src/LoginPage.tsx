@@ -63,7 +63,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className=" h-screen">
+    <div className=" h-screen bg-gray-900">
       {/* <div> Login Page! </div> */}
       <div className="text-white">
         <Link to="/connectCluster"> Go Inside... </Link>
@@ -71,7 +71,7 @@ const LoginPage = () => {
                 <Link to="/componentRelationships"> Component Relationships Page...   </Link> */}
       </div>
 
-      <div className='bg-darkBlue/80 m-5 border rounded border-limeGreen/70'>
+      <div className='bg-darkBlue/80 m-20 border rounded border-limeGreen/70'>
         <div className="bg-clip-text text-transparent py-4 px-3 bg-gradient-to-r from-slateBlue via-seafoam/75 to-slateBlue text-7xl font-black text-center font-logo">kafkaVision</div>
         <div className="relative flex items-center justify-center m-3">
           <form

@@ -119,19 +119,28 @@ const CPUGraph = () => {
           maintainAspectRatio: true,
           plugins: {
             legend: {
-              position: "top"
+              position: "bottom"
             }, 
             title: {
               display: true, 
-              text: 'CPU Usage',
-            }
-          }
+              // text: 'CPU Usage',
+            }, 
+          }, 
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Cores',
+              }
+            },
+          },  
         })
       }, [CPUData]);
 
 
   return (
-    <div styles={{width:'600', length:'400'}}>
+    <div styles={{width:'300', length:'300'}}>
       <div>CPU Usage</div>
       <Line data={CPU} options={chartOptions}/>  
     </div>
