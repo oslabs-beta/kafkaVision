@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { 
   Chart as ChartJS, 
   CategoryScale, 
@@ -10,6 +10,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import regeneratorRuntime from "regenerator-runtime";
+import { appContext } from '../../App.tsx';
 // import { timeStamp } from 'console';
 
 ChartJS.register(
@@ -26,6 +27,12 @@ ChartJS.register(
 // let query = '';
 
 const CPUGauge = () => {
+
+  //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
+  const appState = useContext(appContext);
+  const [connectionState, setConnectionState] = appState.connection;
+  const queryLink = connectionState.url_prometheus;
+
   const [CPU, setCPU] = useState({
     // labels: ['CPU Usage'],
     labels: ['Broker1', 'Broker2'],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
