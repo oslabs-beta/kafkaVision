@@ -22,7 +22,7 @@ ChartJS.register(
 )
 
 //Don't forget to change the query link!
-const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WED 2PM
+//const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WED 2PM
 // let query = '';
 
 const CPUGauge = () => {

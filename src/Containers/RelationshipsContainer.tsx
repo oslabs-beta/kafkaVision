@@ -5,7 +5,7 @@ import BrokerDiagram from '../Components/brokerDiagram';
 import { appContext } from '../App';
 
 //Don't forget to change this!!
-const queryLink = 'https://9090-kayhill-cpdemo-u6pja23ru48.ws-us34.gitpod.io/api/v1/query?query=';
+//const queryLink = 'https://9090-kayhill-cpdemo-u6pja23ru48.ws-us34.gitpod.io/api/v1/query?query=';
 let query = '';
 
 const RelationshipsContainer = () => {

@@ -4,7 +4,7 @@ import HealthMetricsChart from '../chartComponents/HealthMetricsChart';
 import { appContext } from '../App';
 
 //Don't forget to change the query link!
-const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WEDNESDAY 2PM
+//const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WEDNESDAY 2PM
 const queryRange = '';
 let query = '';
  
