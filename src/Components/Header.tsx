@@ -1,6 +1,8 @@
 import React, {useState, useContext} from 'react';
 import { appContext } from '../App';
 import {Link} from 'react-router-dom'
+import connected_icon from '../../public/images/connected_icon.png'
+import disconnected_icon from '../../public/images/no-plug.png'
 
 const Header = () => {
 
@@ -9,6 +11,25 @@ const Header = () => {
   const [connectionState, setConnectionState] = appState.connection;
   console.log(globalState)
   console.log(connectionState)
+
+
+  let connection_image: any = '';
+  if (globalState.isLoggedIn && !connectionState.isConnected){
+    console.log("should be unplugged")
+    connection_image = (
+    <div className="bg-seafoam/80 rounded-3xl mr-3">
+       <img src={disconnected_icon}></img>
+    </div>
+    )
+  } else if (globalState.isLoggedIn && connectionState.isConnected){
+  console.log("should be pluggedin")
+  connection_image = (
+    <div className="bg-seafoam/80 rounded-3xl mr-3">
+       <img src={connected_icon}></img>
+    </div>
+    )
+  }
+
 
   const logout: any = () => { // CORRECT FORMAT?
     console.log("logout fcn invoked")
@@ -47,10 +68,10 @@ const Header = () => {
 
       {/* github button */}
       <div className="flex justify-right">
+        {/* // Credit FREEPIK for CONNECTED Icon in README */}
+        {connection_image}
         <a href="https://github.com/oslabs-beta/kafkavision" className="py-1.5 px-3 mr-3 bg-seafoam/80 hover:bg-darkIndigo/50 text-darkIndigo text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300">Github</a> 
-
         <Link to='/' onClick={() => logout()} className="py-1.5 px-3 mr-3 bg-seafoam/80 hover:bg-darkIndigo/50 text-darkIndigo text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300">Sign Out</Link>
-
         {/* dark mode toggle button  */}
       </div>  
     </div>

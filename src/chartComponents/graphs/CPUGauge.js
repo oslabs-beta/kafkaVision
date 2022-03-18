@@ -52,7 +52,6 @@ const CPUGauge = () => {
 
   const [CPUData, setCPUData] = useState([10, 10], [15, 15]); //changed this from [10, 15]
 
-  
   useEffect( () => {
     //CPU Usage
     const query = 'irate(process_cpu_seconds_total{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"}[5m])*100';

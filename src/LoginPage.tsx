@@ -35,8 +35,15 @@ const LoginPage = () => {
       .then((res) => res.json())
       .then(
         (userInfo) => {
-          // put more user information into state
-          if (userInfo.err) return           // if so, set the isLoggedIn state to true
+          // IF LOGIN ATTEMPT FAILED:
+          if (userInfo.err) {
+            console.log("error in login")
+            setStatus(
+              'Unable to recognize account. Please check your credentials and try again.'
+            );
+            return           
+          }
+          // IF IT WORKED, CHANGE STATE
           setGlobalState((prevState: any) => {
             return { ...prevState,
               username: userInfo.username,
@@ -44,19 +51,19 @@ const LoginPage = () => {
               isLoggedIn: true
             }
           })
-
           setConnectionState((prevState: any) => {
             return { ...prevState,
               past_URLS_Prometheus: userInfo.prometheusClusters,
               past_URLS_Kafka: userInfo.kafkaCluster
             }})
-
+          // REDIRECT TO CONNECT PAGE
           history.push('/connectCluster');
         }
       )
       .catch((error) => {
+          // IF ERROR ON SERVER
           setStatus(
-            'An error occured. Please check your credentials and try again.'
+            'An error occured on the server. Please check your credentials and try again.'
           );
           console.log(error);
         }
@@ -87,16 +94,19 @@ const LoginPage = () => {
 
   return (
     <div className=" h-screen bg-gray-900">
-      {/* <div> Login Page! </div> */}
+      {/* //SECRET BUTTON */}
       <div className="text-white">
-        <Link to="/connectCluster" className="text-slate-900"> Go Inside... </Link>
-        {/* <Link to="/health"> Health Metrics Page...   </Link>
-                <Link to="/componentRelationships"> Component Relationships Page...   </Link> */}
+        <Link to="/connectCluster" className="text-slate-900"> Back door... </Link>
       </div>
-
+      {/* // OVERALL SECTION: */}
       <div className='bg-darkBlue/80 m-20 border rounded border-limeGreen/70'>
         <div className="bg-clip-text text-transparent py-4 px-3 bg-gradient-to-r from-slateBlue via-seafoam/75 to-slateBlue text-7xl font-black text-center font-logo">kafkaVision</div>
-        <div className="relative flex items-center justify-center m-3">
+        <div className="relative flex flex-col items-center justify-center m-3">
+          {/* // LOGIN ERROR MESSAGE: */}
+          <div className="text-red-500 bg-slate-300 max-w-xs border border-red-500 m-3 mb-0 text-center">
+            {status}
+          </div>
+          {/* // LOGIN BOX: */}
           <form
             className="relative flex flex-col items-center justify-center bg-slateBlue/70 rounded border border-seafoam/40 m-5"
             id="login box"
@@ -117,8 +127,8 @@ const LoginPage = () => {
               name="password"
               value={password}
             ></input>
+            {/* //LOGIN & REGISTER BUTTONS: */}
             <span>
-          
               <button
                 className='h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50'
                 onClick={(e) => {
@@ -143,11 +153,7 @@ const LoginPage = () => {
               </button>
             </span>
           </form>
-          {/* <<div className="flex bg-orange-500 w-50 h-50">
-                      <div className="bg-blue-400 w-20 h-20"> Username </div>
-                      <div className="bg-orange-400 w-20 h-20"> Password </div>
-                  </div>> */}
-          <br /><span>{status}</span>
+          {/* <br /><span>{status}</span> */}
         </div>
       </div>
     </div>
