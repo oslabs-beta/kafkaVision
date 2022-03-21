@@ -1,48 +1,50 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { 
-  Chart as ChartJS, 
-  CategoryScale, 
+import {
+  Chart as ChartJS,
+  CategoryScale,
   BarElement,
-  BarController, 
-  Title, 
-  Tooltip, 
-  Legend 
+  BarController,
+  Title,
+  Tooltip,
+  Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import regeneratorRuntime from "regenerator-runtime";
+import regeneratorRuntime from 'regenerator-runtime';
 import { appContext } from '../../App.tsx';
 // import { timeStamp } from 'console';
 
 ChartJS.register(
-  CategoryScale, 
+  CategoryScale,
   BarElement,
-  BarController, 
-  Title, 
-  Tooltip, 
+  BarController,
+  Title,
+  Tooltip,
   Legend
-)
+);
 
 //Don't forget to change the query link!
 //const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WED 2PM
 // let query = '';
 
 const CPUGauge = () => {
-
   //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
   const appState = useContext(appContext);
   const [connectionState, setConnectionState] = appState.connection;
-  const queryLink = connectionState.url_prometheus;
+  const queryParams = 'api/v1/query?query=';
+  const queryLink = connectionState.url_prometheus + queryParams;
 
   const [CPU, setCPU] = useState({
     // labels: ['CPU Usage'],
-    labels: ['Broker1', 'Broker2'],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [{
-      label: 'Broker 1',
-      data: [10, 10],
-      backgroundColor: '#22404c', //lime green
-      borderColor: '#d2fdbb', //dark green
-      borderWidth: 1
-    }],
+    labels: ['Broker1', 'Broker2'], // 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [
+      {
+        label: 'Broker 1',
+        data: [10, 10],
+        backgroundColor: '#22404c', //lime green
+        borderColor: '#d2fdbb', //dark green
+        borderWidth: 1,
+      },
+    ],
   });
 
   const [chartOptions, setChartOptions] = useState({});
@@ -52,22 +54,24 @@ const CPUGauge = () => {
 
   const [CPUData, setCPUData] = useState([10, 10], [15, 15]); //changed this from [10, 15]
 
-  useEffect( () => {
+  useEffect(() => {
     //CPU Usage
-    const query = 'irate(process_cpu_seconds_total{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"}[5m])*100';
+    const query = 'irate(process_cpu_seconds_total[5m])*100';
 
     const useFetch = async () => {
       try {
-        const json = await fetch(queryLink + query)
+        const json = await fetch(queryLink + query);
         const CPUData = await json.json(); // duplicate name but ok because it's in LEC
         // console.log(CPUData.data.result[0].value[1])
-        let newState = [Math.floor(CPUData.data.result[0].value[1]), Math.floor(CPUData.data.result[1].value[1])]
-        setCPUData(newState)
+        let newState = [
+          Math.floor(CPUData.data.result[0].value[1]),
+          Math.floor(CPUData.data.result[1].value[1]),
+        ];
+        setCPUData(newState);
+      } catch (error) {
+        console.log('ERROR IN CPU GAUGE FETCH: ', error);
       }
-      catch (error){
-        console.log('ERROR IN CPU GAUGE FETCH: ', error)
-      }
-    }
+    };
 
     const timeoutMethod = setInterval(() => {
       useFetch();
@@ -76,22 +80,22 @@ const CPUGauge = () => {
     useFetch();
 
     return () => clearInterval(timeoutMethod);
-  }, []
-)
+  }, []);
 
   useEffect(() => {
-    console.log('CPU DATA GAUGE: ', CPUData)
+    console.log('CPU DATA GAUGE: ', CPUData);
     setCPU({
       // labels: ['CPU Usage'],
-      labels: ['Broker1', 'Broker2'],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        // label: 'Broker 1',
-        data: [CPUData[0], CPUData[1]], 
-        backgroundColor: '#22404c', //lime green
-        borderColor: '#d2fdbb', //dark green
-        borderWidth: 1, 
-        
-      }],
+      labels: ['Broker1', 'Broker2'], // 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [
+        {
+          // label: 'Broker 1',
+          data: [CPUData[0], CPUData[1]],
+          backgroundColor: '#22404c', //lime green
+          borderColor: '#d2fdbb', //dark green
+          borderWidth: 1,
+        },
+      ],
     });
 
     setChartOptions({
@@ -99,34 +103,32 @@ const CPUGauge = () => {
       maintainAspectRatio: true,
       plugins: {
         legend: {
-          display: false, 
-          position: "right"
-        }, 
+          display: false,
+          position: 'right',
+        },
         title: {
-          display: true, 
+          display: true,
           // text: 'CPU Usage Gauge',
-        }
-      }, 
+        },
+      },
       scales: {
         y: {
           beginAtZero: true,
           title: {
             display: true,
             text: 'Cores',
-          }
+          },
         },
-      },  
-    })
-      }, [CPUData]);
-
-
+      },
+    });
+  }, [CPUData]);
 
   return (
     <div>
       {/* <div>{JSON.stringify(CPUData)}</div> */}
-      <Bar data={CPU} options={chartOptions}/>  
+      <Bar data={CPU} options={chartOptions} />
     </div>
-  )
-}
+  );
+};
 
 export default CPUGauge;

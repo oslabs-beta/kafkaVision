@@ -3,7 +3,6 @@ import CPUGauge from './graphs/CPUGauge.js';
 import CPUGraph from './graphs/CPUGraph.js';
 import JVMGraph from './graphs/JVMGraph.js';
 import GCGraph from './graphs/GCGraph.js';
-//import { connect } from 'http2';
 import {appContext} from '../App.tsx';
 
 const HealthMetricsChart = () => {
