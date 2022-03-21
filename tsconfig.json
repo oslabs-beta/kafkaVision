@@ -13,7 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },
-  "include": ["./server"],
+  "include": ["./server", "custom.d.ts", "./public/images/connected_icon.png"],
   "exclude": ["node_modules"],
 }
 
