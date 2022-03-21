@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { appContext } from './App';
 
@@ -12,7 +12,38 @@ const ConnectClusterPage = () => {
     const [url_kafka, setKafka] = useState('');
     const [url_prometheus, setProm] = useState('');
     const history = useHistory();
-  
+    // state below used for fetch req to get partitions after kafka_url is updated
+    const doneRendering = useRef(false);
+    const [haveKafkaURL, setHaveKafkaURL] = useState(false);
+    const [haveTopicsList, setHaveTopicsList] = useState(false);
+
+    useEffect(() => {
+      if (doneRendering.current){
+        console.log("in first use effect cascade")
+        fetch('/api/kafka/topics', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          }, 
+          body: JSON.stringify({bootstrap:`${connectionState.url_kafka}`})
+        })
+        .then(data => data.json())
+        .then(data => {
+          console.log("got topics list w/ first cascade fetch")
+          console.log(data)
+          setGlobalState((prevstate:any) => {
+            return {...prevstate, kafka_topics: data, sidebarTab:2}
+          });
+          history.push('/componentRelationships'); // move?
+        })
+        .catch( err => console.log("error getting topics list"))
+      } else {
+        console.log("passing through haveURL useeffect")
+        doneRendering.current = true;
+      }
+    }, [haveKafkaURL]);
+
+
     const handleKafkaInput = (event:any) => {
       setKafka(event.target.value);
     };
@@ -27,15 +58,12 @@ const ConnectClusterPage = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               url_prometheus,
-              // need to add user_id (from state)
               id: globalState.id
             }),
           })
         .then((res) => res.json())
         .then(
             (data) => {
-            // setConnected to Prom to TRUE
-            //setConnectionState({url_prometheus = url_prometheus})
             // CHECK THE CONNECTION LATER
             setConnectionState((prevState: any) => {
               return { ...prevState,
@@ -47,7 +75,7 @@ const ConnectClusterPage = () => {
             setGlobalState((prevstate:any) => {
               return {...prevstate, sidebarTab:1}
             })
-              history.push('/health');
+            history.push('/health'); // move?
             }
           )
           .catch((error) => {
@@ -62,14 +90,22 @@ const ConnectClusterPage = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               url_kafka,
-            // need to add user_id (from state)
+              id: globalState.id
             }),
           })
         .then((res) => res.json())
         .then(
             (data) => {
             // setConnected to Kafka to TRUE
-            //setConnectionState({url_kafka = url_kafka})
+            console.log("got through fisrt saveKfaka ok")
+            setConnectionState((prevState: any) => {
+              return { ...prevState,
+                url_kafka,
+                isConnected: true
+              }
+            });
+            // trigger fetch cascade (first, get topics)
+            setHaveKafkaURL(true);
             },
             (error) => {
             console.log(error);

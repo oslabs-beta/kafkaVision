@@ -13,10 +13,11 @@ const RelationshipsContainer = () => {
   const appState = useContext(appContext);
   const [connectionState, setConnectionState] = appState.connection;
   const [globalState, setGlobalState] = appState.global;
-
+  console.log("relntp container rendered")
+  console.log(globalState.kafka_topics);
   const options = [];
   for (let i = 1; i <= globalState.coreData.length; i +=1){
-      options.push(<option value={i}> {globalState.coreData[i-1].topic}</option>)
+      options.push(<option value={i} key={i}> {globalState.coreData[i-1].topic}</option>)
   }
 
   let renderedContent: any;
@@ -39,7 +40,7 @@ const RelationshipsContainer = () => {
               {options}
             </select>
             <div className='flex p-6 h-60, w-80'>
-              <FlowChart />
+              {/* <FlowChart /> */}
             </div>
           </div>
         </div>

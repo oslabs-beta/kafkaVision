@@ -8,6 +8,7 @@ const kafkaController: Record<string, types.middlewareFunction> = {};
 // on page load
 kafkaController.fetchTopics = (req, res, next) => {
   try {
+    console.log("got to fetch options controller")
     const { bootstrap } = req.body;
     const instance = new kafka.Kafka({
       clientId: 'kafkaVision',

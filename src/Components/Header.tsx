@@ -9,20 +9,20 @@ const Header = () => {
   const appState = useContext(appContext);
   const [globalState, setGlobalState] = appState.global;
   const [connectionState, setConnectionState] = appState.connection;
-  console.log(globalState)
-  console.log(connectionState)
+  // console.log(globalState)
+  // console.log(connectionState)
 
 
   let connection_image: any = '';
   if (globalState.isLoggedIn && !connectionState.isConnected){
-    console.log("should be unplugged")
+    // console.log("should be unplugged")
     connection_image = (
     <div className="bg-seafoam/80 rounded-3xl mr-3">
        <img src={disconnected_icon}></img>
     </div>
     )
   } else if (globalState.isLoggedIn && connectionState.isConnected){
-  console.log("should be pluggedin")
+  // console.log("should be pluggedin")
   connection_image = (
     <div className="bg-seafoam/80 rounded-3xl mr-3">
        <img src={connected_icon}></img>
