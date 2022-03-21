@@ -25,15 +25,13 @@ ChartJS.register(
   Legend,
 )
 
-//Don't forget to change the query link!
-//const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WEDNESDAY 2PM
-// let query = '';
 
 const JVMGraph = () => {
   //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
   const appState = useContext(appContext);
   const [connectionState, setConnectionState] = appState.connection;
-  const queryLink = connectionState.url_prometheus;
+  const queryParams = 'api/v1/query?query=';
+  const queryLink = connectionState.url_prometheus + queryParams;
 
   const [CPU, setCPU] = useState({
     // labels: ['CPU Usage'],
@@ -66,7 +64,7 @@ const JVMGraph = () => {
 
   useEffect( () => {
     //JVM Memory
-    const query = 'sum without(area)(jvm_memory_bytes_used{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})';
+    const query = 'sum without(area)(jvm_memory_bytes_used)';
 
     const useFetch = async () => {
       try {
