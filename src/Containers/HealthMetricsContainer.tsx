@@ -3,10 +3,7 @@ import { Link } from 'react-router-dom';
 import HealthMetricsChart from '../chartComponents/HealthMetricsChart';
 import { appContext } from '../App';
 
-//Don't forget to change the query link!
-//const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WEDNESDAY 2PM
-const queryRange = '';
-let query = '';
+
  
 const HealthMetricsContainer = () => {  
   
@@ -14,7 +11,8 @@ const HealthMetricsContainer = () => {
   const appState = useContext(appContext);
   const [globalState, setGlobalState] = appState.global;
   const [connectionState, setConnectionState] = appState.connection;
-  const queryLink = connectionState.url_prometheus;
+  const queryParams = 'api/v1/query?query=';
+  const queryLink = connectionState.url_prometheus + queryParams;
   const connectionStatus = connectionState.isConnected; // semantic variable
 
   // LOCAL STATE
@@ -25,10 +23,11 @@ const HealthMetricsContainer = () => {
   const [underReplicated, setUnderReplicated] = useState(0);
   const [offlinePartitions, setOfflinePartitions] = useState(0);
 
+  
   //CONTROLLERS
   useEffect(() => {
     //active controllers query
-    const query = 'kafka_controller_kafkacontroller_activecontrollercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"} > 0';
+    const query = 'kafka_controller_kafkacontroller_activecontrollercount';
     const data = {
       method: 'GET', 
       headers: {'Content-Type': 'application/json'}, 
@@ -49,7 +48,7 @@ const HealthMetricsContainer = () => {
   //BROKERS
   useEffect(() => {
     //brokers online query
-    const query = 'count(kafka_server_replicamanager_leadercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})';
+    const query = 'count(kafka_server_replicamanager_leadercount)';
     const data = {
       method: 'GET', 
       headers: {'Content-Type': 'application/json'}, 
@@ -69,7 +68,7 @@ const HealthMetricsContainer = () => {
 
   //PARTITION COUNT
   useEffect(() => {
-    query = 'sum(kafka_controller_kafkacontroller_globalpartitioncount{job="kafka-broker",env=~"dev"})';
+    const query = 'sum(kafka_controller_kafkacontroller_globalpartitioncount)';
     fetch(queryLink + query)
       .then(data => data.json())
       .then(result => {
@@ -84,7 +83,7 @@ const HealthMetricsContainer = () => {
 
   //TOPIC COUNT
   useEffect(() => {
-    query = 'sum(kafka_controller_kafkacontroller_globaltopiccount{job="kafka-broker",env=~"dev"})';
+    const query = 'sum(kafka_controller_kafkacontroller_globaltopiccount)';
     fetch(queryLink + query)
       .then(data => data.json())
       .then(result => {
@@ -104,7 +103,7 @@ const HealthMetricsContainer = () => {
  
   //UNDERREPLICATED PARTITIONS
   useEffect(() => {
-    query = 'sum(kafka_server_replicamanager_underreplicatedpartitions{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})';
+    const query = 'sum(kafka_server_replicamanager_underreplicatedpartitions)';
     fetch(queryLink + query)
       .then(data => data.json())
       .then(result => {
@@ -118,7 +117,7 @@ const HealthMetricsContainer = () => {
 
   //OFFLINE PARTITIONS COUNT
   useEffect(() => {
-    query = 'sum(kafka_controller_kafkacontroller_offlinepartitionscount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})';
+    const query = 'sum(kafka_controller_kafkacontroller_offlinepartitionscount)';
     fetch(queryLink + query)
       .then(data => data.json())
       .then(result => {
