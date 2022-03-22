@@ -4,8 +4,10 @@ const fakeState: any = {
         id:null,
         sidebarTab:0,
         isLoggedIn: false,
-        selectedState:1,
-        coreData:[
+        selected_kafka_topic_index:0,
+        kafka_topics: [],
+        kafka_partitions: ['cheese'],
+        coreData:[ // this is Prometheus's dummy data for Producer-Topic-Consumer diagrams
             {
             producers:["Producer 1", "Producer 2"],
             topic: 'Topic #1',
@@ -40,8 +42,8 @@ const fakeState: any = {
     },
     dummyConnectionState: {
         url_prometheus: 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query=',
-        url_kafka: null,
-        isConnected:true,
+        url_kafka: "demo.saamsa.io:29093",
+        isConnected:false,
         //past_URLS_Prometheus: [],
         //past_URLS_Kafka: []
     }

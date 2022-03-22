@@ -122,7 +122,7 @@ const LoginPage = () => {
             <input
               onChange={handlePasswordInput}
               className="m-4 border rounded bg-slateBlue/70 border-limeGreen/80 text-limeGreen/80"
-              type="text"
+              type="password"
               placeholder="password"
               name="password"
               value={password}

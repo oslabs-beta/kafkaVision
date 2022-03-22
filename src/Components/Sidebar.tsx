@@ -16,7 +16,7 @@ const Sidebar = () => {
     let displayedBoxes = [];
 
     // refactor this for loop?
-    const buttonText = ["Connect Cluster", "Health Metrics", "Component Diagrams"]
+    const buttonText = ["Connect Cluster", "Health Metrics", "Partition Diagrams"]
     const urlsText = ['/connectCluster', '/health', '/componentRelationships']
     for (let i = 0; i<3; i+=1){
         // put in cool shadows?
