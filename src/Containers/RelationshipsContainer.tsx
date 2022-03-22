@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import { Link } from 'react-router-dom';
-import FlowChart from '../Components/FlowChart.jsx';
+import Partition_Diagram from '../Components/Partition_Diagram';
 import BrokerDiagram from '../Components/brokerDiagram';
 import { appContext } from '../App';
 
@@ -13,11 +13,23 @@ const RelationshipsContainer = () => {
   const appState = useContext(appContext);
   const [connectionState, setConnectionState] = appState.connection;
   const [globalState, setGlobalState] = appState.global;
+  // BELOW - toggle whether diagram renders based on whether user has chosen a topic yet in dropdown
+  const topic_chosen = useRef(false);
+
   console.log("relntp container rendered")
   console.log(globalState.kafka_topics);
+  console.log(globalState.selected_kafka_topic_index);
   const options = [];
-  for (let i = 1; i <= globalState.coreData.length; i +=1){
-      options.push(<option value={i} key={i}> {globalState.coreData[i-1].topic}</option>)
+  for (let i = 1; i <= globalState.kafka_topics.length; i +=1){
+    if (i===1) options.push(<option value={0} key={0}> Choose Topic </option>)
+    options.push(<option value={i} key={i}> {globalState.kafka_topics[i-1]}</option>)
+  }
+
+  let rendered_diagram: any;
+  if (topic_chosen.current){
+    rendered_diagram = <Partition_Diagram/>
+  } else{
+    rendered_diagram = ''
   }
 
   let renderedContent: any;
@@ -31,16 +43,16 @@ const RelationshipsContainer = () => {
       )
   } else {
     renderedContent = (
-      <div className='flex-auto justify-center'>
-        <div className="m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75"> 
+      <div className='flex-auto justify-center h-full'>
+        <div className="m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75 h-full"> 
           <h1 className="font-bold text-xl m-4 text-center">Cluster Relations</h1>  
           <div className="border-2 border-seafoam/40 rounded m-5 bg-slateBlue/50">
             <p className='m-3'>Please Select a Topic:</p>
-            <select onChange={e => setGlobalState( (prevState: any) => { return  {...prevState, selectedState: e.target.value}})} className="text-sm text-left mx-5 border border-limeGreen/50 rounded bg-zinc-900" name="topic" id="topic">
+            <select onChange={(e) => {topic_chosen.current = true; setGlobalState((prevState: any) => {return  {...prevState, selected_kafka_topic_index: Number(e.target.value)}})}} className="text-sm text-left mx-5 border border-limeGreen/50 rounded bg-zinc-900" name="topic" id="topic">
               {options}
             </select>
-            <div className='flex p-6 h-60, w-80'>
-              {/* <FlowChart /> */}
+            <div className='flex p-6 h-full, w-full'>
+              {rendered_diagram}
             </div>
           </div>
         </div>

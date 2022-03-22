@@ -17,15 +17,21 @@ const Header = () => {
   if (globalState.isLoggedIn && !connectionState.isConnected){
     // console.log("should be unplugged")
     connection_image = (
-    <div className="bg-seafoam/80 rounded-3xl mr-3">
-       <img src={disconnected_icon}></img>
+      <div className="flex flex-row items-center group">
+        <span className="text-sm mr-4 scale-0 bg-red-700 px-2 text-white group-hover:scale-100 rounded"> Not Connected </span>
+        <div className="bg-seafoam/80 rounded-3xl mr-3">
+          <img src={disconnected_icon}></img>
+        </div>
     </div>
     )
   } else if (globalState.isLoggedIn && connectionState.isConnected){
   // console.log("should be pluggedin")
   connection_image = (
-    <div className="bg-seafoam/80 rounded-3xl mr-3">
-       <img src={connected_icon}></img>
+    <div className="flex flex-row items-center group">
+      <span className="text-sm mr-4 scale-0 bg-green-700 px-2 text-white group-hover:scale-100 rounded"> Connected </span>
+      <div className="bg-seafoam/80 rounded-3xl mr-3">
+        <img src={connected_icon}></img>
+      </div>
     </div>
     )
   }
