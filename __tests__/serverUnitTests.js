@@ -8,7 +8,7 @@ const regeneratorRuntime = require('regenerator-runtime');
 const request = require('supertest');
 const fs = require('fs');
 const path = require('path');
-const server = '../dist/server.js';
+const server = 'http://localhost:3333';
 
 describe('Route integration', () => {
   afterAll(() => {
@@ -17,11 +17,11 @@ describe('Route integration', () => {
 
   describe('/', () => {
     describe('GET', () => {
-      it('responds with 200 status and text/html content type', async () => {
+      it('responds with 400 status and text/html content type', async () => {
         return await request(server)
           .get('/')
           .expect('Content-Type', /text\/html/)
-          .expect(200);
+          .expect(400);
       });
     });
   });
