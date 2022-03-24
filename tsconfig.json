@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "module": "es2020",
+    "moduleResolution": "node",
+    "target": "es2018",
+    "allowJs": true,
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  },
+  "include": ["./server", "custom.d.ts", "./public/images/connected_icon.png"],
+  "exclude": ["node_modules"],
+}
+

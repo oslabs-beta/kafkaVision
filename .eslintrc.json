@@ -1,0 +1,54 @@
+{
+    "root": true,
+    "ignorePatterns": ["**/test", "**/__tests__"],
+    "env": {
+      "node": true,
+      "browser": true,
+      "es2020": true,
+      "es2021": true,
+      "jest": true
+    },
+    "plugins": ["react"],
+    "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      "indent": ["warn", 2],
+      "no-unused-vars": ["off", { "vars": "local" }],
+      "no-case-declarations": "off",
+      "prefer-const": "warn",
+      "quotes": ["warn", "single"],
+      "react/prop-types": "off",
+      "semi": ["warn", "always"],
+      "space-infix-ops": "warn",
+      "import/extensions": "off",
+      "linebreak-style": "off",
+      "node/no-unsupported-features/es-syntax": "off",
+      "no-underscore-dangle": "off",
+      "import/prefer-default-export": "off"
+    },
+    "settings": {
+      "react": { "version": "detect"},
+      "noInlineConfig": true,
+      "node": {
+        "tryExtensions": [".js", ".ts", ".d.ts"],
+        "moduleDirectory": ["node_modules", "server/"]
+      },
+      "import/resolver": {
+        "node": {
+          "extensions": [".js", ".ts", ".d.ts"],
+          "moduleDirectory": ["node_modules", "server/"],
+          "typescript": {}
+        },
+        "typescript": {
+          "alwaysTryTypes": true,
+          "project": "."
+        }
+      }
+    }
+ }
