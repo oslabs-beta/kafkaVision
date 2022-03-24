@@ -7,11 +7,12 @@
     "noImplicitAny": true,
     "module": "es2020",
     "moduleResolution": "node",
-    "target": "es2018",
+    "target": "es6",
     "allowJs": true,
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["node", "jest"]
   },
   "include": ["./server", "custom.d.ts", "./public/images/connected_icon.png"],
   "exclude": ["node_modules"],
