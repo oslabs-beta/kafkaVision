@@ -12,7 +12,9 @@
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "types": ["node", "jest"]
+    "types": ["node", "jest"],
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
   "include": ["./server", "custom.d.ts", "./public/images/connected_icon.png"],
   "exclude": ["node_modules"],
