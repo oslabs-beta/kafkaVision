@@ -19,7 +19,12 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "verbose": true,
-    "automock": true
+    "automock": true,
+    "globalSetup": "./jest-setup.ts",
+    "globalTeardown": "./jest-teardown.ts",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    }
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.16.7",
@@ -53,6 +58,7 @@
     "@types/react": "^17.0.40",
     "@types/react-dom": "^17.0.13",
     "@types/react-router-dom": "^5.3.3",
+    "@types/regenerator-runtime": "^0.13.1",
     "autoprefixer": "^10.4.2",
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.2.3",
