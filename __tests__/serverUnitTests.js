@@ -1,14 +1,14 @@
-// import regeneratorRuntime from "regenerator-runtime";
-// import server from '../dist/server.js';
-// import request from 'supertest';
-// import fs from 'fs';
-// import path from 'path';
+import regeneratorRuntime from "regenerator-runtime";
+import server from '../dist/server.js';
+import request from 'supertest';
+import fs from 'fs';
+import path from 'path';
 
-const regeneratorRuntime = require('regenerator-runtime');
-const request = require('supertest');
-const fs = require('fs');
-const path = require('path');
-const server = 'http://localhost:3333';
+// const regeneratorRuntime = require('regenerator-runtime');
+// const request = require('supertest');
+// const fs = require('fs');
+// const path = require('path');
+
 
 describe('Route integration', () => {
   afterAll(() => {

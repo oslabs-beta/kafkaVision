@@ -13,18 +13,7 @@
     "build-prod": "webpack --mode production",
     "start": "nodemon --es-module-specifier-resolution=node dist/server.js",
     "dev": "webpack serve --hot --mode development & nodemon --es-module-specifier-resolution=node dist/server.js",
-    "test": "jest --verbose"
-  },
-  "jest": {
-    "globalSetup": "./jest-setup.cjs",
-    "globalTeardown": "./jest-teardown.cjs",
-    "transform": {
-      "\\.[jt]sx?$": "babel-jest"
-    },
-    "testEnvironment": "jest-environment-jsdom",
-    "setupFilesAfterEnv": [
-      "@testing-library/jest-dom/extend-expect"
-    ]
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --verbose --no-cache"
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.16.7",
@@ -34,6 +23,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "jest-environment-jsdom": "^27.5.1",
+    "jest-environment-node": "^27.5.1",
     "kafkajs": "^1.16.0",
     "mongoose": "^6.2.6",
     "react": "^17.0.2",
@@ -50,7 +40,9 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@hot-loader/react-dom": "^17.0.2",
+    "@testing-library/react": "^12.1.4",
     "@types/bcryptjs": "^2.4.2",
+    "@types/chart.js": "^2.9.35",
     "@types/cors": "^2.8.12",
     "@types/d3": "^7.1.0",
     "@types/express": "^4.17.13",
@@ -72,6 +64,7 @@
     "nodemon": "^2.0.15",
     "postcss-loader": "^6.2.1",
     "prettier": "^2.5.1",
+    "react-test-renderer": "^17.0.2",
     "style-loader": "^3.3.1",
     "supertest": "^6.2.2",
     "ts-jest": "^27.1.4",

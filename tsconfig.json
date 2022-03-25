@@ -16,7 +16,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "include": ["./server", "custom.d.ts", "./public/images/connected_icon.png"],
-  "exclude": ["node_modules"],
+  "include": ["./src", "./server", "custom.d.ts", "./public/images/connected_icon.png"],
+  "exclude": ["node_modules", "./src/__tests__"]
 }
-
