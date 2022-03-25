@@ -95,7 +95,7 @@ const LoginPage = () => {
   return (
     <div className=" h-screen bg-gray-900">
       {/* //SECRET BUTTON */}
-      <div className="text-white">
+      <div>
         <Link to="/connectCluster" className="text-slate-900"> Back door... </Link>
       </div>
       {/* // OVERALL SECTION: */}

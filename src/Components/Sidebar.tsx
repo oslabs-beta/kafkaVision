@@ -16,9 +16,9 @@ const Sidebar = () => {
     let displayedBoxes = [];
 
     // refactor this for loop?
-    const buttonText = ["Connect Cluster", "Health Metrics", "Partition Diagrams"]
-    const urlsText = ['/connectCluster', '/health', '/componentRelationships']
-    for (let i = 0; i<3; i+=1){
+    const buttonText = ["Connect Cluster", "Health Metrics", "Partition Diagrams", "Topic Metrics"]
+    const urlsText = ['/connectCluster', '/health', '/componentRelationships', '/topicMetrics']
+    for (let i = 0; i<4; i+=1){
         // put in cool shadows?
         // sizes auto-adjust if the text takes up two lines
         if (i===globalState.sidebarTab){
