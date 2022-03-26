@@ -9,6 +9,7 @@ import Header from './Components/Header';
 import HealthMetricsContainer from './Containers/HealthMetricsContainer';
 import RelationshipsContainer from './Containers/RelationshipsContainer';
 import TopicsContainer from './Containers/TopicsContainer';
+import NewTopicsContainer from './Containers/NewTopicsContainer';
 import ConnectClusterPage from './ConnectClusterPage';
 import LoginPage from './LoginPage';
 import fakeState from './Components/dummyState';
@@ -81,6 +82,7 @@ const App = () => {//extends React.Component<Props> {
                   <Sidebar />
                 </div>
                 <div className="col-span-5 bg-gray-900">
+                  <NewTopicsContainer />
                   <TopicsContainer />
                 </div>
               </div>

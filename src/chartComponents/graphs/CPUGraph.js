@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { 
   Chart as ChartJS, 
   CategoryScale, 
@@ -50,9 +50,11 @@ const CPUGraph = () => {
   });
 
   const [chartOptions, setChartOptions] = useState({});
+  const {isOpen, setIsOpen} = useRef();
 
   const dataForGraph = [];
   const indexTracker = 0;
+
 
   const [CPUData, setCPUData] = useState([[10, 10, 10, 10, 10, 10, 10, 10, 10, 10], [15, 15, 15, 15, 15, 15, 15, 15, 15, 15]]);
 
@@ -132,14 +134,18 @@ const CPUGraph = () => {
               }
             },
           },  
-        })
+        });
+        
+        //testing collapsible graph by passing down props to the charts
+        const collapse = isOpen ? {height: '300px'} : {height: '0px'};
+
       }, [CPUData]);
 
 
   return (
     <div styles={{width:'300', length:'300'}}>
       <div>CPU Usage</div>
-      <Line data={CPU} options={chartOptions}/>  
+      <Line data={CPU} options={chartOptions} style={collapse}/>  
     </div>
   )
 }
