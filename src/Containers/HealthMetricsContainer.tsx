@@ -239,12 +239,3 @@ const HealthMetricsContainer = () => {
 };
 
 export default HealthMetricsContainer;
-
-{/* <div className='text-sm text-left mx-5'>
-<p>Please Select a Topic:</p>
-<select className='my-1 bg-zinc-900 border rounded border-slateBlue' name="topic" id="topic">
-  {/* <option value="topic1"> Topic 1 </option>
-  <option value="topic2"> Topic 2 </option>
-  <option value="topic3"> Topic 3 </option> */}
-//   {options}
-// </select> */}

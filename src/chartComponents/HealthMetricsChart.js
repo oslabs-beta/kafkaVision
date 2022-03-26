@@ -23,29 +23,27 @@ const HealthMetricsChart = () => {
       )
   } else {
     renderedContent = (
-      <div> 
-      {/* CPU USAGE GRAPHS */}
+      <div>
       <div className="w-fit h-fit grid grid-cols-2 gap-10 ">
+
         <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
           <CPUGraph/>
         </div>
+
         <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
           CPU Usage Gauge
           <CPUGauge/>
         </div>
-      {/* </div> */}
 
-      {/* JVM MEMORY GRAPHS */}
-      {/* <div className="w-full h-full grid grid-cols-2 gap-5"> */}
         <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
           <JVMGraph/>
         </div>
+
         <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
           <GCGraph/>
         </div>
-      {/* </div> */}
       </div>
-    </div>
+      </div>
     )
   }
 

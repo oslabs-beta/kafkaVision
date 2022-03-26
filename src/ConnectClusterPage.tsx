@@ -122,12 +122,12 @@ const ConnectClusterPage = () => {
               <div className='border rounded m-10 border-seafoam/80 bg-slateBlue/80'>
                 <div className="flex place-content-center">
                     <label className="self-center" htmlFor="urlKafka">Enter Broker port: </label>            
-                    <input onChange={handleKafkaInput} placeholder="Kafka Broker Port" name="urlKafka" id="urlKafka" value={url_kafka} className="m-7 rounded bg-slateBlue border border-limeGreen/80" type="text"></input>
+                    <input onChange={handleKafkaInput} autoComplete="off" placeholder="Kafka Broker Port" name="urlKafka" id="urlKafka" value={url_kafka}  className="m-7 rounded bg-slateBlue border border-limeGreen/80" type="text"></input>
                     <button className='self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50' onClick={(e)=>{e.preventDefault(); saveKafka(url_kafka); setKafka('')}}>Submit</button>
                 </div>
                 <div className="flex place-content-center">
                     <label className="self-center" htmlFor="urlProm">Enter Prometheus port: </label>            
-                    <input onChange={handlePromInput} className="m-5 rounded bg-slateBlue border border-limeGreen/80 " placeholder="Prometheus Port" name="urlProm" type-="text" value={url_prometheus}></input>
+                    <input onChange={handlePromInput} autoComplete="off" className="m-5 rounded bg-slateBlue border border-limeGreen/80 " placeholder="Prometheus Port" name="urlProm" type-="text" value={url_prometheus}></input>
                     <button className='self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50' onClick={(e)=>{e.preventDefault(); saveProm(url_prometheus); setProm('')}}>Submit</button>
                 </div>  
               </div>     
