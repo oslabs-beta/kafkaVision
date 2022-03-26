@@ -1,15 +1,14 @@
 import React from 'react';
 //import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-// import App from '../App.tsx';
-import CPUGAUGE from '../chartComponents/graphs/CPUGauge';
-import CPUGauge from '../chartComponents/graphs/CPUGauge';
+//import App from '../App.tsx';
+import Header from '../Components/Header';
 
 describe('Sidebar component', () => {
-  beforeEach(() => render(CPUGauge));
+  beforeEach(() => render(<Header />));
 
   it('renders 2 buttons to page', () => {
-    expect(screen.getAllByRole('button')).toHaveLength(2);
+    expect(screen.getByRole('button')).toHaveLength(2);
   });
 
   it('renders a banner to the page', () => {
