@@ -6,7 +6,7 @@ module.exports = {
   // .ts, .tsx, .js, .jsx, .mjs files will be transformed with ts-jest to ESM syntax:
   preset: 'ts-jest/presets/js-with-ts-esm',
   testEnvironment: 'jest-environment-jsdom',
-  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+  setupFilesAfterEnv: ['./src/jest-setup.js'],
   // passing empty transform prevents babel from transforming files:
   transform: {
     // '^.+\\.js$': 'babel-jest',
@@ -19,7 +19,6 @@ module.exports = {
       tsconfig: './tsconfig.json',
     },
   },
-  //globalSetup: './__tests__/jest-setup.js',
   // troubleshooting steps from ts-jest https://github.com/kulshekhar/ts-jest/blob/main/TROUBLESHOOTING.md
   // cannot find module "" from ""
   // {NOT WORKING - possible bug solved in new version: https://github.com/facebook/jest/issues/9771}
