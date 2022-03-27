@@ -19,6 +19,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "include": ["./server", "custom.d.ts", "./public/images/connected_icon.png"],
+  "include": ["./server", "./custom.d.ts"],
   "exclude": ["node_modules", "./src/__tests__", "./dist"]
 }

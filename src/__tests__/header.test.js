@@ -2,6 +2,17 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Header from '../Components/Header';
 import { StateProvider } from '../__mocks__/MockStateProvider';
+import { jest } from '@jest/globals';
+
+jest.mock('chart.js', () => ({
+  Chart: () => null,
+  CategoryScale: () => null,
+  BarElement: () => null,
+  BarController: () => null,
+  Title: () => null,
+  Tooltip: () => null,
+  Legend: () => null,
+}));
 
 describe('Sidebar component', () => {
   beforeEach(() =>

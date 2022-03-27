@@ -1,8 +1,9 @@
+/// <reference path='../../custom.d.ts'/>
 import React, { useContext } from 'react';
 import { appContext } from '../App';
 import { Link } from 'react-router-dom';
-import connected_icon from '../../public/images/connected_icon.png';
-import disconnected_icon from '../../public/images/no-plug.png';
+// import connected_icon from '../../public/images/connected_icon.png';
+// import disconnected_icon from '../../public/images/no-plug.png';
 
 const Header = () => {
   const {
@@ -52,7 +53,7 @@ const Header = () => {
               Connected
             </span>
             <div className="bg-seafoam/80 rounded-3xl mr-3">
-              <img src={connected_icon}></img>
+              {/* <img src={connected_icon}></img> */}
             </div>
           </div>
         )}
@@ -62,7 +63,7 @@ const Header = () => {
               Not Connected
             </span>
             <div className="bg-seafoam/80 rounded-3xl mr-3">
-              <img src={disconnected_icon}></img>
+              {/* <img src={disconnected_icon}></img> */}
             </div>
           </div>
         )}

@@ -3,7 +3,7 @@ import { jest } from '@jest/globals';
 
 export const store = {
   globalState: null,
-  connectionState: false,
+  connectionState: null,
   setGlobalState: jest.fn(),
   setConnectionState: jest.fn(),
 };
