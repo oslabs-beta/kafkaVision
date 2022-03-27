@@ -5,7 +5,6 @@ import connected_icon from '../../public/images/connected_icon.png';
 import disconnected_icon from '../../public/images/no-plug.png';
 
 const Header = () => {
-  // const contextType = AppContext;
   const {
     state: { connectionState },
   } = useContext(appContext);
