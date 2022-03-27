@@ -6,11 +6,11 @@ jest.mock('react-chartjs-2', () => ({
 }));
 
 jest.mock('chart.js', () => ({
-  Chart,
-  CategoryScale,
-  BarElement,
-  BarController,
-  Title,
-  Tooltip,
-  Legend,
+  Chart: () => null,
+  CategoryScale: () => null,
+  BarElement: () => null,
+  BarController: () => null,
+  Title: () => null,
+  Tooltip: () => null,
+  Legend: () => null,
 }));
