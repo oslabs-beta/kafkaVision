@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
-  Chart as ChartJS,
+  Chart,
   CategoryScale,
   BarElement,
   BarController,
@@ -11,9 +11,8 @@ import {
 import { Bar } from 'react-chartjs-2';
 import regeneratorRuntime from 'regenerator-runtime';
 import { appContext } from '../../App.tsx';
-// import { timeStamp } from 'console';
 
-ChartJS.register(
+Chart.register(
   CategoryScale,
   BarElement,
   BarController,
@@ -21,10 +20,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-//Don't forget to change the query link!
-//const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WED 2PM
-// let query = '';
 
 const CPUGauge = () => {
   //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)

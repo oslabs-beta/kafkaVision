@@ -1,6 +1,6 @@
 //import { hot } from 'react-hot-loader/root';
-import * as React from 'react'; // GET HELP WITH THIS
-// const {useState} = React;
+import React from 'react';
+import { createContext, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // IMPORTED COMPONENTS/PAGES ----------------------------------
@@ -17,19 +17,16 @@ const { dummyGlobalState, dummyConnectionState } = fakeState;
 // interface Props {
 //   name: string;
 // }
-export const appContext = React.createContext(fakeState); // Best to initialize with null?
+export const appContext = createContext(fakeState); // Best to initialize with null?
 
 const App = () => {
-  //extends React.Component<Props> {
-  // render() {
+  const [globalState, setGlobalState] = useState(dummyGlobalState);
+  const [connectionState, setConnectionState] = useState(dummyConnectionState);
 
-  const [globalState, setGlobalState] = React.useState(dummyGlobalState);
-  const [connectionState, setConnectionState] =
-    React.useState(dummyConnectionState);
   const providerProps: any = {
-    global: [globalState, setGlobalState],
-    connection: [connectionState, setConnectionState],
-  }; // will pass this to provider
+    state: { globalState, connectionState},
+    actions: {setGlobalState, setConnectionState},
+  };
 
   return (
     <div>

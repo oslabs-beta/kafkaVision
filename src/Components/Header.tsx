@@ -1,53 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { appContext } from '../App';
 import { Link } from 'react-router-dom';
 // import connected_icon from '../../public/images/connected_icon.png';
 // import disconnected_icon from '../../public/images/no-plug.png';
 
 const Header = () => {
-  const appState = useContext(appContext);
-  const [globalState, setGlobalState] = appState.global;
-  const [connectionState, setConnectionState] = appState.connection;
-  // console.log(globalState)
-  // console.log(connectionState)
+  // const contextType = AppContext;
+  const { state: { connectionState } } = useContext(appContext);
+  const { actions: { setGlobalState, setConnectionState } } = useContext(appContext);
 
-  let connection_image: any = '';
-  if (globalState.isLoggedIn && !connectionState.isConnected) {
-    // console.log("should be unplugged")
-    connection_image = (
-      <div className="flex flex-row items-center group">
-        <span className="text-sm mr-4 scale-0 bg-red-700 px-2 text-white group-hover:scale-100 rounded">
-          Not Connected
-        </span>
-        <div className="bg-seafoam/80 rounded-3xl mr-3">
-          {/* <img src={disconnected_icon}></img> */}
-        </div>
-      </div>
-    );
-  } else if (globalState.isLoggedIn && connectionState.isConnected) {
-    // console.log("should be pluggedin")
-    connection_image = (
-      <div className="flex flex-row items-center group">
-        <span className="text-sm mr-4 scale-0 bg-green-700 px-2 text-white group-hover:scale-100 rounded">
-          Connected
-        </span>
-        <div className="bg-seafoam/80 rounded-3xl mr-3">
-          {/* <img src={connected_icon}></img> */}
-        </div>
-      </div>
-    );
-  }
 
-  const logout: any = () => {
-    // CORRECT FORMAT?
-    console.log('logout fcn invoked');
-    // send fetch request for cookie handling
-    fetch('/api/user/logout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: globalState.id }),
-    });
-    // wipe all relevant state data
+  const disconnect: any = () => {
     setGlobalState((prevState: any) => {
       return {
         ...prevState,
@@ -69,7 +32,6 @@ const Header = () => {
   };
 
   return (
-    // header
     <div
       role="banner"
       className="bg-darkIndigo/70 flex justify-between items-center h-15"
@@ -80,11 +42,29 @@ const Header = () => {
       <div className="bg-clip-text text-transparent py-4 px-3 bg-gradient-to-r from-slateBlue via-seafoam/75 to-slateBlue text-5xl font-black text-justify font-logo">
         kafkaVision
       </div>
-
-      {/* github button */}
       <div className="flex justify-right">
         {/* // Credit FREEPIK for CONNECTED Icon in README */}
-        {connection_image}
+        {connectionState.isConnected && (
+          <div className="flex flex-row items-center group">
+            <span className="text-sm mr-4 scale-0 bg-green-700 px-2 text-white group-hover:scale-100 rounded">
+              Connected
+            </span>
+            <div className="bg-seafoam/80 rounded-3xl mr-3">
+              {/* <img src={connected_icon}></img> */}
+            </div>
+          </div>
+        )}
+        {!connectionState.isConnected && (
+          <div className="flex flex-row items-center group">
+            <span className="text-sm mr-4 scale-0 bg-red-700 px-2 text-white group-hover:scale-100 rounded">
+              Not Connected
+            </span>
+            <div className="bg-seafoam/80 rounded-3xl mr-3">
+              {/* <img src={disconnected_icon}></img> */}
+            </div>
+          </div>
+        )}
+        {/* github button */}
         <a
           role="button"
           href="https://github.com/oslabs-beta/kafkavision"
@@ -95,12 +75,12 @@ const Header = () => {
         <Link
           role="button"
           to="/"
-          onClick={() => logout()}
+          onClick={disconnect}
           className="py-1.5 px-3 mr-3 bg-seafoam/80 hover:bg-darkIndigo/50 text-darkIndigo text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300"
         >
-          Sign Out
+          Disconnect
         </Link>
-        {/* dark mode toggle button  */}
+        {/* future feature: dark mode toggle button  */}
       </div>
     </div>
   );

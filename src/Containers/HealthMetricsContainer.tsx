@@ -7,10 +7,14 @@ import { appContext } from '../App';
  
 const HealthMetricsContainer = () => {  
   
-  //UNPACK APP (CONNECTION) STATE (TO GET PROMETHEUS URL)
-  const appState = useContext(appContext);
-  const [globalState, setGlobalState] = appState.global;
-  const [connectionState, setConnectionState] = appState.connection;
+  //UNPACK APP STATE TO GET PROMETHEUS URL
+  const {
+    state: { connectionState },
+  } = useContext(appContext);
+  const {
+    actions: { setGlobalState },
+  } = useContext(appContext);
+ 
   const queryParams = 'api/v1/query?query=';
   const queryLink = connectionState.url_prometheus + queryParams;
   const connectionStatus = connectionState.isConnected; // semantic variable
@@ -28,10 +32,6 @@ const HealthMetricsContainer = () => {
   useEffect(() => {
     //active controllers query
     const query = 'kafka_controller_kafkacontroller_activecontrollercount';
-    const data = {
-      method: 'GET', 
-      headers: {'Content-Type': 'application/json'}, 
-    }
     fetch(queryLink + query)
       .then(data => data.json())
       .then(result => {
@@ -49,10 +49,6 @@ const HealthMetricsContainer = () => {
   useEffect(() => {
     //brokers online query
     const query = 'count(kafka_server_replicamanager_leadercount)';
-    const data = {
-      method: 'GET', 
-      headers: {'Content-Type': 'application/json'}, 
-    }
     fetch(queryLink + query)
       .then(data => data.json())
       .then(result => {
