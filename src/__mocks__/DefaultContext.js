@@ -1,9 +1,12 @@
 import '@testing-library/jest-dom';
 import { jest } from '@jest/globals';
 
-export const store = {
-  globalState: null,
-  connectionState: null,
-  setGlobalState: jest.fn(),
-  setConnectionState: jest.fn(),
+const setGlobalState = jest.fn();
+const setConnectionState = jest.fn();
+const connectionState = true;
+const globalState = null;
+
+export const providerProps = {
+  state: { globalState, connectionState },
+  actions: { setGlobalState, setConnectionState },
 };

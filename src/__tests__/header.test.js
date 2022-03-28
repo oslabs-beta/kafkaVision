@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Header from '../Components/Header';
 import { appContext } from '../App';
+import { providerProps } from '../__mocks__/DefaultContext';
 import { jest } from '@jest/globals';
 
 jest.mock('chart.js', () => ({
@@ -15,25 +16,17 @@ jest.mock('chart.js', () => ({
 }));
 
 describe('Header component', () => {
-  const setGlobalState = jest.fn();
-  const setConnectionState = jest.fn();
-  const connectionState = true;
-  const globalState = null;
-
-  const providerProps = {
-    state: { globalState, connectionState },
-    actions: { setGlobalState, setConnectionState },
-  };
-
-  beforeEach(() => render(
-    <appContext.Provider value={providerProps}>
-      <Header />
-    </appContext.Provider>
-  ));
+  beforeEach(() =>
+    render(
+      <appContext.Provider value={providerProps}>
+        <Header />
+      </appContext.Provider>
+    )
+  );
 
   it('renders 2 buttons to page', () => {
-  expect(screen.getAllByRole('button')).toHaveLength(2);
- });
+    expect(screen.getAllByRole('button')).toHaveLength(2);
+  });
 
   it('renders a banner to the page', () => {
     expect(screen.getByRole('banner')).toBeInTheDocument();
