@@ -21,21 +21,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/kafka', kafkaRouter);
-app.use('/api/user', userRouter)
 
-import * as dotenv from "dotenv";
-dotenv.config();
+// FOLLOWING SECTION FOR FUTURE USER AUTH / DATABASE
 
-// non-undefined assertion operator to account for undefined type
-const db: string = process.env.MONGO_URI!;
+// app.use('/api/user', userRouter);
 
-connect(db)
-    .then(() => {
-      console.log('Connected to MongoDB');
-    })
-    .catch((err: Error) =>
-      console.log(`Error found inside the mongoose connect method: ${err}`)
-    );
+// import * as dotenv from "dotenv";
+// dotenv.config();
+
+// // non-undefined assertion operator to account for undefined type
+// const db: string = process.env.MONGO_URI!;
+
+// connect(db)
+//     .then(() => {
+//       console.log('Connected to MongoDB');
+//     })
+//     .catch((err: Error) =>
+//       console.log(`Error found inside the mongoose connect method: ${err}`)
+//     );
 
 app.use(express.static(path.join(__dirname, '../dist')));
 
