@@ -4,7 +4,7 @@ import Header from '../Components/Header';
 import { appContext } from '../App';
 import { providerProps } from '../__mocks__/DefaultContext';
 import { jest } from '@jest/globals';
-import { mockChartJs } from '../../__mocks__/chart';
+import { mockChartJs } from '../../__mocks__/chart.js';
 import { mockReactChartJs2 } from '../../__mocks__/react-chartjs-2';
 
 describe('Header component', () => {
