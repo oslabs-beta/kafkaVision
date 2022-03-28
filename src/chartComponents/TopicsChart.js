@@ -1,7 +1,8 @@
 import React, {useContext} from 'react';
 import {appContext} from '../App.tsx';
-// import BytesInGraph from './graphs/BytesInGraph';
-import CPUGraph from './graphs/CPUGraph.js';
+import BytesInGraph from './graphs/BytesInGraph.js';
+import BytesOutGraph from './graphs/BytesOutGraph.js';
+import MessagesInGraph from './graphs/MessagesInGraph.js';
 
 const TopicsChart = () => {
   console.log('')
@@ -40,13 +41,17 @@ const TopicsChart = () => {
   //   </div>  
   // )
   return (
-    <div class='flex flex-row justify-around h-full border border-yellow-400 items-center'>
+    <div className='flex flex-row justify-around h-full border border-yellow-400 items-center'>
       <div className="h-full w-full border border-white gap-10 ">
-        <CPUGraph/>
+        <BytesInGraph/>
       </div>
 
       <div className="h-full w-full border border-white gap-10 ">
-        <CPUGraph/>
+        <BytesOutGraph/>
+      </div>
+
+      <div className="h-full w-full border border-white gap-10 ">
+        <MessagesInGraph/>
       </div>
     </div>
   )

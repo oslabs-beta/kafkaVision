@@ -131,7 +131,10 @@ const CPUGraph = () => {
               }
             },
             // x: {
-            //   type: 'timeseries',
+            //   type: 'time',
+            //   time: {
+            //     unit: 'second',
+            //   }
             // }
           },  
         })
