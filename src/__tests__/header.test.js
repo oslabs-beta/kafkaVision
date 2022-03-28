@@ -4,25 +4,19 @@ import Header from '../Components/Header';
 import { appContext } from '../App';
 import { providerProps } from '../__mocks__/DefaultContext';
 import { jest } from '@jest/globals';
-
-jest.mock('chart.js', () => ({
-  Chart: () => null,
-  CategoryScale: () => null,
-  BarElement: () => null,
-  BarController: () => null,
-  Title: () => null,
-  Tooltip: () => null,
-  Legend: () => null,
-}));
+import { mockChartJs } from '../../__mocks__/chart';
+import { mockReactChartJs2 } from '../../__mocks__/react-chartjs-2';
 
 describe('Header component', () => {
-  beforeEach(() =>
+  beforeEach(() => {
+    jest.mock('react-chartjs-2', mockReactChartJs2);
+    jest.mock('chart.js', mockChartJs);
     render(
       <appContext.Provider value={providerProps}>
         <Header />
       </appContext.Provider>
-    )
-  );
+    );
+  });
 
   it('renders 2 buttons to page', () => {
     expect(screen.getAllByRole('button')).toHaveLength(2);

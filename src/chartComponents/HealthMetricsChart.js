@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-// import CPUGauge from './graphs/CPUGauge.js';
-// import CPUGraph from './graphs/CPUGraph.js';
-// import JVMGraph from './graphs/JVMGraph.js';
-// import GCGraph from './graphs/GCGraph.js';
+import CPUGauge from './graphs/CPUGauge.js';
+import CPUGraph from './graphs/CPUGraph.js';
+import JVMGraph from './graphs/JVMGraph.js';
+import GCGraph from './graphs/GCGraph.js';
 import { appContext } from '../App.tsx';
 
 const HealthMetricsChart = () => {
