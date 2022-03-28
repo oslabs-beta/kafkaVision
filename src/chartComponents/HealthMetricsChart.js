@@ -5,6 +5,7 @@ import JVMGraph from './graphs/JVMGraph.js';
 import GCGraph from './graphs/GCGraph.js';
 import BrokerThroughputGraph from './graphs/BrokerThroughput.js';
 import {appContext} from '../App.tsx';
+import FetchLatencyGraph from './graphs/FetchLatencyGraph.js';
 
 const HealthMetricsChart = () => {
 
@@ -28,12 +29,16 @@ const HealthMetricsChart = () => {
       <div className="w-fit h-fit grid grid-cols-2 gap-10 ">
 
         <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
-          {/* <CPUGraph/> */}
-          <BrokerThroughputGraph/>
+          <CPUGraph/>
+          {/* <BrokerThroughputGraph/> */}
         </div>
 
         <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
           <CPUGauge/>
+        </div>
+
+        <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
+          <FetchLatencyGraph/>
         </div>
 
         <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
