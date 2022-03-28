@@ -1,12 +1,12 @@
 import express, {Request,Response,Application} from 'express';
 import kafkaRouter from './routes/kafkaRouter.js';
-import userRouter from './routes/userRouter.js';
+// import userRouter from './routes/userRouter.js';
 import cors  from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import mongoose from 'mongoose';
-const { connect } = mongoose;
+// import mongoose from 'mongoose';
+// const { connect } = mongoose;
 
 const port = 3333;
 
