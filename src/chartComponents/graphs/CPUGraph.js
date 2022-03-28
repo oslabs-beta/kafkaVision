@@ -136,17 +136,17 @@ const CPUGraph = () => {
             text: 'Cores',
           },
         },
-        x: {
-          type: 'time',
-          time: {
-            unit: 'second',
-          },
-          adapters: {
-            date: {
-              locale: de
-            }
-          }
-        },      
+        // x: {
+        //   type: 'time',
+        //   time: {
+        //     unit: 'second',
+        //   },
+        //   adapters: {
+        //     date: {
+        //       locale: de
+        //     }
+        //   }
+        // },      
       },  
     })
   }, [CPUData]);

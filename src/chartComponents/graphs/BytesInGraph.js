@@ -25,8 +25,9 @@ ChartJS.register(
 
 const BytesInGraph = () => {
   //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
-  const appState = useContext(appContext);
-  const [connectionState, setConnectionState] = appState.connection;
+  const {
+    state: { connectionState },
+  } = useContext(appContext);
   const queryParams = 'api/v1/query?query=';
   const queryLink = connectionState.url_prometheus + queryParams;
 

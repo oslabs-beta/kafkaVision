@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { appContext } from '../App';
 import TopicsChart from '../chartComponents/TopicsChart';
 
 
