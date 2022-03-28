@@ -8,8 +8,6 @@ const RelationshipsContainer = () => {
   //UNPACKING STATE:
   const {
     state: { connectionState, globalState },
-  } = useContext(appContext);
-  const {
     actions: { setGlobalState },
   } = useContext(appContext);
   // BELOW - toggle whether diagram renders based on whether user has chosen a topic yet in dropdown

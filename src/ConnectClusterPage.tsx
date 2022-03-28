@@ -5,12 +5,9 @@ import { appContext } from './App';
 const ConnectClusterPage = () => {
   //UNPACKING STATE:
   const {
-    state: { connectionState, globalState },
+    state: { connectionState, globalState }, actions: { setConnectionState, setGlobalState },
   } = useContext(appContext);
-  const {
-    actions: { setConnectionState, setGlobalState },
-  } = useContext(appContext);
-
+  
   const [url_kafka, setKafka] = useState('');
   const [url_prometheus, setProm] = useState('');
   const history = useHistory();

@@ -6,8 +6,6 @@ const Sidebar = () => {
   //UNPACKING STATE:
   const {
     state: { globalState },
-  } = useContext(appContext);
-  const {
     actions: { setGlobalState },
   } = useContext(appContext);
   let displayedBoxes = [];

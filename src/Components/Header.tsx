@@ -8,8 +8,6 @@ import disconnected_icon from '../../public/images/no-plug.png';
 const Header = () => {
   const {
     state: { connectionState },
-  } = useContext(appContext);
-  const {
     actions: { setGlobalState, setConnectionState },
   } = useContext(appContext);
 
@@ -84,7 +82,7 @@ const Header = () => {
         >
           Disconnect
         </Link> */}
-        
+
         {/* future feature: dark mode toggle button  */}
       </div>
     </div>
