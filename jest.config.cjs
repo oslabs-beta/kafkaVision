@@ -19,6 +19,10 @@ module.exports = {
       tsconfig: './tsconfig.json',
     },
   },
+  "moduleNameMapper": {
+    "\\.(png|jpg)$": "<rootDir>/__mocks__/fileMock.js",
+    "\\.(css|less)$": "<rootDir>/__mocks__/fileMock.js"
+  }
   // troubleshooting steps from ts-jest https://github.com/kulshekhar/ts-jest/blob/main/TROUBLESHOOTING.md
   // cannot find module "" from ""
   // {NOT WORKING - possible bug solved in new version: https://github.com/facebook/jest/issues/9771}
