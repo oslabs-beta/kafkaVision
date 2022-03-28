@@ -1,15 +1,14 @@
 {
-    presets: [
-      [
-        '@babel/preset-env',
-        {
-          modules: false
-        }
-      ],
-      '@babel/preset-react',
-      '@babel/preset-typescript'
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": false,
+        "targets": { "node": "current" }
+      }
     ],
-    plugins: [
-      'react-hot-loader/babel'
-    ]
-  }
+    "@babel/preset-react",
+    "@babel/preset-typescript"
+  ],
+  "plugins": ["react-hot-loader/babel"]
+}
