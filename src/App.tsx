@@ -24,8 +24,8 @@ const App = () => {
   const [connectionState, setConnectionState] = useState(dummyConnectionState);
 
   const providerProps: any = {
-    state: { globalState, connectionState},
-    actions: {setGlobalState, setConnectionState},
+    state: { globalState, connectionState },
+    actions: { setGlobalState, setConnectionState },
   };
 
   return (
@@ -33,7 +33,7 @@ const App = () => {
       <BrowserRouter>
         <div>
           {/* remove this div?*/}
-          <appContext.Provider value={providerProps}>
+          <appContext.Provider value={{ providerProps }}>
             <div className="text-2xl text-fontGray-75 bg-zinc-900">
               <Header />
             </div>

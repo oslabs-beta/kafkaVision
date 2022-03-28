@@ -67,7 +67,6 @@ const Header = () => {
             </div>
           </div>
         )}
-        {/* github button */}
         <a
           role="button"
           href="https://github.com/oslabs-beta/kafkavision"
@@ -75,14 +74,15 @@ const Header = () => {
         >
           Github
         </a>
-        <Link
+      {/* change <Link> to el using () => history.push */}
+        {/* <Link
           role="button"
           to="/"
           onClick={disconnect}
           className="py-1.5 px-3 mr-3 bg-seafoam/80 hover:bg-darkIndigo/50 text-darkIndigo text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300"
         >
           Disconnect
-        </Link>
+        </Link> */}
         {/* future feature: dark mode toggle button  */}
       </div>
     </div>
