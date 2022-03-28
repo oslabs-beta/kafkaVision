@@ -136,12 +136,24 @@ const CPUGraph = () => {
             text: 'Cores',
           },
         },
-      },
-    });
+        // x: {
+        //   type: 'time',
+        //   time: {
+        //     unit: 'second',
+        //   },
+        //   adapters: {
+        //     date: {
+        //       locale: de
+        //     }
+        //   }
+        // },      
+      },  
+    })
   }, [CPUData]);
 
+
   return (
-    <div styles={{ width: '300', length: '300' }}>
+    <div>
       <div>CPU Usage</div>
       <Line data={CPU} options={chartOptions} />
     </div>

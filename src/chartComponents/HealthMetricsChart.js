@@ -3,7 +3,9 @@ import CPUGauge from './graphs/CPUGauge.js';
 import CPUGraph from './graphs/CPUGraph.js';
 import JVMGraph from './graphs/JVMGraph.js';
 import GCGraph from './graphs/GCGraph.js';
+import BrokerThroughputGraph from './graphs/BrokerThroughput.js';
 import { appContext } from '../App.tsx';
+import FetchLatencyGraph from './graphs/FetchLatencyGraph.js';
 
 const HealthMetricsChart = () => {
   //UNPACK CONNECTION STATE (TO GET whether cluster is Connected)
@@ -31,6 +33,9 @@ const HealthMetricsChart = () => {
             <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
               CPU Usage Gauge
               <CPUGauge />
+            </div>
+            <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
+              <FetchLatencyGraph/>
             </div>
             {/* JVM MEMORY GRAPHS */}
             <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">

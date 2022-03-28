@@ -122,7 +122,7 @@ const CPUGauge = () => {
 
   return (
     <div>
-      {/* <div>{JSON.stringify(CPUData)}</div> */}
+      <p>CPU Gauge</p>
       <Bar data={CPU} options={chartOptions} />
     </div>
   );

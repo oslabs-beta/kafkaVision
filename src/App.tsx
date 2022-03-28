@@ -8,6 +8,7 @@ import Sidebar from './Components/Sidebar';
 import Header from './Components/Header';
 import HealthMetricsContainer from './Containers/HealthMetricsContainer';
 import RelationshipsContainer from './Containers/RelationshipsContainer';
+import TopicsContainer from './Containers/TopicsContainer';
 import ConnectClusterPage from './ConnectClusterPage';
 import LoginPage from './LoginPage';
 import fakeState from './Components/dummyState';
@@ -60,6 +61,17 @@ const App = () => {
                   </div>
                   <div className="col-span-5 bg-gray-900">
                     <HealthMetricsContainer />
+                  </div>
+                </div>
+              </Route>
+
+              <Route exact path="/topicMetrics">
+                <div className="grid grid-cols-6 h-screen">
+                  <div className="flex col-span-1">
+                    <Sidebar />
+                  </div>
+                  <div className="col-span-5 bg-gray-900">
+                    <TopicsContainer />
                   </div>
                 </div>
               </Route>

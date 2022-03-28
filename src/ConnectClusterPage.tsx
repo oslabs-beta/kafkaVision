@@ -118,6 +118,7 @@ const ConnectClusterPage = () => {
             value={url_kafka}
             className="m-7 rounded bg-slateBlue border border-limeGreen/80"
             type="text"
+            autoComplete="off"
           ></input>
           <button
             className="self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50"
@@ -140,6 +141,7 @@ const ConnectClusterPage = () => {
             placeholder="Prometheus Port"
             name="urlProm"
             type-="text"
+            autoComplete="off"
             value={url_prometheus}
           ></input>
           <button

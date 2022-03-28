@@ -91,30 +91,11 @@ const RelationshipsContainer = () => {
     );
   }
 
-  // FETCH NOT NEEDED HERE - MIGHT PUT BACK IN?
-  // const reqParamBroker = {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json"
-  //   },
-  //   body: JSON.stringify({
-  //     query: `count(kafka_server_replicamanager_leadercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})`
-  //   }),
-  // }
-
-  // useEffect(() => {
-  //   query = '1/api/v1/query?query=count(kafka_server_replicamanager_leadercount{job="kafka-broker",env="dev",instance=~"(kafka1:1234|kafka2:1234)"})';
-  //   fetch(queryLink + query, reqParamBroker)
-  //     .then(data => data.json())
-  //     .then(data => {
-  //       console.log('ROB DATA: ', data)
-  //     })
-  //     .catch(e => {
-  //       console.log('ERROR IN RELATIONSHIP QUERY USEEFFECT: ', e);
-  //     })
-  // }, []);
-
-  return <div>{renderedContent}</div>;
-};
+  return(
+    <div>
+      {renderedContent}
+    </div>
+  )
+}
 
 export default RelationshipsContainer;
