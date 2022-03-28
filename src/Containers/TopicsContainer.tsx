@@ -20,10 +20,10 @@ const TopicsContainer: React.FC <any>= () => {
   const [isOpen, setIsOpen] = useState(false);
   const parentRef = useRef<HTMLDivElement>(null);
 
-  const collapse: any = isOpen ? 'h-70 scale-100' : 'h-0 scale-0';
+  const collapse: any = isOpen ? 'h-70 scale-100 border border-green-300' : 'h-0 scale-0';
 
   return (
-    <div>
+    <div className='border border-red-900'>
       <button onClick={() => {
         console.log('clicked');
         console.log('height, ', collapse);
@@ -31,7 +31,7 @@ const TopicsContainer: React.FC <any>= () => {
         topic1
       </button>
       <div className={collapse}>
-        <div className='border border-white m-5'>
+        <div className='border border-white m-5 h-70'>
           <TopicsChart/>
         </div>
       </div>

@@ -155,10 +155,7 @@ const HealthMetricsContainer = () => {
           {/* Topic Metrics */}
           <div className='border border-slateBlue rounded m-5 bg-zinc-800'>
             <p className='m-5'>Topic Metrics</p>
-  
-            {/* Drop Down Menu way down below!*/}
             
-          
               {/* List of metrics */}
                 <div className='grid grid-cols-3  rounded gap-5 p-5 text-sm font-light divide-fontGray/50'>
                   <div className='bg-slateBlue/70 p-5 rounded border border-fontGray/50'>

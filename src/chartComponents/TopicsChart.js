@@ -4,6 +4,7 @@ import {appContext} from '../App.tsx';
 import CPUGraph from './graphs/CPUGraph.js';
 
 const TopicsChart = () => {
+  console.log('')
   //UNPACK CONNECTION STATE (TO GET whether cluster is Connected)
   // const appState = useContext(appContext);
   // const [connectionState, setConnectionState] = appState.connection;
@@ -39,8 +40,14 @@ const TopicsChart = () => {
   //   </div>  
   // )
   return (
-    <div className="w-max h-max grid grid-cols-3 gap-10 ">
-      <CPUGraph/>
+    <div class='flex flex-row justify-around h-full border border-yellow-400 items-center'>
+      <div className="h-full w-full border border-white gap-10 ">
+        <CPUGraph/>
+      </div>
+
+      <div className="h-full w-full border border-white gap-10 ">
+        <CPUGraph/>
+      </div>
     </div>
   )
 };
