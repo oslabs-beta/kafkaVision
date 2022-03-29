@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import {appContext} from '../App.tsx';
-import BytesInGraph from './graphs/BytesInGraph.js';
-import BytesOutGraph from './graphs/BytesOutGraph.js';
-import MessagesInGraph from './graphs/MessagesInGraph.js';
+// import BytesInGraph from './graphs/BytesInGraph.js';
+// import BytesOutGraph from './graphs/BytesOutGraph.js';
+// import MessagesInGraph from './graphs/MessagesInGraph.js';
 
 const TopicsChart = () => {
   console.log('')
@@ -22,23 +22,23 @@ const TopicsChart = () => {
   //     )
   // } else {
   //   renderedContent = (
-  //     <div className="w-fit h-fit grid grid-cols-3 gap-10 "> 
+  //     <div className="w-fit h-fit grid grid-cols-3 gap-10 ">
   //       <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
   //         <CPUGraph/>
-  //       </div> 
+  //       </div>
   //       {/* <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
   //         <CPUGraph/>
-  //       </div> 
+  //       </div>
   //       <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
   //         <CPUGraph/>
   //       </div>   */}
-  //     </div>  
+  //     </div>
   //   )
   // }
   // return (
   //   <div>
   //     {renderedContent}
-  //   </div>  
+  //   </div>
   // )
   return (
     <div className='flex flex-row justify-around h-full border border-yellow-400 items-center'>

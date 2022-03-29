@@ -4,7 +4,8 @@ import Header from '../Components/Header';
 import { appContext } from '../App';
 import { providerProps } from '../__mocks__/DefaultContext';
 import { jest } from '@jest/globals';
-import { mockChartJs } from '../../__mocks__/chart';
+// import { mockChartJs } from '../../__mocks__/chart';
+import { BroswerRouter, BrowserRouter } from'react-router-dom';
 
 // jest.mock('chart.js', () => ({
 //   __esModule: true,
@@ -27,11 +28,11 @@ import { mockChartJs } from '../../__mocks__/chart';
 //   Line: ()=> null
 // }));
 
-describe('Header component', () => {
+xdescribe('Header component', () => {
   beforeEach(() => {
     render(
       <appContext.Provider value={providerProps}>
-        <Header />
+        <BrowserRouter><Header /></BrowserRouter>
       </appContext.Provider>
     );
   });
@@ -42,5 +43,9 @@ describe('Header component', () => {
 
   it('renders a banner to the page', () => {
     expect(screen.getByRole('banner')).toBeInTheDocument();
+  });
+
+  it('Should have text kafkaVision', () => {
+    expect(screen.getByText('kafkaVision', {exact:true}));
   });
 });

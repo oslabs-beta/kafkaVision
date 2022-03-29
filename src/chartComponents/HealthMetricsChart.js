@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import CPUGauge from './graphs/CPUGauge.js';
-import CPUGraph from './graphs/CPUGraph.js';
-import JVMGraph from './graphs/JVMGraph.js';
-import GCGraph from './graphs/GCGraph.js';
-import BrokerThroughputGraph from './graphs/BrokerThroughput.js';
+// import CPUGauge from './graphs/CPUGauge.js';
+// import CPUGraph from './graphs/CPUGraph.js';
+// import JVMGraph from './graphs/JVMGraph.js';
+// import GCGraph from './graphs/GCGraph.js';
+// import BrokerThroughputGraph from './graphs/BrokerThroughput.js';
 import { appContext } from '../App.tsx';
-import FetchLatencyGraph from './graphs/FetchLatencyGraph.js';
+// import FetchLatencyGraph from './graphs/FetchLatencyGraph.js';
 
 const HealthMetricsChart = () => {
   //UNPACK CONNECTION STATE (TO GET whether cluster is Connected)
