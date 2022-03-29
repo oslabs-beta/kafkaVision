@@ -7,7 +7,7 @@ const StaticHealthData = () => {
         state: { connectionState },
       } = useContext(appContext);
 
-    const queryParams = 'api/v1/query?query=';
+    const queryParams = 'api/v1/query?query='; 
     const queryLink = connectionState.url_prometheus + queryParams;
     const connectionStatus = connectionState.isConnected
 

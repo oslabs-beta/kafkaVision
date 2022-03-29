@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import {appContext} from '../App.tsx';
+import StaticTopicsData from '../Components/StaticTopicsData.tsx';
 import BytesInGraph from './graphs/BytesInGraph.js';
 import BytesOutGraph from './graphs/BytesOutGraph.js';
 import MessagesInGraph from './graphs/MessagesInGraph.js';
@@ -53,6 +54,7 @@ const TopicsChart = () => {
       <div className="h-full w-full border border-white gap-10 ">
         <MessagesInGraph/>
       </div>
+
     </div>
   )
 };
