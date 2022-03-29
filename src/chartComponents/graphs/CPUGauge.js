@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
-  Chart as ChartJS,
+  Chart,
   CategoryScale,
   BarElement,
   BarController,
@@ -11,9 +11,8 @@ import {
 import { Bar } from 'react-chartjs-2';
 import regeneratorRuntime from 'regenerator-runtime';
 import { appContext } from '../../App.tsx';
-// import { timeStamp } from 'console';
 
-ChartJS.register(
+Chart.register(
   CategoryScale,
   BarElement,
   BarController,
@@ -22,14 +21,12 @@ ChartJS.register(
   Legend
 );
 
-//Don't forget to change the query link!
-//const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WED 2PM
-// let query = '';
-
 const CPUGauge = () => {
   //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
-  const appState = useContext(appContext);
-  const [connectionState, setConnectionState] = appState.connection;
+  const {
+    state: { connectionState },
+  } = useContext(appContext);
+
   const queryParams = 'api/v1/query?query=';
   const queryLink = connectionState.url_prometheus + queryParams;
 
@@ -69,6 +66,7 @@ const CPUGauge = () => {
         ];
         setCPUData(newState);
       } catch (error) {
+        console.log(connectionState.url_prometheus)
         console.log('ERROR IN CPU GAUGE FETCH: ', error);
       }
     };
@@ -125,7 +123,7 @@ const CPUGauge = () => {
 
   return (
     <div>
-      {/* <div>{JSON.stringify(CPUData)}</div> */}
+      <p>CPU Gauge</p>
       <Bar data={CPU} options={chartOptions} />
     </div>
   );
