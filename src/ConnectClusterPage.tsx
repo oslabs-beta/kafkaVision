@@ -9,16 +9,19 @@ const ConnectClusterPage = () => {
   } = useContext(appContext);
   
   const [url_kafka, setKafka] = useState('');
-  const [url_prometheus, setProm] = useState('');
+  const [url_prometheus_input, setProm] = useState('');
   const history = useHistory();
   // state below used for fetch req to get partitions after kafka_url is updated
   const doneRendering = useRef(false);
   const [haveKafkaURL, setHaveKafkaURL] = useState(false);
+  const [show_error_kafka, setErrorKafka] = useState(false);
+  const [show_error_prom, setErrorProm] = useState(false);
+
   // const [haveTopicsList, setHaveTopicsList] = useState(false);
 
   useEffect(() => {
     if (doneRendering.current) {
-      console.log('in first use effect cascade');
+      console.log('in first use effect cascade'); 
       fetch('/api/kafka/topics', {
         method: 'POST',
         headers: {
@@ -49,13 +52,38 @@ const ConnectClusterPage = () => {
   const handlePromInput = (event: any) => {
     setProm(event.target.value);
   };
+  function verify_prom() {
+    const queryParams = 'api/v1/query?query=';
+    const query = 'irate(process_cpu_seconds_total[5m])*100';
+    const fullFetch = url_prometheus_input + queryParams + query
+    fetch(fullFetch)
+      .then(data=> data.json())
+      .then(data => {
+        setConnectionState((prevState: any) => {
+          return { ...prevState, url_prometheus:url_prometheus_input, isConnected: true };
+        });
+        setGlobalState((prevstate: any) => {
+          return { ...prevstate, sidebarTab: 1 };
+        });
+        setErrorProm(() => {
+          return false;
+        })
+        history.push('/health'); // move?
+      })
+      .catch( err => {
+        console.log("test query string came back false!");
+        setErrorProm(() => {
+          return true;
+        })
+      })
+  }
 
-  function saveProm(url_prometheus: String) {
+  function saveProm(url_prometheus_input: String) {
     fetch('/api/user/saveprom', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        url_prometheus,
+        url_prometheus_input,
         id: globalState.id,
       }),
     })
@@ -63,7 +91,7 @@ const ConnectClusterPage = () => {
       .then((data) => {
         // CHECK THE CONNECTION LATER
         setConnectionState((prevState: any) => {
-          return { ...prevState, url_prometheus, isConnected: true };
+          return { ...prevState, url_prometheus:url_prometheus_input, isConnected: true };
         });
 
         setGlobalState((prevstate: any) => {
@@ -73,6 +101,7 @@ const ConnectClusterPage = () => {
       })
       .catch((error) => {
         console.log(error);
+        // change valid_prom_url to  
       });
   }
 
@@ -142,18 +171,20 @@ const ConnectClusterPage = () => {
             name="urlProm"
             type-="text"
             autoComplete="off"
-            value={url_prometheus}
+            value={url_prometheus_input}
           ></input>
           <button
             className="self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50"
             onClick={(e) => {
               e.preventDefault();
-              saveProm(url_prometheus);
+              // saveProm(url_prometheus_input);
               setProm('');
+              verify_prom();
             }}
           >
             Submit
           </button>
+          {show_error_prom && <div className="text-red-900 text-lg">Please enter a valid Prometheus URL</div>}
         </div>
       </div>
     </div>
