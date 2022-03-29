@@ -42,15 +42,15 @@ const TopicsChart = () => {
   // )
   return (
     <div className='flex flex-row justify-around h-full border border-yellow-400 items-center'>
-      <div className="h-full w-full border border-white gap-10 ">
+      <div className="h-full w-full gap-10 bg-gray-800 border border-fontGray/40 rounded">
         <BytesInGraph/>
       </div>
 
-      <div className="h-full w-full border border-white gap-10 ">
+      <div className="h-full w-full bg-gray-800 border border-fontGray/40 rounded gap-10 ">
         <BytesOutGraph/>
       </div>
 
-      <div className="h-full w-full border border-white gap-10 ">
+      <div className="h-full w-full bg-gray-800 border border-fontGray/40 rounded gap-10 ">
         <MessagesInGraph/>
       </div>
 

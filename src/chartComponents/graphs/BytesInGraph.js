@@ -56,16 +56,16 @@ const BytesInGraph = () => {
   const [bytesInData, setBytesInData] = useState([[10, 10, 10, 10, 10, 10, 10, 10, 10, 10], [15, 15, 15, 15, 15, 15, 15, 15, 15, 15]]);
 
   useEffect( () => {
-    const query ='sum without(topic)(rate(kafka_server_brokertopicmetrics_bytesinpersec[5m]))';
+    const query ='topk(10, sum(rate(kafka_server_brokertopicmetrics_totalfetchrequestspersec[5m])) by (topic))';
 
     const useFetch = async () => {
       try {
         const json = await fetch(queryLink + query)
         const bytesInData = await json.json();
-        console.log(bytesInData.data.result[0].value[1])
+        // console.log(bytesInData.data.result[0].value[1])
         setBytesInData(prevState => {
-          console.log("state changed")
-          console.log(prevState)
+          // console.log("state changed")
+          // console.log(prevState)
           let broker1NewState = prevState[0];
           let broker2NewState = prevState[1];
           broker1NewState.shift();
@@ -78,6 +78,7 @@ const BytesInGraph = () => {
       }
       catch (error){
         console.log('ERROR IN BYTESIN GRAPH FETCH: ', error)
+        // save something in state... bad link... 
       }
     }
 

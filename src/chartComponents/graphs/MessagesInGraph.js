@@ -62,10 +62,10 @@ const MessagesInGraph = () => {
       try {
         const json = await fetch(queryLink + query)
         const messagesInData = await json.json();
-        console.log(messagesInData.data.result[0].value[1])
+        // console.log(messagesInData.data.result[0].value[1])
         setMessagesInData(prevState => {
-          console.log("state changed")
-          console.log(prevState)
+          // console.log("state changed")
+          // console.log(prevState)
           let broker1NewState = prevState[0];
           let broker2NewState = prevState[1];
           broker1NewState.shift();
