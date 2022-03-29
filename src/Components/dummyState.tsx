@@ -3,10 +3,10 @@ const fakeState: any = {
         username:null,
         id:null,
         sidebarTab:0,
-        isLoggedIn: false,
+        isLoggedIn: true,
         selected_kafka_topic_index:0,
         kafka_topics: [],
-        kafka_partitions: ['cheese'],
+        kafka_partitions: [],
         coreData:[ // this is Prometheus's dummy data for Producer-Topic-Consumer diagrams
             {
             producers:["Producer 1", "Producer 2"],
