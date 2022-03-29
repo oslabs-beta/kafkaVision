@@ -119,19 +119,19 @@ const ConnectClusterPage = () => {
     })
       .then(data=> data.json())
       .then(data => {
-        console.log('no error', data)
-        // setConnectionState((prevState: any) => {
-        //   return { ...prevState, url_kafka: url_kafka_input, isConnected: true };
-        // });
-        // setGlobalState((prevstate: any) => {
-        //   return { ...prevstate, sidebarTab: 2 };
-        // });
-        // // trigger fetch cascade (first, get topics)
-        // setHaveKafkaURL(true);
-        // setErrorKafka(() => {
-        //   return false;
-        // })
-        // history.push('/componentRelationships');
+        // console.log('no error', data)
+        setConnectionState((prevState: any) => {
+          return { ...prevState, url_kafka: url_kafka_input, isConnected: true };
+        });
+        setGlobalState((prevstate: any) => {
+          return { ...prevstate, sidebarTab: 2 };
+        });
+        // trigger fetch cascade (first, get topics)
+        setHaveKafkaURL(true);
+        setErrorKafka(() => {
+          return false;
+        })
+        history.push('/componentRelationships');
       })
       .catch( err => {
         console.log("didnt work,,,", err)
