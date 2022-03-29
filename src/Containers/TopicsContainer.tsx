@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import TopicsChart from '../chartComponents/TopicsChart';
-
+import { appContext } from '../App';
 
 interface Props {
   key: number,
@@ -13,35 +13,88 @@ interface Props {
   }
 };  
 
-//changed to any bc when Props are passed in error: TS2739: Type '{}' is missing the following properties from type 'Props': key, onClick, parentRef, style
-const TopicsContainer: React.FC <any>= () => {
-  const [isOpen, setIsOpen] = useState(false);
+const TopicsContainer = () => {
+  //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
+  const {
+    state: { connectionState },
+  } = useContext(appContext);
+  const queryParams = 'api/v1/query?query=';
+  const queryLink = connectionState.url_prometheus + queryParams;
+  
+  //LOCAL STATE
+  const [isOpen, setIsOpen] = useState([false, false, false, false, false]);
+  const [bytesInName, setBytesInName] = useState(['', '', '', '', '']);
+  const [bytesIn, setBytesIn] = useState([0, 0, 0, 0, 0]);
+  const [bytesOutName, setBytesOutName] = useState(['', '', '', '', '']);
+  const [bytesOut, setBytesOut] = useState([0, 0, 0, 0, 0]);
+  const [messagesname, setMessagesName] = useState(['', '', '', '', '']);
+  const [messages, setMessages] = useState([0, 0, 0, 0, 0]);
   const parentRef = useRef<HTMLDivElement>(null);
 
-  const collapse: any = isOpen ? 'h-70 scale-100 border border-green-300' : 'h-0 scale-0';
+  //use effect
+    //do fetch
+      //grab top 5 metrics and names
 
+  //BYTES IN    
+  useEffect(() => {
+    const query = 'topk(10, sum(rate(kafka_server_brokertopicmetrics_totalfetchrequestspersec[5m])) by (topic))';
+    fetch(queryLink + query)
+      .then((data) => data.json())
+      .then((result) => {
+          console.log('VALUES: ', result.series[0].fields[3].value);
+          const metrics: any = result.series[0].fields[3].value;
+          const topNames: any = result.series[0].fields[2].value;
+          
+          //GET TOP 5 TOPICS
+          const topMetrics = metrics.sort().slice(-5);
+          console.log(topMetrics);
+
+          setBytesInName(topNames);
+          setBytesIn(topMetrics);
+        })  
+      .catch((err) => {
+          console.log('ERROR IN BYTES IN TOPICS CONTAINER USEEFFECT: ', err);
+    });
+  }, [bytesInName, bytesIn]);
+
+
+  const helperFunction = (i: number) => {
+    setIsOpen((prevState) => {
+      prevState[i] = !prevState[i];
+      return {...prevState};
+    })
+  };
+ 
   const topics = [];
-  for (let i = 0; i < 5; i++){
+  for (let i = 0; i < bytesInName.length; i++){
+    let collapse: string = isOpen[i] ? 'h-70 scale-100 m-3 p-3 border rounded border-seafoam/40 bg-slateBlue/50 transition-all duration-300' : 'h-0 scale-0 transition-all duration-300';
+ 
+
     topics.push(
-      //added parentRef => supposed to be able to open one at a time?
-      <div className='border border-red-900' ref={parentRef}> 
-      <button onClick={() => {
-        console.log('clicked');
-        console.log('height, ', collapse);
-        setIsOpen(!isOpen)}}>
-        Topic: {i}
-      </button>
-      <div className={collapse}>
-        <div className='border border-white m-5 h-70'>
-          <TopicsChart/>
+      <div className='border border-limeGreen/70 rounded m-3 p-3' ref={parentRef} onClick={()=> helperFunction(i)}> 
+        <div className="cursor-default m-0 p-0 text-fontGray/40" key={i}>
+          Topic: {topics[i]}
+        </div>
+        {/* <button 
+          key={i}
+          onClick={() => {
+            console.log(i, 'clicked');
+            helperFunction(i);
+          }}> */}
+              
+        {/* </button> */}
+        <div className={collapse}>
+          <div className='m-5 h-70'>
+            <TopicsChart/>
+          </div>
         </div>
       </div>
-    </div>
     )
-  }
+  };
 
   return (
-    <div>
+    <div className='border-2 border-seafoam/40 rounded m-5 y-5'>
+      <h1 className='text-3xl text-seafoam/70 text-center m-5'>Top 5 Topics Throughput</h1>
       {topics}
     </div>
   )

@@ -62,10 +62,10 @@ const BytesOutGraph = () => {
       try {
         const json = await fetch(queryLink + query)
         const bytesOutData = await json.json();
-        console.log(bytesOutData.data.result[0].value[1])
+        // console.log(bytesOutData.data.result[0].value[1])
         setBytesOutData(prevState => {
-          console.log("state changed")
-          console.log(prevState)
+          // console.log("state changed")
+          // console.log(prevState)
           let broker1NewState = prevState[0];
           let broker2NewState = prevState[1];
           broker1NewState.shift();
@@ -135,7 +135,7 @@ const BytesOutGraph = () => {
 
   return (
     <div styles={{width:'300', length:'300'}}>
-      <div>Bytes Out</div>
+      <p className='text-fontGray/40 text-center'>Bytes Out</p>      
       <Line data={bytesOut} options={chartOptions}/>  
     </div>
   )

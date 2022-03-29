@@ -66,6 +66,7 @@ const CPUGauge = () => {
         ];
         setCPUData(newState);
       } catch (error) {
+        console.log(connectionState.url_prometheus)
         console.log('ERROR IN CPU GAUGE FETCH: ', error);
       }
     };

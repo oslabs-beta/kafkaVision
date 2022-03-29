@@ -7,13 +7,18 @@ const ConnectClusterPage = () => {
   const {
     state: { connectionState, globalState }, actions: { setConnectionState, setGlobalState },
   } = useContext(appContext);
-  
-  const [url_kafka, setKafka] = useState('');
-  const [url_prometheus, setProm] = useState('');
+
+  const [url_kafka_input, setKafka] = useState('');
+  const [url_prometheus_input, setProm] = useState('');
+  const [show_error_kafka, setErrorKafka] = useState(false);
+  const [show_error_prom, setErrorProm] = useState(false);
+
   const history = useHistory();
   // state below used for fetch req to get partitions after kafka_url is updated
   const doneRendering = useRef(false);
   const [haveKafkaURL, setHaveKafkaURL] = useState(false);
+
+
   // const [haveTopicsList, setHaveTopicsList] = useState(false);
 
   useEffect(() => {
@@ -50,12 +55,38 @@ const ConnectClusterPage = () => {
     setProm(event.target.value);
   };
 
-  function saveProm(url_prometheus: String) {
+  function verify_prom() {
+    const queryParams = 'api/v1/query?query=';
+    const query = 'irate(process_cpu_seconds_total[5m])*100';
+    const fullFetch = url_prometheus_input + queryParams + query
+    fetch(fullFetch)
+      .then(data=> data.json())
+      .then(data => {
+        setConnectionState((prevState: any) => {
+          return { ...prevState, url_prometheus:url_prometheus_input, isConnected: true };
+        });
+        setGlobalState((prevstate: any) => {
+          return { ...prevstate, sidebarTab: 1 };
+        });
+        setErrorProm(() => {
+          return false;
+        })
+        history.push('/health');
+      })
+      .catch( err => {
+        console.log("test query string came back false!");
+        setErrorProm(() => {
+          return true;
+        })
+      })
+  }
+  /*
+  function saveProm(url_prometheus_input: String) {
     fetch('/api/user/saveprom', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        url_prometheus,
+        url_prometheus_input,
         id: globalState.id,
       }),
     })
@@ -63,7 +94,7 @@ const ConnectClusterPage = () => {
       .then((data) => {
         // CHECK THE CONNECTION LATER
         setConnectionState((prevState: any) => {
-          return { ...prevState, url_prometheus, isConnected: true };
+          return { ...prevState, url_prometheus:url_prometheus_input, isConnected: true };
         });
 
         setGlobalState((prevstate: any) => {
@@ -73,15 +104,48 @@ const ConnectClusterPage = () => {
       })
       .catch((error) => {
         console.log(error);
+        // change valid_prom_url to
       });
   }
+  */
 
-  function saveKafka(url_kafka: String) {
+  function verify_kafka() {
+    fetch('/api/kafka/topics', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ bootstrap: `${url_kafka_input}` }),
+    })
+      .then(data=> data.json())
+      .then(data => {
+        setConnectionState((prevState: any) => {
+          return { ...prevState, url_kafka: url_kafka_input, isConnected: true };
+        });
+        setGlobalState((prevstate: any) => {
+          return { ...prevstate, sidebarTab: 2 };
+        });
+        // trigger fetch cascade (first, get topics)
+        setHaveKafkaURL(true);
+        setErrorKafka(() => {
+          return false;
+        })
+        history.push('/componentRelationships');
+      })
+      .catch( err => {
+        console.log("Invalid Kafka cluster. ERROR:", err)
+        setErrorKafka(() => {
+          return true;
+        })
+      })
+  }
+  /*
+  function saveKafka(url_kafka_input: String) {
     fetch('/api/user/savekafka', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        url_kafka,
+        url_kafka_input,
         id: globalState.id,
       }),
     })
@@ -89,7 +153,7 @@ const ConnectClusterPage = () => {
       .then(
         (data) => {
           setConnectionState((prevState: any) => {
-            return { ...prevState, url_kafka, isConnected: true };
+            return { ...prevState, url_kafka: url_kafka_input, isConnected: true };
           });
           // trigger fetch cascade (first, get topics)
           setHaveKafkaURL(true);
@@ -99,7 +163,7 @@ const ConnectClusterPage = () => {
         }
       );
   }
-
+  */
   return (
     <div className="flex flex-col text-fontGray/70 border rounded border-limeGreen/70 m-10 bg-gray-800">
       <div className="flex place-content-center font-bold text-xl m-5 text-fontGray-75">
@@ -115,7 +179,7 @@ const ConnectClusterPage = () => {
             placeholder="Kafka Broker Port"
             name="urlKafka"
             id="urlKafka"
-            value={url_kafka}
+            value={url_kafka_input}
             className="m-7 rounded bg-slateBlue border border-limeGreen/80"
             type="text"
             autoComplete="off"
@@ -124,12 +188,14 @@ const ConnectClusterPage = () => {
             className="self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50"
             onClick={(e) => {
               e.preventDefault();
-              saveKafka(url_kafka);
+              // saveKafka(url_kafka_input);
               setKafka('');
+              verify_kafka();
             }}
           >
             Submit
           </button>
+          {show_error_kafka&& <div className="text-red-900 text-lg">Please enter a valid Kakfa URL</div>}
         </div>
         <div className="flex place-content-center">
           <label className="self-center" htmlFor="urlProm">
@@ -142,18 +208,20 @@ const ConnectClusterPage = () => {
             name="urlProm"
             type-="text"
             autoComplete="off"
-            value={url_prometheus}
+            value={url_prometheus_input}
           ></input>
           <button
             className="self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50"
             onClick={(e) => {
               e.preventDefault();
-              saveProm(url_prometheus);
+              // saveProm(url_prometheus_input);
               setProm('');
+              verify_prom();
             }}
           >
             Submit
           </button>
+          {show_error_prom && <div className="text-red-900 text-lg">Please enter a valid Prometheus URL</div>}
         </div>
       </div>
     </div>
