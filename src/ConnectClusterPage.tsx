@@ -119,7 +119,6 @@ const ConnectClusterPage = () => {
     })
       .then(data=> data.json())
       .then(data => {
-        // console.log('no error', data)
         setConnectionState((prevState: any) => {
           return { ...prevState, url_kafka: url_kafka_input, isConnected: true };
         });
