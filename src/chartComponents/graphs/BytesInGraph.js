@@ -136,7 +136,7 @@ const BytesInGraph = () => {
 
   return (
     <div styles={{width:'300', length:'300'}}>
-      <div>Bytes In</div>
+      <p className='text-fontGray/40 text-center'>Bytes In</p>
       <Line data={bytesIn} options={chartOptions}/>  
     </div>
   )

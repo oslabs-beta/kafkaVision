@@ -135,7 +135,7 @@ const BytesOutGraph = () => {
 
   return (
     <div styles={{width:'300', length:'300'}}>
-      <div>Bytes Out</div>
+      <p className='text-fontGray/40 text-center'>Bytes Out</p>      
       <Line data={bytesOut} options={chartOptions}/>  
     </div>
   )

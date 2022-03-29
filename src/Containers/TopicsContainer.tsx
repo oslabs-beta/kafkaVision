@@ -67,12 +67,12 @@ const TopicsContainer = () => {
  
   const topics = [];
   for (let i = 0; i < bytesInName.length; i++){
-    let collapse: string = isOpen[i] ? 'h-70 scale-100 border border-green-300 transition-all duration-300' : 'h-0 scale-0 transition-all duration-300';
+    let collapse: string = isOpen[i] ? 'h-70 scale-100 m-3 p-3 border rounded border-seafoam/40 bg-slateBlue/50 transition-all duration-300' : 'h-0 scale-0 transition-all duration-300';
  
 
     topics.push(
-      <div className='border border-red-900 m-0 p-0' ref={parentRef} onClick={()=> helperFunction(i)}> 
-        <div className="cursor-default m-0 p-0" key={i}>
+      <div className='border border-limeGreen/70 rounded m-3 p-3' ref={parentRef} onClick={()=> helperFunction(i)}> 
+        <div className="cursor-default m-0 p-0 text-fontGray/40" key={i}>
           Topic: {topics[i]}
         </div>
         {/* <button 
@@ -84,7 +84,7 @@ const TopicsContainer = () => {
               
         {/* </button> */}
         <div className={collapse}>
-          <div className='border border-white m-5 h-70'>
+          <div className='m-5 h-70'>
             <TopicsChart/>
           </div>
         </div>
@@ -93,7 +93,8 @@ const TopicsContainer = () => {
   };
 
   return (
-    <div>
+    <div className='border-2 border-seafoam/40 rounded m-5 y-5'>
+      <h1 className='text-3xl text-seafoam/70 text-center m-5'>Top 5 Topics Throughput</h1>
       {topics}
     </div>
   )

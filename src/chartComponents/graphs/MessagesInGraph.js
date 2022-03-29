@@ -135,7 +135,7 @@ const MessagesInGraph = () => {
 
   return (
     <div styles={{width:'300', length:'300'}}>
-      <div>Messages In</div>
+      <p className='text-fontGray/40 text-center'>Messages In</p>
       <Line data={messagesIn} options={chartOptions}/>  
     </div>
   )
