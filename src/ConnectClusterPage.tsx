@@ -134,11 +134,10 @@ const ConnectClusterPage = () => {
         history.push('/componentRelationships');
       })
       .catch( err => {
-        console.log("didnt work,,,", err)
-        // console.log("test query string came back false!");
-        // setErrorKafka(() => {
-        //   return true;
-        // })
+        console.log("Invalid Kafka cluster. ERROR:", err)
+        setErrorKafka(() => {
+          return true;
+        })
       })
   }
   /*
@@ -197,7 +196,7 @@ const ConnectClusterPage = () => {
           >
             Submit
           </button>
-          {show_error_prom && <div className="text-red-900 text-lg">Please enter a valid Kakfa URL</div>}
+          {show_error_kafka&& <div className="text-red-900 text-lg">Please enter a valid Kakfa URL</div>}
         </div>
         <div className="flex place-content-center">
           <label className="self-center" htmlFor="urlProm">
