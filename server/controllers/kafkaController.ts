@@ -8,22 +8,30 @@ const kafkaController: Record<string, types.middlewareFunction> = {};
 // on page load
 kafkaController.fetchTopics = (req, res, next) => {
   try {
-    console.log("got to fetch options controller")
+    // console.log("got to fetch options controller")
+    console.log('BOOBOBOBOBOBOB')
+    console.log(req.body)
     const { bootstrap } = req.body;
+    console.log('kafka.kafka')
     const instance = new kafka.Kafka({
       clientId: 'kafkaVision',
       brokers: [`${bootstrap}`],
     });
+    console.log('before instance.admin()')
     const admin = instance.admin();
+    console.log('before admin,connect')
     admin.connect();
+    console.log("after admin connect")
     admin.listTopics().then((data: any) => {
       //  [ 'topic-1', 'topic-2', 'topic-3', ... ]
       console.log(data);
       res.locals.data = data;
+      console.log("query wrked?")
       return next();
     });
     admin.disconnect();
   } catch (err) {
+    console.log("kafkajs query error")
     const defaultErr = {
       log: 'Express error handler caught an error in kafkaController.fetchTopics middleware',
       status: 500,
