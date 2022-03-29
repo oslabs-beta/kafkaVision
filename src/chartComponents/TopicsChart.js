@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import {appContext} from '../App.tsx';
-// import BytesInGraph from './graphs/BytesInGraph.js';
-// import BytesOutGraph from './graphs/BytesOutGraph.js';
-// import MessagesInGraph from './graphs/MessagesInGraph.js';
+import BytesInGraph from './graphs/BytesInGraph.js';
+import BytesOutGraph from './graphs/BytesOutGraph.js';
+import MessagesInGraph from './graphs/MessagesInGraph.js';
 
 const TopicsChart = () => {
   console.log('')

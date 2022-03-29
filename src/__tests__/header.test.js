@@ -4,7 +4,7 @@ import Header from '../Components/Header';
 import { appContext } from '../App';
 import { providerProps } from '../__mocks__/DefaultContext';
 import { jest } from '@jest/globals';
-// import { mockChartJs } from '../../__mocks__/chart';
+import { mockChartJs } from '../../__mocks__/chart';
 import { BroswerRouter, BrowserRouter } from'react-router-dom';
 
 // jest.mock('chart.js', () => ({
