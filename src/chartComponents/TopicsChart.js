@@ -22,23 +22,23 @@ const TopicsChart = () => {
   //     )
   // } else {
   //   renderedContent = (
-  //     <div className="w-fit h-fit grid grid-cols-3 gap-10 "> 
+  //     <div className="w-fit h-fit grid grid-cols-3 gap-10 ">
   //       <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
   //         <CPUGraph/>
-  //       </div> 
+  //       </div>
   //       {/* <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
   //         <CPUGraph/>
-  //       </div> 
+  //       </div>
   //       <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
   //         <CPUGraph/>
   //       </div>   */}
-  //     </div>  
+  //     </div>
   //   )
   // }
   // return (
   //   <div>
   //     {renderedContent}
-  //   </div>  
+  //   </div>
   // )
 
   

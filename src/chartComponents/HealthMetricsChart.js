@@ -4,8 +4,8 @@ import CPUGraph from './graphs/CPUGraph.js';
 import JVMGraph from './graphs/JVMGraph.js';
 import GCGraph from './graphs/GCGraph.js';
 import BrokerThroughputGraph from './graphs/BrokerThroughput.js';
-import { appContext } from '../App.tsx';
 import FetchLatencyGraph from './graphs/FetchLatencyGraph.js';
+import { appContext } from '../App.tsx';
 
 const HealthMetricsChart = () => {
   //UNPACK CONNECTION STATE (TO GET whether cluster is Connected)
