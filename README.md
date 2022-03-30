@@ -63,7 +63,7 @@ KafkaVision has the following features:
 9. On the ‘Partition Diagrams’ page, you can _Select a topic_ from the dropdown to visualize all partitions of a topic and their offsets
 
 ## Demo Testing App
-If you do not have a Kafka instance but would like to demo KafkaVision, we modified this <a href="https://github.com/confluentinc/cp-demo" onclick="return ! window.open(this.href);">public demo app </a>from Confluent Platform to scrape metrics from the cluster and export them to Prometheus using JMX-Exporter. To quickly get up and running, you can <a href='https://kayhill-cpdemo-aki26esh1q7.ws-us38.gitpod.io/' onclick="return ! window.open(this.href);">open our pre-configured demo cluster with GitPod.</a>
+If you do not have a Kafka instance but would like to demo KafkaVision, we modified this <a href="https://github.com/confluentinc/cp-demo" onclick="return ! window.open(this.href);">public demo app </a>from Confluent Platform to scrape metrics from the cluster and export them to Prometheus using JMX-Exporter. To quickly get up and running, you can <a href='https://kayhill-cpdemo-aki26esh1q7.ws-us38.gitpod.io/' onclick="return ! window.open(this.href);">open our pre-configured demo cluster with GitPod and follow the boot instructions.</a>
 
 ## Feature Roadmap
 
@@ -79,28 +79,26 @@ The development team intends to continue improving KafkaVision and adding more f
 - [KafkaJS](https://kafka.js.org/) - Kafka client for Node.js
 - [Prometheus](https://prometheus.io/) - Time series database with event monitoring
 - [ChartJS](https://www.chartjs.org/) - Rendering of metric graphs
-- [React Flow](https://reactflow.dev/) - Rendering of relationship diagrams
 - [Tailwind CSS](https://tailwindcss.com/) - Styling components
 - [Jest](https://jestjs.io/) - Testing
-- Love ❤️
 
 ## Contributors
 
-[Isabelle](https://github.com/isabellesalvador) - [LinkedIn](https://www.linkedin.com/in/isabelle-salvador-605a67105/)
+[Isabelle Salvador](https://github.com/isabellesalvador) - [LinkedIn](https://www.linkedin.com/in/isabelle-salvador-605a67105/)
 <br>
 [Kayliegh Hill](https://github.com/kayhill) - [LinkedIn](https://www.linkedin.com/in/kayliegh-hill)
 <br>
-[Neel](https://github.com/nlakshman) - [LinkedIn](https://www.linkedin.com/in/neel-lakshman/)
+[Neel Lakshman](https://github.com/nlakshman) - [LinkedIn](https://www.linkedin.com/in/neel-lakshman/)
 <br>
-[Rob](https://github.com/rfbeier) - [LinkedIn](https://www.linkedin.com/in/robert-beier-49795081)
+[Rob Beier](https://github.com/rfbeier) - [LinkedIn](https://www.linkedin.com/in/robert-beier-49795081)
 <br>
 
 If you'd like to support the active development of KafkaVision:
 
-- Add a GitHub Star to the project.
-- Tweet about the project on Twitter.
-- Write a review or tutorial on Medium, Dev.to or personal blog.
-- Contribute to this project by raising a new issue or making a PR to solve an issue.
+- Star this repo!
+- Tweet about the project
+- Write a review or tutorial on Medium, Dev.to or personal blog
+- Contribute to this project by raising a new issue or making a PR to solve an issue
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/oslabs-beta/kafkavision/blob/dev/LICENSE) file for details
