@@ -3,10 +3,8 @@ import * as types from '../types';
 
 const sessionController: Record<string, types.middlewareFunction> = {};
 
-
 sessionController.startSession = async (req, res, next) => {
 	try {
-		// check if session exists. If not, create one
 		const session = await Session.findOne({
 			username: res.locals.username
 		});
