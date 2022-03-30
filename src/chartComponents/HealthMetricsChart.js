@@ -27,10 +27,10 @@ const HealthMetricsChart = () => {
         <div className="flex justify-around">
           <div className="w-fit h-fit grid grid-cols-2 gap-x-40 gap-y-20 ">
             {/* CPU USAGE GRAPHS */}
-            <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
+            <div className="cols-span-1 bg-gray-800 border mb-5 border-fontGray/40 rounded">
               <CPUGraph />
             </div>
-            <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
+            <div className="cols-span-1 bg-gray-800 border mb-5 border-fontGray/40 rounded">
               CPU Usage Gauge
               <CPUGauge />
             </div>
@@ -38,10 +38,10 @@ const HealthMetricsChart = () => {
               <FetchLatencyGraph/>
             </div> */}
             {/* JVM MEMORY GRAPHS */}
-            <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
+            <div className="col-span-1 bg-gray-800 border mb-5 border-fontGray/40 rounded">
               <JVMGraph />
             </div>
-            <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
+            <div className="col-span-1 bg-gray-800 border  mb-5 border-fontGray/40 rounded">
               <GCGraph />
             </div>
           </div>
