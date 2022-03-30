@@ -23,58 +23,64 @@ ChartJS.register(
   Legend,
 )
 
-const BytesOutGraph = () => {
+const BytesOutGraph = (props) => {
   //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
   const {
     state: { connectionState },
   } = useContext(appContext);
   const queryParams = 'api/v1/query?query=';
   const queryLink = connectionState.url_prometheus + queryParams;
+  console.log("bytesout rendered with props:", props)
 
   const [bytesOut, setBytesOut] = useState({
-    labels: [1, 2, 3, 4, 5, 6],
+    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     datasets: [{
-      label: 'Broker 1',
-      data: [5, 5, 5, 5, 5, 5],
+      label: 'Topic',
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       backgroundColor: '#22404c', //lime green
       borderColor: '#d2fdbb', //dark green
       borderWidth: 1
-    },
-    {
-      label: 'Broker 2',
-      data: [0,0,0,0,0,0],
-      backgroundColor: '#22404c', //lime green
-      borderColor: '#d2fdbb', //dark green
-    }],
+    }
+    // ,
+    // {
+    //   label: 'Broker 2',
+    //   data: [0,0,0,0,0,0],
+    //   backgroundColor: '#22404c', //lime green
+    //   borderColor: '#d2fdbb', //dark green
+    // }
+  ],
   });
 
   const [chartOptions, setChartOptions] = useState({});
-
-  const dataForGraph = [];
-  const indexTracker = 0;
-
-  const [bytesOutData, setBytesOutData] = useState([[10, 10, 10, 10, 10, 10, 10, 10, 10, 10], [15, 15, 15, 15, 15, 15, 15, 15, 15, 15]]);
+  const [badQuery, setbadQuery] = useState(false);
+  const [bytesOutData, setBytesOutData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
   useEffect( () => {
-    const query ='sum without(topic)(rate(kafka_server_brokertopicmetrics_bytesoutpersec[5m]))';
+    const query ='sum(rate(kafka_server_brokertopicmetrics_bytesoutpersec[5m])) by (topic)';
 
     const useFetch = async () => {
       try {
         const json = await fetch(queryLink + query)
-        const bytesOutData = await json.json();
+        const result = await json.json();
+        console.log("this tie around", result)
         // console.log(bytesOutData.data.result[0].value[1])
-        setBytesOutData(prevState => {
-          // console.log("state changed")
-          // console.log(prevState)
-          let broker1NewState = prevState[0];
-          let broker2NewState = prevState[1];
-          broker1NewState.shift();
-          broker2NewState.shift();
-          broker1NewState.push(bytesOutData.data.result[0].value[1]);
-          broker2NewState.push(bytesOutData.data.result[1].value[1]);
-          let newState = [ broker1NewState, broker2NewState];
-          return newState
-        })
+        let newDatapoint = result.data.result.filter(s => s.metric.topic===props.fetchedTopicName);
+        console.log("ok im here")
+        console.log(newDatapoint)
+        if (newDatapoint.length === 0){ // if not found in query
+          console.log("that string is not found")
+          setbadQuery(true);
+        }else{
+          console.log("new datapoint in else", newDatapoint)
+          console.log('went in else')
+          newDatapoint = newDatapoint[0].value[1];
+          setBytesOutData(prevState => {
+            let brokerNewState = [...prevState];
+            brokerNewState.shift();
+            brokerNewState.push(newDatapoint);
+            return brokerNewState;
+          })
+        }
       }
       catch (error){
         console.log('ERROR IN BYTESOUT GRAPH FETCH: ', error)
@@ -95,18 +101,20 @@ const BytesOutGraph = () => {
         setBytesOut({
           labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
           datasets: [{
-            label: 'Broker 1',
-            data: bytesOutData[0],
+            label: `${props.fetchedTopicName}`,
+            data: bytesOutData,
             backgroundColor: ['#d2fdbb'], //lime green
             borderColor: ['#7cb55e'], //dark green
             borderWidth: 1
-          },
-          {
-            label: 'Broker 2',
-            data: bytesOutData[1],
-            backgroundColor: '#22404c',  //slateBlue
-            borderColor: '#03dac5', //seafoam
-          }],
+          }
+          // ,
+          // {
+          //   label: 'Broker 2',
+          //   data: bytesOutData[1],
+          //   backgroundColor: '#22404c',  //slateBlue
+          //   borderColor: '#03dac5', //seafoam
+          // }
+        ],
         });
 
         setChartOptions({
@@ -135,7 +143,12 @@ const BytesOutGraph = () => {
 
   return (
     <div styles={{width:'300', length:'300'}}>
-      <p className='text-fontGray/40 text-center'>Bytes Out</p>      
+      {badQuery && <p className='text-fontGray/40 text-center'>
+        Topic not found in Query
+      </p>  }   
+      {!badQuery && <p className='text-fontGray/40 text-center'>
+        Bytes Out
+      </p> }
       <Line data={bytesOut} options={chartOptions}/>  
     </div>
   )

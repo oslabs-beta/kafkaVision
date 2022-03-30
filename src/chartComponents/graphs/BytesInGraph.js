@@ -23,7 +23,7 @@ ChartJS.register(
   Legend,
 )
 
-const BytesInGraph = () => {
+const BytesInGraph = (props) => {
   //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
   const {
     state: { connectionState },
@@ -32,49 +32,48 @@ const BytesInGraph = () => {
   const queryLink = connectionState.url_prometheus + queryParams;
 
   const [bytesIn, setBytesIn] = useState({
-    labels: [1, 2, 3, 4, 5, 6],
+    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     datasets: [{
-      label: 'Broker 1',
-      data: [5, 5, 5, 5, 5, 5],
+      label: 'Topic',
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       backgroundColor: '#22404c', //lime green
       borderColor: '#d2fdbb', //dark green
       borderWidth: 1
-    },
-    {
-      label: 'Broker 2',
-      data: [0,0,0,0,0,0],
-      backgroundColor: '#22404c', //lime green
-      borderColor: '#d2fdbb', //dark green
-    }],
+    }
+    // ,
+    // {
+    //   label: 'Broker 2',
+    //   data: [0,0,0,0,0,0],
+    //   backgroundColor: '#22404c', //lime green
+    //   borderColor: '#d2fdbb', //dark green
+    // }
+  ],
   });
 
   const [chartOptions, setChartOptions] = useState({});
-
-  const dataForGraph = [];
-  const indexTracker = 0;
-
-  const [bytesInData, setBytesInData] = useState([[10, 10, 10, 10, 10, 10, 10, 10, 10, 10], [15, 15, 15, 15, 15, 15, 15, 15, 15, 15]]);
+  const [badQuery, setbadQuery] = useState(false);
+  const [bytesInData, setBytesInData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
   useEffect( () => {
-    const query ='topk(10, sum(rate(kafka_server_brokertopicmetrics_totalfetchrequestspersec[5m])) by (topic))';
+    const query ='sum(rate(kafka_server_brokertopicmetrics_bytesinpersec[5m])) by (topic)';
 
     const useFetch = async () => {
       try {
         const json = await fetch(queryLink + query)
-        const bytesInData = await json.json();
-        // console.log(bytesInData.data.result[0].value[1])
-        setBytesInData(prevState => {
-          // console.log("state changed")
-          // console.log(prevState)
-          let broker1NewState = prevState[0];
-          let broker2NewState = prevState[1];
-          broker1NewState.shift();
-          broker2NewState.shift();
-          broker1NewState.push(bytesInData.data.result[0].value[1]);
-          broker2NewState.push(bytesInData.data.result[1].value[1]);
-          let newState = [ broker1NewState, broker2NewState];
-          return newState
-        })
+        const result = await json.json();
+        let newDatapoint = result.data.result.filter(s => s.metric.topic===props.fetchedTopicName);
+        newDatapoint = newDatapoint[0].value[1];
+        if (newDatapoint.length === 0){ // if not found in query
+          console.log("that string is not found")
+          setbadQuery(true);
+        }else{
+          setBytesInData(prevState => {
+            let brokerNewState = [...prevState];
+            brokerNewState.shift();
+            brokerNewState.push(newDatapoint);
+            return brokerNewState
+          })
+        }
       }
       catch (error){
         console.log('ERROR IN BYTESIN GRAPH FETCH: ', error)
@@ -89,25 +88,26 @@ const BytesInGraph = () => {
     useFetch();
 
     return () => clearInterval(timeoutMethod);
-  }, []
-)
+  }, []);
 
   useEffect(() => {
         setBytesIn({
           labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
           datasets: [{
-            label: 'Broker 1',
-            data: bytesInData[0],
+            label: `${props.fetchedTopicName}`,
+            data: bytesInData,
             backgroundColor: ['#d2fdbb'], //lime green
             borderColor: ['#7cb55e'], //dark green
             borderWidth: 1
-          },
-          {
-            label: 'Broker 2',
-            data: bytesInData[1],
-            backgroundColor: '#22404c',  //slateBlue
-            borderColor: '#03dac5', //seafoam
-          }],
+          }
+          // ,
+          // {
+          //   label: 'Broker 2',
+          //   data: bytesInData[1],
+          //   backgroundColor: '#22404c',  //slateBlue
+          //   borderColor: '#03dac5', //seafoam
+          // }
+        ],
         });
 
         setChartOptions({
@@ -136,7 +136,12 @@ const BytesInGraph = () => {
 
   return (
     <div styles={{width:'300', length:'300'}}>
-      <p className='text-fontGray/40 text-center'>Bytes In</p>
+      {badQuery && <p className='text-fontGray/40 text-center'>
+        Topic not found in Query
+      </p>  }   
+      {!badQuery && <p className='text-fontGray/40 text-center'>
+        Bytes In
+      </p> }
       <Line data={bytesIn} options={chartOptions}/>  
     </div>
   )
