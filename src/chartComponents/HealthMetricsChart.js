@@ -34,9 +34,9 @@ const HealthMetricsChart = () => {
               CPU Usage Gauge
               <CPUGauge />
             </div>
-            <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
+            {/* <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
               <FetchLatencyGraph/>
-            </div>
+            </div> */}
             {/* JVM MEMORY GRAPHS */}
             <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
               <JVMGraph />
