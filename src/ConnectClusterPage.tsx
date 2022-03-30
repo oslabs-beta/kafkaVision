@@ -167,7 +167,7 @@ const ConnectClusterPage = () => {
   return (
     <div className="flex flex-col text-fontGray/70 border rounded border-limeGreen/70 m-10 bg-gray-800">
       <div className="flex place-content-center font-bold text-xl m-5 text-fontGray-75">
-        <h1>Connect Kafka Cluster</h1>
+        <h1>Choose a method to connect to your Kafka Cluster</h1>
       </div>
       <div className="border rounded m-10 border-seafoam/80 bg-slateBlue/80">
         <div className="flex place-content-center">
@@ -175,6 +175,7 @@ const ConnectClusterPage = () => {
             Enter Broker port:{' '}
           </label>
           <input
+            role="input_kafka"
             onChange={handleKafkaInput}
             placeholder="Kafka Broker Port"
             name="urlKafka"
@@ -185,6 +186,7 @@ const ConnectClusterPage = () => {
             autoComplete="off"
           ></input>
           <button
+            role="button"
             className="self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50"
             onClick={(e) => {
               e.preventDefault();
@@ -202,6 +204,7 @@ const ConnectClusterPage = () => {
             Enter Prometheus port:{' '}
           </label>
           <input
+            role='input_prometheus'
             onChange={handlePromInput}
             className="m-5 rounded bg-slateBlue border border-limeGreen/80 "
             placeholder="Prometheus Port"
@@ -211,6 +214,7 @@ const ConnectClusterPage = () => {
             value={url_prometheus_input}
           ></input>
           <button
+            role="button"
             className="self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50"
             onClick={(e) => {
               e.preventDefault();

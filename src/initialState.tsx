@@ -1,4 +1,4 @@
-const fakeState: any = {
+const initialState: any = {
     dummyGlobalState: {
         username:null,
         id:null,
@@ -51,4 +51,4 @@ const fakeState: any = {
     }
 }
 
-export default fakeState;
+export default initialState;

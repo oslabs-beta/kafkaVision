@@ -16,6 +16,7 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --verbose --no-cache"
   },
   "dependencies": {
+    "@testing-library/user-event": "^14.0.0",
     "bcryptjs": "^2.4.3",
     "chart.js": "^3.7.1",
     "cors": "^2.8.5",

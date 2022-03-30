@@ -11,14 +11,14 @@ import RelationshipsContainer from './Containers/RelationshipsContainer';
 import TopicsContainer from './Containers/TopicsContainer';
 import ConnectClusterPage from './ConnectClusterPage';
 import LoginPage from './LoginPage';
-import fakeState from './Components/dummyState';
-const { dummyGlobalState, dummyConnectionState } = fakeState;
+import initialState from './initialState';
+const { dummyGlobalState, dummyConnectionState } = initialState;
 // ------------------------------------------------------
 
 // interface Props {
 //   name: string;
 // }
-export const appContext = createContext(fakeState); // Best to initialize with null?
+export const appContext = createContext(initialState); // Best to initialize with null?
 
 const App = () => {
   const [globalState, setGlobalState] = useState(dummyGlobalState);
