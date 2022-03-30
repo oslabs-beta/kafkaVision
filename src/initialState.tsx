@@ -45,9 +45,9 @@ const initialState: any = {
         // url_kafka: "demo.saamsa.io:29093",
         url_prometheus: null,
         url_kafka: null,
-        isConnected:true,
-        valid_prom_url: true,
-        valid_kafka_url:false,
+        isConnected:false,
+        valid_prom_url: false,
+        valid_kafka_url:false
         //past_URLS_Prometheus: [],
         //past_URLS_Kafka: []
     }

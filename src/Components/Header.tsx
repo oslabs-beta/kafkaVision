@@ -28,6 +28,8 @@ const Header = () => {
         url_prometheus: null,
         url_kafka: null,
         isConnected: false,
+        valid_prom_url:false,
+        valid_kafka_url:false
       };
     });
   };

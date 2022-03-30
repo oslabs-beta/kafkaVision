@@ -62,6 +62,7 @@ const ConnectClusterPage = () => {
     fetch(fullFetch)
       .then(data=> data.json())
       .then(data => {
+        console.log("prom query string good")
         setConnectionState((prevState: any) => {
           return { ...prevState, url_prometheus:url_prometheus_input, isConnected: true, valid_prom_url: true };
         });
