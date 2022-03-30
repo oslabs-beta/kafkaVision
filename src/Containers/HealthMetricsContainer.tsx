@@ -45,7 +45,28 @@ const HealthMetricsContainer = () => {
         </div>
       </div>
     );
-  } else {
+  } else if (connectionStatus && !connectionState.valid_prom_url){
+    renderedContent = (
+      <div className="flex-auto justify-center text-fontGray/75">
+        <div className="m-10 rounded bg-backgroundC-400 text-fontGray/75 text-2xl">
+          Please Connect to using a {' '}
+          <Link
+            className="text-slate-100 font-bold"
+            to="/connectCluster"
+            onClick={() =>
+              setGlobalState((prevState: any) => {
+                return { ...prevState, sidebarTab: 0 };
+              })
+            }
+          >
+            PromQL Connection
+          </Link>{' '}
+          to see this page
+        </div>
+      </div>
+    );
+  }
+  else if (connectionStatus && connectionState.valid_prom_url) {
     renderedContent = (
       <div className="text-xl text-center m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75 font-bold">
         <h2 className="m-4 text-center">Health Dashboard</h2>

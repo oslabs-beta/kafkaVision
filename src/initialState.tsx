@@ -1,4 +1,4 @@
-const fakeState: any = {
+const initialState: any = {
     dummyGlobalState: {
         username:null,
         id:null,
@@ -6,7 +6,7 @@ const fakeState: any = {
         isLoggedIn: true,
         selected_kafka_topic_index:0,
         kafka_topics: [],
-        kafka_partitions: ['cheese'],
+        kafka_partitions: [],
         coreData:[ // this is Prometheus's dummy data for Producer-Topic-Consumer diagrams
             {
             producers:["Producer 1", "Producer 2"],
@@ -45,12 +45,12 @@ const fakeState: any = {
         // url_kafka: "demo.saamsa.io:29093",
         url_prometheus: null,
         url_kafka: null,
-        isConnected:false,
-        valid_prom_url: false,
+        isConnected:true,
+        valid_prom_url: true,
         valid_kafka_url:false
         //past_URLS_Prometheus: [],
         //past_URLS_Kafka: []
     }
 }
 
-export default fakeState;
+export default initialState;

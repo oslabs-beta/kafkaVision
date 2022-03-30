@@ -9,6 +9,7 @@ const kafkaController: Record<string, types.middlewareFunction> = {};
 kafkaController.fetchTopics = (req, res, next) => {
   try {
     console.log("got to fetch options controller")
+    console.log(req.body)
     const { bootstrap } = req.body;
     const instance = new kafka.Kafka({
       clientId: 'kafkaVision',
@@ -20,6 +21,7 @@ kafkaController.fetchTopics = (req, res, next) => {
       //  [ 'topic-1', 'topic-2', 'topic-3', ... ]
       console.log(data);
       res.locals.data = data;
+      console.log("query wrked?")
       return next();
     });
     admin.disconnect();
