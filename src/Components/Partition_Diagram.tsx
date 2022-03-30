@@ -13,7 +13,7 @@ const Partition_Diagram = () => {
   let renderedContent = [];
   for (let i = 0; i < localPartitionState.length; i += 1) {
     renderedContent.push(
-      <div className="bg-zinc-800 h-9 border border-fontGray/50 text-sm text-seafoam/70 rounded flex flex-row justify-around w-full">
+      <div className="bg-zinc-800 h-9 border border-fontGray/40 text-sm text-seafoam/50 rounded flex flex-row justify-around w-full">
         <div>Partition Number: {localPartitionState[i].partition} </div>
         <div>Offset: {localPartitionState[i].offset} </div>
         <div>High: {localPartitionState[i].high} </div>
