@@ -75,13 +75,25 @@ const Header = () => {
       </div>
       <div className="flex justify-right">
         {/* // Credit FREEPIK for CONNECTED Icon in README */}
-        {connectionState.isConnected && (
+        {(connectionState.isConnected && connectionState.valid_prom_url) && (
           <div className="flex flex-row items-center group">
             <span className="text-sm mr-4 scale-0 bg-green-700 px-2 text-white group-hover:scale-100 rounded">
-              Connected
+              Connected with PromQL
             </span>
-            <div className="bg-seafoam/80 rounded-3xl mr-3">
-              <img src={connected_icon}></img>
+            <div className="bg-seafoam/80 rounded-3xl mr-3 text-lg">
+              PC
+              {/* <img src={connected_icon}></img> */}
+            </div>
+          </div>
+        )}
+        {(connectionState.isConnected && connectionState.valid_kafka_url) && (
+          <div className="flex flex-row items-center group">
+            <span className="text-sm mr-4 scale-0 bg-green-700 px-2 text-white group-hover:scale-100 rounded">
+              Connected with KafkaJS
+            </span>
+            <div className="bg-seafoam/80 rounded-3xl mr-3 text-lg">
+              KC
+              {/* <img src={connected_icon}></img> */}
             </div>
           </div>
         )}

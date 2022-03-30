@@ -28,7 +28,7 @@ import { BroswerRouter, BrowserRouter } from'react-router-dom';
 //   Line: ()=> null
 // }));
 
-xdescribe('Header component', () => {
+describe('Header component', () => {
   beforeEach(() => {
     render(
       <appContext.Provider value={providerProps}>

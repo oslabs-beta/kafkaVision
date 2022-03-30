@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { appContext } from '../App';
 import { providerProps } from '../__mocks__/DefaultContext';
 
-describe('Sidebar Tests', () => {
+xdescribe('Sidebar Tests', () => {
   beforeEach(() => {
     render(
       <appContext.Provider value={providerProps}>
@@ -35,4 +35,6 @@ describe('Sidebar Tests', () => {
   it('Should have text Topic Metrics', () => {
     expect(screen.getByText('Topic Metrics', {exact:true}));
   });
+
+
 })

@@ -45,7 +45,7 @@ const Partition_Diagram = () => {
   }, [globalState]);
 
   return (
-    <div className="bg-green-600 h-full w-full">
+    <div className="bg-green-600 h-full w-full" role="test_selected">
       {renderedContent}
       {/* <div className=" h-full w-full"> Hiya {JSON.stringify(localPartitionState)} </div> */}
     </div>
