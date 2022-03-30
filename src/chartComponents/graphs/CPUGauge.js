@@ -59,14 +59,16 @@ const CPUGauge = () => {
       try {
         const json = await fetch(queryLink + query);
         const CPUData = await json.json(); // duplicate name but ok because it's in LEC
-        // console.log(CPUData.data.result[0].value[1])
+        
+        let filtered = CPUData.data.result.filter(result => (result.metric.job = "kafka-broker"));
+        console.log(filtered)
         let newState = [
-          Math.floor(CPUData.data.result[0].value[1]),
-          Math.floor(CPUData.data.result[1].value[1]),
+          Math.floor(filtered[0].value[1]),
+          Math.floor(filtered[1].value[1]),
         ];
         setCPUData(newState);
       } catch (error) {
-        console.log(connectionState.url_prometheus)
+        console.log(connectionState.url_prometheus);
         console.log('ERROR IN CPU GAUGE FETCH: ', error);
       }
     };
