@@ -1,68 +1,12 @@
 /// <reference path='../../custom.d.ts'/>
 import React, { useContext } from 'react';
 import { appContext } from '../App';
-import { Link } from 'react-router-dom';
-import connected_icon from '../../public/images/connected_icon.png';
 import disconnected_icon from '../../public/images/no-plug.png';
 
 const Header = () => {
   const {
     state: { connectionState, globalState },
-    actions: { setGlobalState, setConnectionState },
   } = useContext(appContext);
-
-  const disconnect: any = () => {
-    setGlobalState((prevState: any) => {
-      return {
-        ...prevState,
-        username: null,
-        id: null,
-        sidebarTab: 0,
-        isLoggedIn: false,
-        selectedState: 1,
-      };
-    });
-    setConnectionState((prevState: any) => {
-      return {
-        ...prevState,
-        url_prometheus: null,
-        url_kafka: null,
-        isConnected: false,
-        valid_prom_url:false,
-        valid_kafka_url:false
-      };
-    });
-  };
-
-  const logout: any = () => {
-    // CORRECT FORMAT?
-    console.log('logout fcn invoked');
-    // send fetch request for cookie handling
-    fetch('/api/user/logout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: globalState.id }),
-    });
-    // wipe all relevant state data
-    setGlobalState((prevState: any) => {
-      return {
-        ...prevState,
-        username: null,
-        id: null,
-        sidebarTab: 0,
-        isLoggedIn: false,
-        selectedState: 1,
-      };
-    });
-    setConnectionState((prevState: any) => {
-      return {
-        ...prevState,
-        url_prometheus: null,
-        url_kafka: null,
-        isConnected: false,
-      };
-    });
-  };
 
   return (
     <div
@@ -115,26 +59,11 @@ const Header = () => {
         <a href="https://github.com/oslabs-beta/kafkavision">
           <button 
             role="button"
-            className="py-1.5 px-3 mr-3 bg-seafoam/80 hover:bg-darkIndigo/50 text-darkIndigo text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300 align-center">
+            className="py-1.5 px-4 mr-3 bg-seafoam/80 hover:bg-darkIndigo/50 text-darkIndigo text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300 align-center">
               Github
           </button>
           
         </a>
-        {/* change <Link> to el using () => history.push */}
-
-        <Link
-          role="button"
-          to="/"
-        >
-          <button
-            onClick={logout}
-            className="py-1.5 px-3 mr-3 bg-seafoam/80 hover:bg-darkIndigo/50 text-darkIndigo text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300 align-center"
-          >
-            Log Out
-          </button>
-        </Link>
-
-        {/* future feature: dark mode toggle button  */}
       </div>
     </div>
   );

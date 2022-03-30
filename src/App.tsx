@@ -11,6 +11,7 @@ import RelationshipsContainer from './Containers/RelationshipsContainer';
 import TopicsContainer from './Containers/TopicsContainer';
 import ConnectClusterPage from './ConnectClusterPage';
 import LoginPage from './LoginPage';
+import LandingPage from './LandingPage'
 import initialState from './initialState';
 const { dummyGlobalState, dummyConnectionState } = initialState;
 // ------------------------------------------------------
@@ -40,7 +41,7 @@ const App = () => {
             </div>
             <Switch>
               <Route exact path="/">
-                <LoginPage />
+                <LandingPage />
               </Route>
 
               <Route exact path="/connectCluster">

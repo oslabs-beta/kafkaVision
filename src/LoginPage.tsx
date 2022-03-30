@@ -108,9 +108,9 @@ const LoginPage = () => {
         </div>
         <div className="relative flex flex-col items-center justify-center m-3">
           {/* // LOGIN ERROR MESSAGE: */}
-          <div className="text-red-500 bg-slate-300 max-w-xs border border-red-500 m-3 mb-0 text-center">
+          {/* <div className="text-red-500 bg-slate-300 max-w-xs border border-red-500 m-3 mb-0 text-center">
             {status}
-          </div>
+          </div> */}
           {/* // LOGIN BOX: */}
           <form
             className="relative flex flex-col items-center justify-center bg-slateBlue/70 rounded border border-seafoam/40 m-5"
