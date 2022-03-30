@@ -3,12 +3,8 @@ import * as types from '../types';
 
 const kafkaController: Record<string, types.middlewareFunction> = {};
 
-//const bootstrap = 'kayhill-cpdemo-kyrt8dklw5r.ws-us34.gitpod.io:19091'
-
-// on page load
 kafkaController.fetchTopics = (req, res, next) => {
   try {
-    console.log("got to fetch options controller")
     const { bootstrap } = req.body;
     const instance = new kafka.Kafka({
       clientId: 'kafkaVision',
@@ -18,7 +14,6 @@ kafkaController.fetchTopics = (req, res, next) => {
     admin.connect();
     admin.listTopics().then((data: any) => {
       // Data format: [ 'topic-1', 'topic-2', 'topic-3', ... ]
-      console.log(data);
       res.locals.data = data;
       return next();
     });
@@ -35,7 +30,6 @@ kafkaController.fetchTopics = (req, res, next) => {
   }
 };
 
-// on selection of specific topic, get metadata
 kafkaController.fetchTopicMetadata = (req, res, next) => {
   try {
     const { bootstrap, topic } = req.body;
@@ -63,7 +57,6 @@ kafkaController.fetchTopicMetadata = (req, res, next) => {
   }
 };
 
-// On selection of specific topic, get offsets
 kafkaController.fetchTopicOffsets = (req, res, next) => {
   try {
     const { bootstrap, topic } = req.body;
@@ -96,7 +89,6 @@ kafkaController.fetchTopicOffsets = (req, res, next) => {
     return next(defaultErr);
   }
 };
-
 
 kafkaController.describeCluster = (req, res, next) => {
   try {
