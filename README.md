@@ -54,7 +54,7 @@ KafkaVision has the following features:
 
 1. Clone this repo on your local machine
 2. Install dependencies with `npm install`
-3. Compile Typescript with `npx tsc`
+3. Compile Typescript with `npm run compile-prod`
 4. In a new terminal, run the command `npm run build-prod`
 5. Then, run `npm start`
 6. Open localhost:3333 to enter the KafkaVision App
