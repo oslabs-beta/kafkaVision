@@ -64,7 +64,7 @@ const ConnectClusterPage = () => {
       .then(data => {
         console.log("prom query string good")
         setConnectionState((prevState: any) => {
-          return { ...prevState, url_prometheus:url_prometheus_input, isConnected: true, valid_prom_url:true };
+          return { ...prevState, url_prometheus:url_prometheus_input, isConnected: true, valid_prom_url: true };
         });
         setGlobalState((prevstate: any) => {
           return { ...prevstate, sidebarTab: 1 };
@@ -121,7 +121,7 @@ const ConnectClusterPage = () => {
       .then(data=> data.json())
       .then(data => {
         setConnectionState((prevState: any) => {
-          return { ...prevState, url_kafka: url_kafka_input, isConnected: true, valid_kafka_url:true };
+          return { ...prevState, url_kafka: url_kafka_input, isConnected: true, valid_kafka_url: true };
         });
         setGlobalState((prevstate: any) => {
           return { ...prevstate, sidebarTab: 2 };

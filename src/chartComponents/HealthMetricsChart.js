@@ -17,15 +17,15 @@ const HealthMetricsChart = () => {
   return (
     <div>
       {!connectionStatus && (
-        <div className="flex-auto justify-center">
+        <div>
           <div className="m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-slate-800">
             Please Connect to see this page
           </div>
         </div>
       )}
       {connectionStatus && (
-        <div>
-          <div className="w-fit h-fit grid grid-cols-2 gap-10 ">
+        <div className="flex justify-around">
+          <div className="w-fit h-fit grid grid-cols-2 gap-x-40 gap-y-20 ">
             {/* CPU USAGE GRAPHS */}
             <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
               <CPUGraph />
@@ -34,9 +34,9 @@ const HealthMetricsChart = () => {
               CPU Usage Gauge
               <CPUGauge />
             </div>
-            <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
+            {/* <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
               <FetchLatencyGraph/>
-            </div>
+            </div> */}
             {/* JVM MEMORY GRAPHS */}
             <div className="col-span-1 bg-gray-800 border border-fontGray/40 rounded">
               <JVMGraph />
