@@ -123,7 +123,6 @@ const CPUGauge = () => {
 
   return (
     <div>
-      <p>CPU Gauge</p>
       <Bar data={CPU} options={chartOptions} />
     </div>
   );

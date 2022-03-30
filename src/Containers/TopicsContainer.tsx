@@ -76,8 +76,8 @@ const TopicsContainer = () => {
     let collapse: string = isOpen[i] ? 'h-70 scale-100 m-3 p-3 border rounded border-seafoam/40 bg-slateBlue/50 transition-all duration-300' : 'h-0 scale-0 transition-all duration-300';
 
     topics.push(
-      <div className='border border-limeGreen/70 rounded m-3 p-3' ref={parentRef} onClick={()=> helperFunction(i)}> 
-        <div className="cursor-default m-0 p-0 text-fontGray/40" key={i}>
+      <div className='border border-fontGray/40 rounded m-3 p-3 bg-zinc-800' ref={parentRef} onClick={()=> helperFunction(i)}> 
+        <div className="cursor-default font-bold text-2xl text-limeGreen/70 pl-7" key={i}>
           Topic: {topics[i]}
         </div>
         {/* <button 
@@ -138,8 +138,8 @@ const TopicsContainer = () => {
       </div>
       )}
       {(connectionState.isConnected && connectionState.valid_prom_url) && (
-        <div className='border-2 border-seafoam/40 rounded m-5 y-5'>
-          <h1 className='text-3xl text-seafoam/70 text-center m-5'>Top 5 Topics Throughput</h1>
+        <div className='border-2 border-seafoam/40 rounded m-5 y-5 bg-slateBlue/50'>
+          <h1 className='text-4xl text-fontGray/70 font-bold text-center m-5'>Top 5 Topics Throughput</h1>
           {topics}
         </div>
       )}

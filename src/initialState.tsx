@@ -47,7 +47,7 @@ const initialState: any = {
         url_kafka: null,
         isConnected:true,
         valid_prom_url: true,
-        valid_kafka_url:false
+        valid_kafka_url:false,
         //past_URLS_Prometheus: [],
         //past_URLS_Kafka: []
     }
