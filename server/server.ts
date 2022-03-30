@@ -1,12 +1,18 @@
-import express, {Request,Response,Application} from 'express';
+import express from 'express';
 import kafkaRouter from './routes/kafkaRouter.js';
-// import userRouter from './routes/userRouter.js';
 import cors  from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+
+// IMPORTS FOR FUTURE USER AUTH / DATABASE FUNCTIONALITY
+
+// import userRouter from './routes/userRouter.js';
 // import mongoose from 'mongoose';
 // const { connect } = mongoose;
+
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const port = 3333;
 
@@ -22,12 +28,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/kafka', kafkaRouter);
 
-// FOLLOWING SECTION FOR FUTURE USER AUTH / DATABASE
+
+// FOLLOWING SECTION FOR FUTURE USER AUTH / DATABASE FUNCTIONALITY
 
 // app.use('/api/user', userRouter);
-
-// import * as dotenv from "dotenv";
-// dotenv.config();
 
 // // non-undefined assertion operator to account for undefined type
 // const db: string = process.env.MONGO_URI!;
@@ -61,30 +65,31 @@ type errorType = {
     status: number;
     message: { err: string };
   };
-  //404 error handler
-  app.use('/*', (req, res) => {
-    res.sendStatus(404);
-  });
-  //global error handler
-app.use(
-    (
-      err: express.ErrorRequestHandler,
-      req: express.Request,
-      res: express.Response,
-      next: express.NextFunction
-    ) => {
-      const defaultErr: errorType = {
-        log: 'Express error handler caught unknown middleware error',
-        status: 500,
-        message: { err: 'An error occurred' },
-      };
-      const errorObj = { ...defaultErr, ...err };
-      console.log(err);
-      return res.status(errorObj.status).json(errorObj.message);
-    }
-  );
 
-app.listen(port, ():void => console.log(`Server running on port ${port}`)
+//404 error handler
+app.use('/*', (req, res) => {
+  res.sendStatus(404);
+});
+
+//global error handler
+app.use(
+  (
+    err: express.ErrorRequestHandler,
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    const defaultErr: errorType = {
+      log: 'Express error handler caught unknown middleware error',
+      status: 500,
+      message: { err: 'An error occurred' },
+    };
+    const errorObj = { ...defaultErr, ...err };
+    console.log(err);
+    return res.status(errorObj.status).json(errorObj.message);
+  }
 );
+
+app.listen(port, ():void => console.log(`Server running on port ${port}`));
 
 export default app;
