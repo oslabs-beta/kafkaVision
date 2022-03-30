@@ -25,7 +25,7 @@ const HealthMetricsChart = () => {
       )}
       {connectionStatus && (
         <div className="flex justify-around">
-          <div className="w-fit h-fit grid grid-cols-2 gap-x-40 gap-y-20 ">
+          <div className="w-fit h-fit grid grid-cols-2 gap-x-20 gap-y-10 p-5">
             {/* CPU USAGE GRAPHS */}
             <div className="cols-span-1 bg-gray-800 border border-fontGray/40 rounded">
               <CPUGraph />

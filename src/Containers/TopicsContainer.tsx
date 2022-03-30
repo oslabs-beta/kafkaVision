@@ -36,9 +36,7 @@ const TopicsContainer = () => {
   const [fetchData, setFetchData] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
   const [fetchedTopicNames, setFetchedTopicNames] = useState(['','','','','']);
 
-  //use effect
-    //do fetch
-      //grab top 5 metrics and names
+
 
   //BYTES IN    
   useEffect(() => {
@@ -47,15 +45,15 @@ const TopicsContainer = () => {
       .then((data) => data.json())
       .then((result) => {
           console.log('VALUES: ', result.series[0].fields[3].value);
-          const metrics: any = result.series[0].fields[3].value;
-          const topNames: any = result.series[0].fields[2].value;
+          const metrics: number = result.series[0].fields[3].value;
+          const topNames: number = result.series[0].fields[2].value;
           
-          //GET TOP 5 TOPICS
-          const topMetrics = metrics.sort().slice(-5);
-          console.log(topMetrics);
+          // //GET TOP 5 TOPICS
+          // const topMetrics = metrics.sort().slice(-5);
+          // console.log(topMetrics);
 
-          setBytesInName(topNames);
-          setBytesIn(topMetrics);
+          // setBytesInName(topNames);
+          // setBytesIn(topMetrics);
 
         })  
       .catch((err) => {
@@ -131,7 +129,7 @@ const TopicsContainer = () => {
               })
             }
           >
-            PromQL Connection
+            Prometheus Connection
           </Link>{' '}
           to see this page
         </div>
