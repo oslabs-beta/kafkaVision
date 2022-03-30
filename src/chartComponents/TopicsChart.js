@@ -4,13 +4,13 @@ import BytesInGraph from './graphs/BytesInGraph.js';
 import BytesOutGraph from './graphs/BytesOutGraph.js';
 import MessagesInGraph from './graphs/MessagesInGraph.js';
 
-const TopicsChart = () => {
+const TopicsChart = (props) => {
   console.log('')
   //UNPACK CONNECTION STATE (TO GET whether cluster is Connected)
   // const appState = useContext(appContext);
   // const [connectionState, setConnectionState] = appState.connection;
   // const connectionStatus = connectionState.isConnected;
-
+  console.log("props", props)
   // let renderedContent;
   // if (connectionStatus === false){
   //   renderedContent = (
@@ -45,7 +45,7 @@ const TopicsChart = () => {
   return (
     <div className='flex flex-row justify-around h-full items-center'>
       <div className="h-full w-full bg-gray-800 border border-fontGray/40 text-fontGray/75 font-bold rounded">
-        <BytesInGraph/>
+        <BytesInGraph bytesIn={props.bytesIn}/>
       </div>
 
       <div className="h-full w-full bg-gray-800 border border-fontGray/40 fontGray/40 rounded gap-10 ">

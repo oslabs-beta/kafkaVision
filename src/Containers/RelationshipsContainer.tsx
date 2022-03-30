@@ -59,7 +59,29 @@ const RelationshipsContainer = () => {
         </div>
       </div>
     );
-  } else {
+  } else if (connectionState.isConnected && !connectionState.valid_kafka_url){
+    renderedContent = (
+      <div className="flex-auto justify-center">
+        <div className=" m-10 rounded bg-backgroundC-400 text-fontGray/75 text-2xl">
+          Please Connect using a
+          <Link
+            className="text-slate-100 font-bold"
+            to="/connectCluster"
+            onClick={() =>
+              setGlobalState((prevState: any) => {
+                return { ...prevState, sidebarTab: 0 };
+              })
+            }
+          >
+            {' '}
+            Kafka Broker Connection{' '}
+          </Link>
+          to see this page
+        </div>
+      </div>
+    );
+  }
+  else if (connectionState.isConnected && connectionState.valid_kafka_url) {
     renderedContent = (
       <div className="flex-auto justify-center h-full">
         <div className="m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75 h-full">

@@ -225,8 +225,8 @@ const ConnectClusterPage = () => {
           >
             Submit
           </button>
-          {show_error_prom && <div className="text-red-900 text-lg">Please enter a valid Prometheus URL</div>}
         </div>
+        {show_error_prom && <div className="text-red-600 text-lg mx-0 px-0 text-center">Please enter a valid Prometheus URL</div>}
       </div>
     </div>
   );

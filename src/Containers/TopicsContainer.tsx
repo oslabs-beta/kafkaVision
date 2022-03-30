@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useContext } from 'react';
 import TopicsChart from '../chartComponents/TopicsChart';
 import { appContext } from '../App';
+import {Link} from 'react-router-dom'
 
 interface Props {
   key: number,
@@ -17,19 +18,23 @@ const TopicsContainer = () => {
   //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
   const {
     state: { connectionState },
+    actions: {setGlobalState}
   } = useContext(appContext);
   const queryParams = 'api/v1/query?query=';
   const queryLink = connectionState.url_prometheus + queryParams;
-  
+  console.log("PROM URL", connectionState.valid_prom_url)
   //LOCAL STATE
   const [isOpen, setIsOpen] = useState([false, false, false, false, false]);
   const [bytesInName, setBytesInName] = useState(['', '', '', '', '']);
-  const [bytesIn, setBytesIn] = useState([0, 0, 0, 0, 0]);
+  const [bytesIn, setBytesIn] = useState([5, 5, 5, 5, 5]);
   const [bytesOutName, setBytesOutName] = useState(['', '', '', '', '']);
-  const [bytesOut, setBytesOut] = useState([0, 0, 0, 0, 0]);
+  const [bytesOut, setBytesOut] = useState([20, 20, 20, 20, 20]);
   const [messagesname, setMessagesName] = useState(['', '', '', '', '']);
-  const [messages, setMessages] = useState([0, 0, 0, 0, 0]);
+  const [messages, setMessages] = useState([30, 30, 30, 30, 30]);
   const parentRef = useRef<HTMLDivElement>(null);
+
+  const [fetchData, setFetchData] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
+  const [fetchedTopicNames, setFetchedTopicNames] = useState(['','','','','']);
 
   //use effect
     //do fetch
@@ -51,6 +56,7 @@ const TopicsContainer = () => {
 
           setBytesInName(topNames);
           setBytesIn(topMetrics);
+
         })  
       .catch((err) => {
           console.log('ERROR IN BYTES IN TOPICS CONTAINER USEEFFECT: ', err);
@@ -68,7 +74,6 @@ const TopicsContainer = () => {
   const topics = [];
   for (let i = 0; i < bytesInName.length; i++){
     let collapse: string = isOpen[i] ? 'h-70 scale-100 m-3 p-3 border rounded border-seafoam/40 bg-slateBlue/50 transition-all duration-300' : 'h-0 scale-0 transition-all duration-300';
- 
 
     topics.push(
       <div className='border border-limeGreen/70 rounded m-3 p-3' ref={parentRef} onClick={()=> helperFunction(i)}> 
@@ -85,7 +90,7 @@ const TopicsContainer = () => {
         {/* </button> */}
         <div className={collapse}>
           <div className='m-5 h-70'>
-            <TopicsChart/>
+            <TopicsChart bytesIn={bytesIn} bytesOut={bytesOut} messages={messages} />
           </div>
         </div>
       </div>
@@ -93,12 +98,53 @@ const TopicsContainer = () => {
   };
 
   return (
-    <div className='border-2 border-seafoam/40 rounded m-5 y-5'>
-      <h1 className='text-3xl text-seafoam/70 text-center m-5'>Top 5 Topics Throughput</h1>
-      {topics}
+    <div>
+      {!connectionState.isConnected && (
+        <div className="flex-auto justify-center text-fontGray/75">
+        <div className="m-10 rounded bg-backgroundC-400 text-fontGray/75 text-2xl">
+          Please Connect to your{' '}
+          <Link
+            className="text-slate-100 font-bold"
+            to="/connectCluster"
+            onClick={() =>
+              setGlobalState((prevState: any) => {
+                return { ...prevState, sidebarTab: 0 };
+              })
+            }
+          >
+            Cluster
+          </Link>{' '}
+          to see this page
+        </div>
+      </div>
+      )}
+      {(connectionState.isConnected && !connectionState.valid_prom_url) && (
+        <div className="flex-auto justify-center text-fontGray/75">
+        <div className="m-10 rounded bg-backgroundC-400 text-fontGray/75 text-2xl">
+          Please Connect using a {' '}
+          <Link
+            className="text-slate-100 font-bold"
+            to="/connectCluster"
+            onClick={() =>
+              setGlobalState((prevState: any) => {
+                return { ...prevState, sidebarTab: 0 }; 
+              })
+            }
+          >
+            PromQL Connection
+          </Link>{' '}
+          to see this page
+        </div>
+      </div>
+      )}
+      {(connectionState.isConnected && connectionState.valid_prom_url) && (
+        <div className='border-2 border-seafoam/40 rounded m-5 y-5'>
+          <h1 className='text-3xl text-seafoam/70 text-center m-5'>Top 5 Topics Throughput</h1>
+          {topics}
+        </div>
+      )}
     </div>
   )
 };
-
 
 export default TopicsContainer;
