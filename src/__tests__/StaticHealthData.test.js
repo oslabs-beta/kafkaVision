@@ -7,9 +7,11 @@ import { BrowserRouter } from 'react-router-dom';
 
 describe('Static Health Metrics Tests', () => {
   beforeEach(() => {
-    render (
+    render(
       <appContext.Provider value={providerProps}>
-        <BrowserRouter><StaticHealthData/></BrowserRouter>
+        <BrowserRouter>
+          <StaticHealthData />
+        </BrowserRouter>
       </appContext.Provider>
     );
   });
