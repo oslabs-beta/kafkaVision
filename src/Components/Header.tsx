@@ -73,30 +73,33 @@ const Header = () => {
       <div className="bg-clip-text text-transparent py-4 px-3 bg-gradient-to-r from-slateBlue via-seafoam/75 to-slateBlue text-5xl font-black text-justify font-logo">
         kafkaVision
       </div>
-      <div className="flex justify-right">
-        {/* // Credit FREEPIK for CONNECTED Icon in README */}
-        {(connectionState.isConnected && connectionState.valid_prom_url) && (
-          <div className="flex flex-row items-center group">
-            <span className="text-sm mr-4 scale-0 bg-green-700 px-2 text-white group-hover:scale-100 rounded">
-              Connected with PromQL
-            </span>
-            <div className="bg-seafoam/80 rounded-3xl mr-3 text-lg">
-              PC
-              {/* <img src={connected_icon}></img> */}
+      <div className="flex justify-right justify-between">
+        <div className="flex flex-col">
+          {/* // Credit FREEPIK for CONNECTED Icon in README */}
+          {(connectionState.isConnected && connectionState.valid_prom_url) && (
+            <div className="flex flex-row items-center group">
+              <span className="text-xs mr-4 scale-0 bg-green-700 px-2 text-white group-hover:scale-100 rounded">
+                Connected with Prometheus
+              </span>
+              <div className="bg-limeGreen/80 rounded-full mr-3 text-xs p-2">
+                PC
+                {/* <img src={connected_icon}></img> */}
+              </div>
             </div>
-          </div>
-        )}
-        {(connectionState.isConnected && connectionState.valid_kafka_url) && (
-          <div className="flex flex-row items-center group">
-            <span className="text-sm mr-4 scale-0 bg-green-700 px-2 text-white group-hover:scale-100 rounded">
-              Connected with KafkaJS
-            </span>
-            <div className="bg-seafoam/80 rounded-3xl mr-3 text-lg">
-              KC
-              {/* <img src={connected_icon}></img> */}
+          )}
+          {(connectionState.isConnected && connectionState.valid_kafka_url) && (
+            <div className="flex flex-row items-center group">
+              <span className="text-xs mr-4 scale-0 bg-green-700 px-2 text-white group-hover:scale-100 rounded">
+                Connected with KafkaJS
+              </span>
+              <div className="bg-limeGreen/80 rounded-full mr-3 text-xs p-2">
+                KC
+                {/* <img src={connected_icon}></img> */}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
+        
         {!connectionState.isConnected && (
           <div className="flex flex-row items-center group">
             <span className="text-sm mr-4 scale-0 bg-red-700 px-2 text-white group-hover:scale-100 rounded">
@@ -107,22 +110,26 @@ const Header = () => {
             </div>
           </div>
         )}
-        <a
-          role="button"
-          href="https://github.com/oslabs-beta/kafkavision"
-          className="py-1.5 px-3 mr-3 bg-seafoam/80 hover:bg-darkIndigo/50 text-darkIndigo text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300"
-        >
-          Github
+        <a href="https://github.com/oslabs-beta/kafkavision">
+          <button 
+            role="button"
+            className="py-1.5 px-3 mr-3 bg-seafoam/80 hover:bg-darkIndigo/50 text-darkIndigo text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300 align-center">
+              Github
+          </button>
+          
         </a>
         {/* change <Link> to el using () => history.push */}
 
         <Link
           role="button"
           to="/"
-          onClick={logout}
-          className="py-1.5 px-3 mr-3 bg-seafoam/80 hover:bg-darkIndigo/50 text-darkIndigo text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300"
         >
-          Log Out
+          <button
+            onClick={logout}
+            className="py-1.5 px-3 mr-3 bg-seafoam/80 hover:bg-darkIndigo/50 text-darkIndigo text-base border border-white/50 rounded drop-shadow hover:text-seafoam/75 transition-all duration-300 align-center"
+          >
+            Log Out
+          </button>
         </Link>
 
         {/* future feature: dark mode toggle button  */}

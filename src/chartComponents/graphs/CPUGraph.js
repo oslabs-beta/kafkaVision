@@ -155,7 +155,9 @@ const CPUGraph = () => {
   return (
     <div>
       <div>CPU Usage</div>
-      <Line data={CPU} options={chartOptions} />
+      <Line 
+        data={CPU} 
+        options={chartOptions} />
     </div>
   );
 };

@@ -59,7 +59,7 @@ const HealthMetricsContainer = () => {
               })
             }
           >
-            PromQL Connection
+            Prometheus Connection
           </Link>{' '}
           to see this page
         </div>
@@ -74,7 +74,7 @@ const HealthMetricsContainer = () => {
           {/* Overall Cluster Health */}
           <div className="rounded m-5 border border-fontGray/50 bg-zinc-800">
             <p className="m-3">Overall Cluster Health</p>
-            <div className="flex items-center justify-center m-8">
+            <div className="flex justify-around">
               <HealthMetricsChart />
             </div>
           </div>
