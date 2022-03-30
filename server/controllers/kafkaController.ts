@@ -15,6 +15,7 @@ kafkaController.fetchTopics = (req, res, next) => {
     admin.listTopics().then((data: any) => {
       // Data format: [ 'topic-1', 'topic-2', 'topic-3', ... ]
       res.locals.data = data;
+      console.log("query wrked?")
       return next();
     });
     admin.disconnect();
