@@ -81,8 +81,9 @@ const JVMGraph = () => {
           let broker2NewState = prevState[1];
           broker1NewState.shift();
           broker2NewState.shift();
-          broker1NewState.push(CPUData.data.result[0].value[1]);
-          broker2NewState.push(CPUData.data.result[1].value[1]);
+          let filtered = CPUData.data.result.filter(result => (result.metric.job = "kafka-broker"));
+          broker1NewState.push(filtered[0].value[1]);
+          broker2NewState.push(filtered[1].value[1]);
           let newState = [broker1NewState, broker2NewState];
           return newState;
         });

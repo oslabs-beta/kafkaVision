@@ -1,7 +1,9 @@
+![Screen Shot 2022-03-29 at 6 13 20 PM](https://user-images.githubusercontent.com/61764488/160890405-2ae61d7b-5a6c-4489-8300-08fcb243ac92.png)
 # KafkaVision
-Visualize your Apache Kafka cluster.
+### A visualization and optimization insight tool for Apache Kafka
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/oslabs-beta/kafkavision/pulls)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/oslabs-beta/reactron/LICENSE)
 
 <details>
@@ -19,23 +21,23 @@ Visualize your Apache Kafka cluster.
 
 
 ## About KafkaVision
-### A modern, intuitive GUI for quick visualization of the status, health, and structure of your Apache Kafka cluster
 
 KafkaVision simplifies monitoring of a Kafka cluster by allowing developers to:
 - Quickly view a snapshot of a cluster's health
 - Visualize and compare topic level metrics in a cluster
 
-KafkaVision saves developers time by:
-- Prioritizing cluster health metrics and status updates that really matter
-- Eliminating the need for manual creation of PromQL queries
-- Providing relevant and useful graphs that update in real-time -- with no additional configuration required
+How KafkaVision saves developers time:
+- Prioritizes cluster health metrics and status updates that really matter
+- Provides relevant and useful graphs that update in real-time -- with no additional configuration required
+- Organizes topics and partitions in an easy-to-consume visualization to inform quick consumer optimization decisions
+- Eliminates the need for manual creation of PromQL queries and unfamiliar CLI commands
 
 
 ## Pre-requisites
 
 To use this application, you'll need to have at least one of the following:
 
-1. A running Kafka instance with at least one broker with an available plaintext port
+1. A running Kafka instance with at least one broker with a public port
 2. A running Kafka instance configured with Prometheus and access to the corresponding Prometheus port
 
 ## Features
@@ -43,8 +45,8 @@ To use this application, you'll need to have at least one of the following:
 KafkaVision has the following features:
 
 - An intuitive and simplified GUI
-- Insights into cluster topics, brokers, partitions, and controllers
-- Graphs to visualize & monitor overall cluster health metrics, including CPU Usage, JVM Memory Usage, and Time Spent in GC
+- Insights into cluster topics, partitions, and consumer offsets
+- Graphs to visualize & monitor overall cluster health metrics, including CPU Usage, JVM Memory Usage, Time Spent in GC, and more
 
 ## How It Works
 
@@ -52,11 +54,12 @@ KafkaVision has the following features:
 
 1. Clone this repo on your local machine
 2. Install dependencies with `npm install`
-3. Run the command `npm run build-prod`
-4. In a new terminal, run the command `npm start`
-5. Open localhost:3333 to enter the KafkaVision App
-6. Log in or register a new account
-7. To add a new broker or Prometheus address, add the location in the input field and click _Submit_.
+3. Compile Typescript with `npx tsc`
+4. In a new terminal, run the command `npm run build-prod`
+5. Then, run `npm start`
+6. Open localhost:3333 to enter the KafkaVision App
+7. Log in or register a new account
+8. To add a new broker or Prometheus address, add the location in the input field and click _Submit_.
 9. On the ‘Partition Diagrams’ page, you can _Select a topic_ from the dropdown to visualize all partitions of a topic and their offsets
 
 ## Demo Testing App
