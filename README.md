@@ -1,7 +1,9 @@
+![Screen Shot 2022-03-29 at 6 13 20 PM](https://user-images.githubusercontent.com/61764488/160890405-2ae61d7b-5a6c-4489-8300-08fcb243ac92.png)
 # KafkaVision
-Visualize your Apache Kafka cluster.
+### A visualization and optimization insight tool for Apache Kafka
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/oslabs-beta/kafkavision/pulls)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/oslabs-beta/reactron/LICENSE)
 
 <details>
@@ -19,7 +21,6 @@ Visualize your Apache Kafka cluster.
 
 
 ## About KafkaVision
-### A visualization and optimization insight tool for Apache Kafka
 
 KafkaVision simplifies monitoring of a Kafka cluster by allowing developers to:
 - Quickly view a snapshot of a cluster's health
