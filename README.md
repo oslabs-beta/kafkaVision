@@ -1,24 +1,11 @@
-![Screen Shot 2022-03-29 at 6 13 20 PM](https://user-images.githubusercontent.com/61764488/160890405-2ae61d7b-5a6c-4489-8300-08fcb243ac92.png)
+![Screen Shot 2022-03-31 at 12 14 56 PM](https://user-images.githubusercontent.com/61764488/161104170-2557b904-e6c5-4bca-80f0-a152895ad970.png)
+
 # KafkaVision
 ### A visualization and optimization insight tool for Apache Kafka
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/oslabs-beta/kafkavision/pulls)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/oslabs-beta/reactron/LICENSE)
-
-<details>
-	<summary>Table of Contents</summary>
-
-- [About KafkaVision](##About-KafkaVision)
-- [Pre-requisites](##Pre-requisites)
-- [Features](##Features)
-- [How It Works](##How-It-Works)
-- [Demo Testing App](##Demo-Testing-App)
-- [Feature Roadmap](##Feature-Roadmap)
-- [Contributors](##Contributors)
-- [License](##License)
-</details>
-
 
 ## About KafkaVision
 
@@ -59,7 +46,7 @@ The 'Topic Metrics' page displays real-time throughput metrics for the most acti
 
 **3) Insights into cluster topics, partitions, and consumer offsets (with Broker connection)**
 
-The 'Partition Diagrams' page allows users to gain insight into the partitions within each Topic of their Cluster, including the number of partitions, the current offsets, and more!
+The 'Partition Diagrams' page allows users to gain insight into the partitions within each Topic of their Cluster, including the number of partitions and the current offsets, allowing developers to quickly make optimization decisions about partition and consumer assignments.
 
 ![partition-diagram](https://user-images.githubusercontent.com/87503302/161098210-ac1ec57a-2aa8-4033-b6ac-cc9047049537.gif)
 
