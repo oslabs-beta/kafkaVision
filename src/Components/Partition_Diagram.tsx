@@ -2,14 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import { appContext } from '../App';
 
 const Partition_Diagram = () => {
+  //unpacking state from context
   const {
     state: { globalState, connectionState },
   } = useContext(appContext);
 
+  // local state which will be an array that gets filled by fetch
   const [localPartitionState, setLocalPartitionState] = useState(
     globalState.kafka_partitions
   );
 
+  // creating elements for each partition of a certain topic (topic is selected in parent element)
   let renderedContent = [];
   for (let i = 0; i < localPartitionState.length; i += 1) {
     renderedContent.push(
@@ -22,6 +25,8 @@ const Partition_Diagram = () => {
     );
   }
 
+  // fetch offset data on page load using topic name from global state (kafka_topics)
+  // which topic is queried is determined by global state 'selected_kafka_topic_index' (set in parent 'RelationshipsContainer')
   useEffect(() => {
     fetch('/api/kafka/topicoffsets', {
       method: 'POST',
@@ -38,7 +43,6 @@ const Partition_Diagram = () => {
       .then((data) => data.json())
       .then((data) => {
         setLocalPartitionState(data);
-        // setGlobalState((prevstate:any) => {return {...prevstate, kafka_partitions: data}});
       })
       .catch((err) => console.log(`error getting topic offset info: ${err}`));
     return;
@@ -47,7 +51,6 @@ const Partition_Diagram = () => {
   return (
     <div className="h-full w-full">
       {renderedContent}
-      {/* <div className=" h-full w-full"> Hiya {JSON.stringify(localPartitionState)} </div> */}
     </div>
   );
 };

@@ -31,8 +31,10 @@ const MessagesInGraph = (props) => {
   const queryParams = 'api/v1/query?query=';
   const queryLink = connectionState.url_prometheus + queryParams;
 
-  console.log("messagesIn rendered with props:", props)
-
+  //Local state being rendered onto graph
+  const [chartOptions, setChartOptions] = useState({});
+  const [badQuery, setbadQuery] = useState(false);
+  const [messagesInData, setMessagesInData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [messagesIn, setMessagesIn] = useState({
     labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     datasets: [{
@@ -41,34 +43,27 @@ const MessagesInGraph = (props) => {
       backgroundColor: '#22404c', //lime green
       borderColor: '#d2fdbb', //dark green
       borderWidth: 1
-    }
-    // ,
-    // {
-    //   label: 'Broker 2',
-    //   data: [0,0,0,0,0,0],
-    //   backgroundColor: '#22404c', //lime green
-    //   borderColor: '#d2fdbb', //dark green
-    // }
-  ],
+    }],
   });
 
-  const [chartOptions, setChartOptions] = useState({});
-  const [badQuery, setbadQuery] = useState(false);
-  const [messagesInData, setMessagesInData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
   useEffect( () => {
     const query ='sum(rate(kafka_server_brokertopicmetrics_messagesinpersec[5m])) by (topic)';
 
+    //Awaiting for a previous query that gets topics with top five throughput
     const useFetch = async () => {
       try {
         const json = await fetch(queryLink + query)
         const result = await json.json();
         let newDatapoint = result.data.result.filter(s => s.metric.topic===props.fetchedTopicName);
         newDatapoint = newDatapoint[0].value[1];
-        if (newDatapoint.length === 0){ // if not found in query
-          console.log("that string is not found")
+
+        //Edgecase for if topic name is not found in query
+        if (newDatapoint.length === 0){ 
           setbadQuery(true);
-        }else{
+
+        //Allows state to recieve and discard metrics so there are only 10 datapoints at a time
+        } else {
           setMessagesInData(prevState => {
             let brokerNewState = [...prevState];
             brokerNewState.shift();
@@ -82,6 +77,7 @@ const MessagesInGraph = (props) => {
       }
     }
 
+    //Allows graphs to update every second
     const timeoutMethod = setInterval(() => {
       useFetch();
     }, 1000);
@@ -101,17 +97,10 @@ const MessagesInGraph = (props) => {
             backgroundColor: ['#d2fdbb'], //lime green
             borderColor: ['#7cb55e'], //dark green
             borderWidth: 1
-          }
-          // ,
-          // {
-          //   label: 'Broker 2',
-          //   data: messagesInData[1],
-          //   backgroundColor: '#22404c',  //slateBlue
-          //   borderColor: '#03dac5', //seafoam
-          // }
-        ],
+          }],
         });
 
+        //Tooltips from ChartJS for graph customization
         setChartOptions({
           responsive: false,
           maintainAspectRatio: true,
@@ -136,6 +125,7 @@ const MessagesInGraph = (props) => {
       }, [messagesInData]);
 
 
+      //Edgecasing which gets rendered to the page dependent on if a valid query was returned
   return (
     <div styles={{width:'300', length:'300'}}>
       {badQuery && <p className='text-fontGray/40 text-center'>

@@ -31,36 +31,32 @@ const CPUGraph = () => {
   const queryParams = 'api/v1/query?query=';
   const queryLink = connectionState.url_prometheus + queryParams;
 
+  //Local state being rendered onto graph
+  const [chartOptions, setChartOptions] = useState({});
+  const [CPUData, setCPUData] = useState([
+    [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+    [15, 15, 15, 15, 15, 15, 15, 15, 15, 15],
+  ]);
   const [CPU, setCPU] = useState({
-    // labels: ['CPU Usage'],
-    labels: [1, 2, 3, 4, 5, 6], // 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: [1, 2, 3, 4, 5, 6],
     datasets: [
       {
         label: 'Broker 1',
         data: [5, 5, 5, 5, 5, 5],
-        backgroundColor: '#22404c', //lime green
-        borderColor: '#d2fdbb', //dark green
+        backgroundColor: '#22404c', 
+        borderColor: '#d2fdbb', 
         borderWidth: 1,
       },
       {
         label: 'Broker 2',
         data: [0, 0, 0, 0, 0, 0],
-        backgroundColor: '#22404c', //lime green
-        borderColor: '#d2fdbb', //dark green
+        backgroundColor: '#22404c', 
+        borderColor: '#d2fdbb', 
       },
     ],
   });
 
-  const [chartOptions, setChartOptions] = useState({});
-
-  const dataForGraph = [];
-  const indexTracker = 0;
-
-  const [CPUData, setCPUData] = useState([
-    [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-    [15, 15, 15, 15, 15, 15, 15, 15, 15, 15],
-  ]);
-
+  //Fetches data for CPU Usage on load
   useEffect(() => {
     const query = 'irate(process_cpu_seconds_total[5m])*100';
 
@@ -68,15 +64,18 @@ const CPUGraph = () => {
       try {
         const json = await fetch(queryLink + query);
         const CPUData = await json.json();
-        console.log(CPUData.data.result[0].value[1]);
+        
         setCPUData((prevState) => {
-          console.log('state changed');
-          console.log(prevState);
+          //Allows the state's array to discard old data points
           let broker1NewState = prevState[0];
           let broker2NewState = prevState[1];
           broker1NewState.shift();
           broker2NewState.shift();
+
+          //Filtering query for brokers  
           let filtered = CPUData.data.result.filter(result => (result.metric.job = "kafka-broker"));
+          
+          //Loading newer data points to state
           broker1NewState.push(filtered[0].value[1]);
           broker2NewState.push(filtered[1].value[1]);
           let newState = [broker1NewState, broker2NewState];
@@ -87,6 +86,7 @@ const CPUGraph = () => {
       }
     };
 
+    //Allows graphs to update every second
     const timeoutMethod = setInterval(() => {
       useFetch();
     }, 1000);
@@ -96,27 +96,28 @@ const CPUGraph = () => {
     return () => clearInterval(timeoutMethod);
   }, []);
 
+  //Sets graph properties on load
   useEffect(() => {
     setCPU({
-      // labels: ['CPU Usage'],
-      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], // 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 
       datasets: [
         {
           label: 'Broker 1',
           data: CPUData[0],
-          backgroundColor: ['#d2fdbb'], //lime green
-          borderColor: ['#7cb55e'], //dark green
+          backgroundColor: ['#d2fdbb'], 
+          borderColor: ['#7cb55e'], 
           borderWidth: 1,
         },
         {
           label: 'Broker 2',
           data: CPUData[1],
-          backgroundColor: '#22404c', //slateBlue
-          borderColor: '#03dac5', //seafoam
+          backgroundColor: '#22404c', 
+          borderColor: '#03dac5', 
         },
       ],
     });
 
+    //Tooltips from ChartJS for customization
     setChartOptions({
       responsive: false,
       maintainAspectRatio: true,
@@ -126,7 +127,6 @@ const CPUGraph = () => {
         },
         title: {
           display: true,
-          // text: 'CPU Usage',
         },
       },
       scales: {
@@ -137,24 +137,13 @@ const CPUGraph = () => {
             text: 'Cores',
           },
         },
-        // x: {
-        //   type: 'time',
-        //   time: {
-        //     unit: 'second',
-        //   },
-        //   adapters: {
-        //     date: {
-        //       locale: de
-        //     }
-        //   }
-        // },
       },
     });
   }, [CPUData]);
 
   return (
     <div>
-      <div>CPU Usage</div>
+      <p>CPU Usage</p>
       <Line 
         data={CPU} 
         options={chartOptions} />

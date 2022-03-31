@@ -32,29 +32,22 @@ const BytesOutGraph = (props) => {
   const queryLink = connectionState.url_prometheus + queryParams;
   console.log("bytesout rendered with props:", props)
 
+  //Local state 
   const [bytesOut, setBytesOut] = useState({
     labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     datasets: [{
       label: 'Topic',
       data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      backgroundColor: '#22404c', //lime green
-      borderColor: '#d2fdbb', //dark green
+      backgroundColor: '#22404c', 
+      borderColor: '#d2fdbb',
       borderWidth: 1
-    }
-    // ,
-    // {
-    //   label: 'Broker 2',
-    //   data: [0,0,0,0,0,0],
-    //   backgroundColor: '#22404c', //lime green
-    //   borderColor: '#d2fdbb', //dark green
-    // }
-  ],
+    }],
   });
-
   const [chartOptions, setChartOptions] = useState({});
   const [badQuery, setbadQuery] = useState(false);
   const [bytesOutData, setBytesOutData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
+  //Awaiting for a previous query that gets topics with top five throughput
   useEffect( () => {
     const query ='sum(rate(kafka_server_brokertopicmetrics_bytesoutpersec[5m])) by (topic)';
 
@@ -62,17 +55,14 @@ const BytesOutGraph = (props) => {
       try {
         const json = await fetch(queryLink + query)
         const result = await json.json();
-        console.log("this tie around", result)
-        // console.log(bytesOutData.data.result[0].value[1])
         let newDatapoint = result.data.result.filter(s => s.metric.topic===props.fetchedTopicName);
-        console.log("ok im here")
-        console.log(newDatapoint)
-        if (newDatapoint.length === 0){ // if not found in query
-          console.log("that string is not found")
+       
+        //Edgecase for if topic name is not found in query
+        if (newDatapoint.length === 0){ 
           setbadQuery(true);
-        }else{
-          console.log("new datapoint in else", newDatapoint)
-          console.log('went in else')
+
+        //Allows state to recieve and discard metrics so there are only 10 datapoints at a time  
+        } else {
           newDatapoint = newDatapoint[0].value[1];
           setBytesOutData(prevState => {
             let brokerNewState = [...prevState];
@@ -87,6 +77,7 @@ const BytesOutGraph = (props) => {
       }
     }
 
+    //Allows graphs to update every second
     const timeoutMethod = setInterval(() => {
       useFetch();
     }, 1000);
@@ -97,26 +88,20 @@ const BytesOutGraph = (props) => {
   }, []
 )
 
+  //Sets graph properties on load
   useEffect(() => {
         setBytesOut({
           labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
           datasets: [{
             label: `${props.fetchedTopicName}`,
             data: bytesOutData,
-            backgroundColor: ['#d2fdbb'], //lime green
-            borderColor: ['#7cb55e'], //dark green
+            backgroundColor: ['#d2fdbb'], 
+            borderColor: ['#7cb55e'], 
             borderWidth: 1
-          }
-          // ,
-          // {
-          //   label: 'Broker 2',
-          //   data: bytesOutData[1],
-          //   backgroundColor: '#22404c',  //slateBlue
-          //   borderColor: '#03dac5', //seafoam
-          // }
-        ],
+          }],
         });
 
+        //Tooltips from ChartJS for graph customization
         setChartOptions({
           responsive: false,
           maintainAspectRatio: true,
@@ -140,7 +125,7 @@ const BytesOutGraph = (props) => {
         })
       }, [bytesOutData]);
 
-
+  //Edgecasing which gets rendered to the page dependent on if a valid query was returned
   return (
     <div styles={{width:'300', length:'300'}}>
       {badQuery && <p className='text-fontGray/40 text-center'>

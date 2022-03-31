@@ -3,25 +3,20 @@ import { Link } from 'react-router-dom';
 import { appContext } from '../App';
 
 const Sidebar = () => {
-  //UNPACKING STATE:
+  //unpack state to color sidebar buttons correctly
   const {
     state: { globalState },
     actions: { setGlobalState },
   } = useContext(appContext);
-  let displayedBoxes = [];
 
-  // refactor this for loop?
-  const buttonText = [
-    'Connect Cluster',
-    'Health Metrics',
-    'Partition Diagrams',
-    'Topic Metrics'
-  ];
+  // for loop to create sidebar buttons; text arrays that will be inserted into elements shown prior
+  // global state variable 'sidebarTab' below used to save  index of current button
+  let displayedBoxes = [];
+  const buttonText = ['Connect Cluster', 'Health Metrics', 'Partition Diagrams', 'Topic Metrics'];
   const urlsText = ['/connectCluster', '/health', '/componentRelationships', '/topicMetrics'];
   const roles = ['cluster_button', 'health_button', 'component_button', 'topic_button']
   for (let i = 0; i < 4; i += 1) {
-    // put in cool shadows?
-    // sizes auto-adjust if the text takes up two lines
+    // creates element of unique color if it's for the page user is currently on
     if (i === globalState.sidebarTab) {
       displayedBoxes.push(
         <Link
@@ -39,6 +34,7 @@ const Sidebar = () => {
         </Link>
       );
     } else {
+      // otherwise, creates elements of normal color if they're not the page user is currently on 
       displayedBoxes.push(
         <Link
           to={urlsText[i]}

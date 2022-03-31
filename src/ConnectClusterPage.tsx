@@ -3,13 +3,15 @@ import { useHistory } from 'react-router-dom';
 import { appContext } from './App';
 
 const ConnectClusterPage = () => {
-  //UNPACKING STATE:
+  //unpack state 
   const {
     state: { connectionState, globalState }, actions: { setConnectionState, setGlobalState },
   } = useContext(appContext);
 
+  // local state used to capture user typing character-by-character
   const [url_kafka_input, setKafka] = useState('');
   const [url_prometheus_input, setProm] = useState('');
+
   const [show_error_kafka, setErrorKafka] = useState(false);
   const [show_error_prom, setErrorProm] = useState(false);
 
@@ -17,9 +19,6 @@ const ConnectClusterPage = () => {
   // state below used for fetch req to get partitions after kafka_url is updated
   const doneRendering = useRef(false);
   const [haveKafkaURL, setHaveKafkaURL] = useState(false);
-
-
-  // const [haveTopicsList, setHaveTopicsList] = useState(false);
 
   useEffect(() => {
     if (doneRendering.current) {

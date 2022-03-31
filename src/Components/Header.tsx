@@ -4,24 +4,19 @@ import { appContext } from '../App';
 import disconnected_icon from '../../public/images/no-plug.png';
 
 const Header = () => {
+  //unpack state for connection status
   const {
     state: { connectionState, globalState },
   } = useContext(appContext);
 
   return (
-    <div
-      role="banner"
-      className="bg-darkIndigo/70 flex justify-between items-center h-15"
-    >
-      {/* logo */}
-      {/* <div className="justify-items-end py-5 px-3 font-bold text-textC-100/75 text-3xl">kafkavision</div> */}
-      {/* <div className="justify-items-end py-5 px-3 text-textC-100/90 drop-shadow-md font-bold bg-backgroundC-400 text-3xl">kafkavision</div> */}
+    <div role="banner" className="bg-darkIndigo/70 flex justify-between items-center h-15">
       <div className="bg-clip-text text-transparent py-4 px-3 bg-gradient-to-r from-slateBlue via-seafoam/75 to-slateBlue text-5xl font-black text-justify font-logo">
         kafkaVision
       </div>
       <div className="flex justify-right justify-between">
         <div className="flex flex-col">
-          {/* // Credit FREEPIK for CONNECTED Icon in README */}
+          {/* 3 connection icons below with hover description (conditionally rendered) */}
           {(connectionState.isConnected && connectionState.valid_prom_url) && (
             <div className="flex flex-row items-center group">
               <span className="text-xs mr-4 scale-0 bg-green-700 px-2 text-white group-hover:scale-100 rounded">
@@ -29,7 +24,6 @@ const Header = () => {
               </span>
               <div className="bg-limeGreen/80 rounded-full mr-3 text-xs p-2">
                 PC
-                {/* <img src={connected_icon}></img> */}
               </div>
             </div>
           )}
@@ -40,12 +34,10 @@ const Header = () => {
               </span>
               <div className="bg-limeGreen/80 rounded-full mr-3 text-xs p-2">
                 KC
-                {/* <img src={connected_icon}></img> */}
               </div>
             </div>
           )}
         </div>
-        
         {!connectionState.isConnected && (
           <div className="flex flex-row items-center group">
             <span className="text-sm mr-4 scale-0 bg-red-700 px-2 text-white group-hover:scale-100 rounded">
@@ -56,6 +48,7 @@ const Header = () => {
             </div>
           </div>
         )}
+        {/* github button */}
         <a href="https://github.com/oslabs-beta/kafkavision">
           <button 
             role="button"

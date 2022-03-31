@@ -2,16 +2,15 @@ import React, { useEffect, useState, useContext } from 'react';
 import { appContext } from '../App';
 
 const StaticHealthData = () => {
-    // Unpack state from provider context
+    // Unpack state from provider context to utilize user's saved url
     const {
         state: { connectionState },
       } = useContext(appContext);
-
     const queryParams = 'api/v1/query?query='; 
     const queryLink = connectionState.url_prometheus + queryParams;
     const connectionStatus = connectionState.isConnected
 
-      // LOCAL STATE
+    // local state variables whose values will be displayed on screeen
     const [topics, setTopics] = useState(0);
     const [controllers, setControllers] = useState(0);
     const [brokers, setBrokers] = useState(0);
@@ -19,15 +18,12 @@ const StaticHealthData = () => {
     const [underReplicated, setUnderReplicated] = useState(0);
     const [offlinePartitions, setOfflinePartitions] = useState(0);
 
-    //CONTROLLERS
+    //fetches count of active controllers on page load
     useEffect(() => {
-        //active controllers query
         const query = 'kafka_controller_kafkacontroller_activecontrollercount';
         fetch(queryLink + query)
         .then((data) => data.json())
         .then((result) => {
-            // console.log('CONTROLLERS QUERY DATA: ', result);
-            // console.log('CHECKING VALUE: ', result.data.result[0].value[1]);
             setControllers(result.data.result[0].value[1]);
         })
         .catch((err) => {
@@ -35,15 +31,12 @@ const StaticHealthData = () => {
         });
     }, [controllers]);
 
-    //BROKERS
+    //fetches count of online brokers on page load
     useEffect(() => {
-        //brokers online query
         const query = 'count(kafka_server_replicamanager_leadercount)';
         fetch(queryLink + query)
         .then((data) => data.json())
         .then((result) => {
-            // console.log('BROKERS QUERY DATA: ', result);
-            // console.log('CHECKING VALUE: ', result.data.result[0].value[1]);
             setBrokers(result.data.result[0].value[1]);
         })
         .catch((err) => {
@@ -51,13 +44,12 @@ const StaticHealthData = () => {
         });
     }, [brokers]);
 
-    //PARTITION COUNT
+    //fetches count of partitions on page load
     useEffect(() => {
         const query = 'sum(kafka_controller_kafkacontroller_globalpartitioncount)';
         fetch(queryLink + query)
         .then((data) => data.json())
         .then((result) => {
-            // console.log('PARTITION COUNT QUERY: ', result);
             setPartitions(result.data.result[0].value[1]);
         })
         .catch((err) => {
@@ -65,7 +57,7 @@ const StaticHealthData = () => {
         });
     }, [partitions]);
 
-    //TOPIC COUNT
+    //fetches count of topics on page load
     useEffect(() => {
         const query = 'sum(kafka_controller_kafkacontroller_globaltopiccount)';
         fetch(queryLink + query)

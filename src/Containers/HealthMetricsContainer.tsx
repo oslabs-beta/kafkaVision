@@ -5,27 +5,17 @@ import HealthMetricsChart from '../chartComponents/HealthMetricsChart';
 import StaticHealthData from '../Components/StaticHealthData'
 
 const HealthMetricsContainer = () => {
-  //UNPACK APP STATE
+  //unpack state and get connection status to determine whether to render real content or blocked page
   const {
     state: { connectionState },
     actions: { setGlobalState },
   } = useContext(appContext);
+  const connectionStatus = connectionState.isConnected;
 
-  const connectionStatus = connectionState.isConnected; // semantic variable
-
-  //TOPICS DROP DOWN MENU
-  // const options = [];
-  // for (let i = 1; i <= topics; i += 1) {
-  //   options.push(
-  //     <option value="topic{i}" key={i}>
-  //       {' '}
-  //       Topic {i}{' '}
-  //     </option>
-  //   );
-  // }
-
+  // 'renderedContent' will hold all JSX elements; based on connectionState, there are 3 CASES it could be:
   let renderedContent: any;
   if (connectionStatus === false) {
+    // CASE 1) if there is no connection at all...
     renderedContent = (
       <div className="flex-auto justify-center text-fontGray/75">
         <div className="m-10 rounded bg-backgroundC-400 text-fontGray/75 text-2xl">
@@ -46,6 +36,7 @@ const HealthMetricsContainer = () => {
       </div>
     );
   } else if (connectionStatus && !connectionState.valid_prom_url){
+    // CASE 2) if there is connection KafkaJS (should be Prometheus)
     renderedContent = (
       <div className="flex-auto justify-center text-fontGray/75">
         <div className="m-10 rounded bg-backgroundC-400 text-fontGray/75 text-2xl">
@@ -67,6 +58,7 @@ const HealthMetricsContainer = () => {
     );
   }
   else if (connectionStatus && connectionState.valid_prom_url) {
+    // CASE 3) if there's a good promQL connection (expected for this page)
     renderedContent = (
       <div className="text-xl text-center m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75 font-bold">
         <h2 className="m-4 text-center">Health Dashboard</h2>

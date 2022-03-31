@@ -18,7 +18,6 @@ const LoginPage = () => {
   const handleUsernameInput = (event: any) => {
     setUsername(event.target.value);
   };
-
   const handlePasswordInput = (event: any) => {
     setPassword(event.target.value);
   };
