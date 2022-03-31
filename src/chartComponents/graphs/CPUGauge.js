@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
-  Chart as ChartJS,
+  Chart,
   CategoryScale,
   BarElement,
   BarController,
@@ -9,11 +9,9 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import regeneratorRuntime from 'regenerator-runtime';
 import { appContext } from '../../App.tsx';
-// import { timeStamp } from 'console';
 
-ChartJS.register(
+Chart.register(
   CategoryScale,
   BarElement,
   BarController,
@@ -22,50 +20,47 @@ ChartJS.register(
   Legend
 );
 
-//Don't forget to change the query link!
-//const queryLink = 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query='; //WED 2PM
-// let query = '';
-
 const CPUGauge = () => {
-  //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
-  const appState = useContext(appContext);
-  const [connectionState, setConnectionState] = appState.connection;
+  //Unpack connection state for Prometheus query URL
+  const {
+    state: { connectionState },
+  } = useContext(appContext);
+
   const queryParams = 'api/v1/query?query=';
   const queryLink = connectionState.url_prometheus + queryParams;
 
+  //Local state being rendered onto graph
+  const [chartOptions, setChartOptions] = useState({});
+  const [CPUData, setCPUData] = useState([10, 10], [15, 15]); 
   const [CPU, setCPU] = useState({
-    // labels: ['CPU Usage'],
-    labels: ['Broker1', 'Broker2'], // 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: ['Broker1', 'Broker2'], 
     datasets: [
       {
         label: 'Broker 1',
         data: [10, 10],
-        backgroundColor: '#22404c', //lime green
-        borderColor: '#d2fdbb', //dark green
+        backgroundColor: '#22404c', 
+        borderColor: '#d2fdbb', 
         borderWidth: 1,
       },
     ],
   });
 
-  const [chartOptions, setChartOptions] = useState({});
-
-  const dataForGraph = [];
-  const indexTracker = 0;
-
-  const [CPUData, setCPUData] = useState([10, 10], [15, 15]); //changed this from [10, 15]
-
+  //Fetches data for CPU Usage on load
   useEffect(() => {
-    //CPU Usage
     const query = 'irate(process_cpu_seconds_total[5m])*100';
 
     const useFetch = async () => {
       try {
         const json = await fetch(queryLink + query);
-        const CPUData = await json.json(); // duplicate name but ok because it's in LEC
-        // console.log(CPUData.data.result[0].value[1])
-        let newState = [
-          Math.floor(CPUData.data.result[0].value[1]),
-          Math.floor(CPUData.data.result[1].value[1]),
+        const CPUData = await json.json(); 
+        
+        //Filtering query for brokers
+        const filtered = CPUData.data.result.filter(result => (result.metric.job = "kafka-broker"));
+  
+        //Rounding metrics returned and setting to state
+        const newState = [
+          Math.floor(filtered[0].value[1]),
+          Math.floor(filtered[1].value[1]),
         ];
         setCPUData(newState);
       } catch (error) {
@@ -73,6 +68,7 @@ const CPUGauge = () => {
       }
     };
 
+    //Allows graphs to update every second
     const timeoutMethod = setInterval(() => {
       useFetch();
     }, 1000);
@@ -82,22 +78,22 @@ const CPUGauge = () => {
     return () => clearInterval(timeoutMethod);
   }, []);
 
+  //Sets graph properties on load
   useEffect(() => {
     console.log('CPU DATA GAUGE: ', CPUData);
     setCPU({
-      // labels: ['CPU Usage'],
-      labels: ['Broker1', 'Broker2'], // 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: ['Broker1', 'Broker2'], 
       datasets: [
         {
-          // label: 'Broker 1',
           data: [CPUData[0], CPUData[1]],
-          backgroundColor: '#22404c', //lime green
-          borderColor: '#d2fdbb', //dark green
+          backgroundColor: '#22404c', 
+          borderColor: '#d2fdbb', 
           borderWidth: 1,
         },
       ],
     });
 
+    //Tooltips from ChartJS for customization
     setChartOptions({
       responsive: false,
       maintainAspectRatio: true,
@@ -108,7 +104,6 @@ const CPUGauge = () => {
         },
         title: {
           display: true,
-          // text: 'CPU Usage Gauge',
         },
       },
       scales: {
@@ -125,7 +120,7 @@ const CPUGauge = () => {
 
   return (
     <div>
-      {/* <div>{JSON.stringify(CPUData)}</div> */}
+      <p>CPU Usage Gauge </p>
       <Bar data={CPU} options={chartOptions} />
     </div>
   );

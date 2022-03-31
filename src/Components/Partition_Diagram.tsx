@@ -1,57 +1,58 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { appContext } from '../App';
 
-const height_adjustable = 600;
-const width_adjustable = 950;
+const Partition_Diagram = () => {
+  //unpacking state from context
+  const {
+    state: { globalState, connectionState },
+  } = useContext(appContext);
 
-const Partition_Diagram= () => {    
-    // const global_state = useContext(globalStateContext);
-    // const {globalState, setGlobalState} = useContext(globalStateContext);
-    const appState = useContext(appContext);
-    const [globalState, setGlobalState] = appState.global;
-    const [connectionState, setConnectionState] = appState.connection;
-    // console.log("partition diagram rerendered")
-    // console.log(globalState)
-    const [localPartitionState, setLocalPartitionState] = useState(globalState.kafka_partitions)
-    // console.log(localPartitionState);
-    console.log("local partitions", localPartitionState)
-    let renderedContent = [];
-    for (let i = 0 ; i<localPartitionState.length; i+=1){
-        renderedContent.push(
-        <div className="bg-green-500 h-12 border text-lg font-bold rounded flex flex-row justify-around w-full">
-            <div>Partition Number: {localPartitionState[i].partition} </div>
-            <div>Offset: {localPartitionState[i].offset} </div>
-            <div>High: {localPartitionState[i].high} </div>
-            <div>Low: {localPartitionState[i].low} </div>
-        </div>)
-    }
+  // local state which will be an array that gets filled by fetch
+  const [localPartitionState, setLocalPartitionState] = useState(
+    globalState.kafka_partitions
+  );
 
+  // creating elements for each partition of a certain topic (topic is selected in parent element)
+  let renderedContent = [];
+  for (let i = 0; i < localPartitionState.length; i += 1) {
+    renderedContent.push(
+      <div className="bg-zinc-800 h-9 border border-fontGray/40 text-sm text-seafoam/50 rounded flex flex-row justify-around w-full">
+        <div>Partition Number: {localPartitionState[i].partition} </div>
+        <div>Offset: {localPartitionState[i].offset} </div>
+        <div>High: {localPartitionState[i].high} </div>
+        <div>Low: {localPartitionState[i].low} </div>
+      </div>
+    );
+  }
 
-    useEffect(() => {
-        fetch('/api/kafka/topicoffsets', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        }, 
-        body: JSON.stringify({bootstrap:`${connectionState.url_kafka}`, topic:`${globalState.kafka_topics[globalState.selected_kafka_topic_index-1]}`})
-        })
-        .then(data => data.json())
-        .then(data => {
-            console.log("got offset info from topic fetch")
-            console.log(data)
-            setLocalPartitionState(data);
-            // setGlobalState((prevstate:any) => {return {...prevstate, kafka_partitions: data}});
-        })
-        .catch( err => console.log("error getting topic offset info"))
-        return
-    }, [globalState])
+  // fetch offset data on page load using topic name from global state (kafka_topics)
+  // which topic is queried is determined by global state 'selected_kafka_topic_index' (set in parent 'RelationshipsContainer')
+  useEffect(() => {
+    fetch('/api/kafka/topicoffsets', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        bootstrap: `${connectionState.url_kafka}`,
+        topic: `${
+          globalState.kafka_topics[globalState.selected_kafka_topic_index - 1]
+        }`,
+      }),
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        setLocalPartitionState(data);
+      })
+      .catch((err) => console.log(`error getting topic offset info: ${err}`));
+    return;
+  }, [globalState]);
 
-    return(
-        <div className="bg-green-600 h-full w-full">
-            {renderedContent}
-            {/* <div className=" h-full w-full"> Hiya {JSON.stringify(localPartitionState)} </div> */}
-        </div>   
-         )
-}
+  return (
+    <div className="h-full w-full">
+      {renderedContent}
+    </div>
+  );
+};
 
 export default Partition_Diagram;

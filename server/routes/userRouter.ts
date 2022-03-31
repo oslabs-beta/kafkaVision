@@ -1,6 +1,7 @@
 import * as express from 'express';
 import userController from '../controllers/userController.js';
 import sessionController from '../controllers/sessionController.js';
+
 const router = express.Router();
 
 router.post(

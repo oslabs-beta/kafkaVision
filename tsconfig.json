@@ -7,13 +7,16 @@
     "noImplicitAny": true,
     "module": "es2020",
     "moduleResolution": "node",
-    "target": "es2018",
+    "target": "es6",
     "allowJs": true,
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["node", "jest"],
+    "lib": ["es6", "dom"],
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
-  "include": ["./server", "custom.d.ts", "./public/images/connected_icon.png"],
-  "exclude": ["node_modules"],
+  "include": ["./server", "./custom.d.ts"],
+  "exclude": ["node_modules", "./src/__tests__", "./dist"]
 }
-

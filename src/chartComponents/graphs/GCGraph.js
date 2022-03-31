@@ -1,94 +1,91 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { 
-  Chart as ChartJS, 
-  CategoryScale, 
+import {
+  Chart as ChartJS,
+  CategoryScale,
   LinearScale,
   PointElement,
-  LineElement,  
-  Title, 
-  Tooltip, 
-  Legend 
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { appContext } from '../../App.tsx';
-import regeneratorRuntime from "regenerator-runtime";
-// import { timeStamp } from 'console';
 
 ChartJS.register(
-  CategoryScale, 
-  LinearScale, 
-  PointElement, 
+  CategoryScale,
+  LinearScale,
+  PointElement,
   LineElement,
-  Title, 
-  Tooltip, 
-  Legend,
-)
-
+  Title,
+  Tooltip,
+  Legend
+);
 
 const GCGraph = () => {
-
-  //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
-  const appState = useContext(appContext);
-  const [connectionState, setConnectionState] = appState.connection;
+  //Unpack connection state for Prometheus query URL
+  const {
+    state: { connectionState },
+  } = useContext(appContext);
   const queryParams = 'api/v1/query?query=';
   const queryLink = connectionState.url_prometheus + queryParams;
 
-  const [CPU, setCPU] = useState({
-    // labels: ['CPU Usage'],
-    labels: [1, 2, 3, 4, 5, 6],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [{
-      label: 'Broker 1',
-      data: [5, 5, 5, 5, 5, 5],
-      backgroundColor: '#22404c', //lime green
-      borderColor: '#d2fdbb', //dark green
-      borderWidth: 1
-    },
-    {
-      label: 'Broker 2',
-      data: [0,0,0,0,0,0],
-      backgroundColor: '#22404c', //lime green
-      borderColor: '#d2fdbb', //dark green
-    }],
+ //Local state being rendered onto graph
+  const [chartOptions, setChartOptions] = useState({});
+  const [GCData, setGCData] = useState([
+    [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+    [15, 15, 15, 15, 15, 15, 15, 15, 15, 15],
+  ]);
+  const [GC, setGC] = useState({
+    labels: [1, 2, 3, 4, 5, 6], 
+    datasets: [
+      {
+        label: 'Broker 1',
+        data: [5, 5, 5, 5, 5, 5],
+        backgroundColor: '#22404c', 
+        borderColor: '#d2fdbb', 
+        borderWidth: 1,
+      },
+      {
+        label: 'Broker 2',
+        data: [0, 0, 0, 0, 0, 0],
+        backgroundColor: '#22404c', 
+        borderColor: '#d2fdbb', 
+      },
+    ],
   });
 
-  const [chartOptions, setChartOptions] = useState({});
-
-  const dataForGraph = [];
-  const indexTracker = 0;
-
-  const [CPUData, setCPUData] = useState([[10, 10, 10, 10, 10, 10, 10, 10, 10, 10], [15, 15, 15, 15, 15, 15, 15, 15, 15, 15]]);
-
-  // const controller = new AbortController();
-
-
-
-  useEffect( () => {
-    //JVM Memory
+  //Fetches data for time spent in GC on load
+  useEffect(() => {
     const query = 'sum without(gc)(rate(jvm_gc_collection_seconds_sum[5m]))';
 
     const useFetch = async () => {
       try {
-        const json = await fetch(queryLink + query)
-        const CPUData = await json.json();
-        console.log(CPUData.data.result[0].value[1])
-        setCPUData(prevState => {
-          console.log("GC state changed")
-          console.log(prevState)
+        const json = await fetch(queryLink + query);
+        const GCData = await json.json();
+        
+        setGCData((prevState) => {
+          //Allows the state's array to discard old data points
           let broker1NewState = prevState[0];
           let broker2NewState = prevState[1];
           broker1NewState.shift();
           broker2NewState.shift();
-          broker1NewState.push(CPUData.data.result[0].value[1]);
-          broker2NewState.push(CPUData.data.result[1].value[1]);
-          let newState = [ broker1NewState, broker2NewState];
-          return newState
-        })
-      }
-      catch (error){
-        console.log('ERROR IN JVM GRAPH FETCH: ', error)
-      }
-    }
 
+           //Filtering query for brokers  
+          let filtered = GCData.data.result.filter(result => (result.metric.job = "kafka-broker"))
+
+          //Loading newer data points to state
+          broker1NewState.push(filtered[0].value[1]);
+          broker2NewState.push(filtered[1].value[1]);
+          let newState = [broker1NewState, broker2NewState];
+          return newState;
+        });
+      } catch (error) {
+        console.log('ERROR IN GC GRAPH FETCH: ', error);
+      }
+    };
+
+    //Allows graphs to update every second
     const timeoutMethod = setInterval(() => {
       useFetch();
     }, 1000);
@@ -96,61 +93,59 @@ const GCGraph = () => {
     useFetch();
 
     return () => clearInterval(timeoutMethod);
-  }, []
-)
+  }, []);
 
-
+  //Sets graph properties on load
   useEffect(() => {
-    setCPU({
-      // labels: ['CPU Usage'],
-      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],// 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: 'Broker 1',
-        data: CPUData[0],
-        backgroundColor: ['#d2fdbb'], //lime green
-        borderColor: ['#7cb55e'], //dark green
-        borderWidth: 1
-      },
-      {
-        label: 'Broker 2',
-        data: CPUData[1],
-        backgroundColor: '#22404c',  //slateBlue
-        borderColor: '#03dac5', //seafoam
-      }],
+    setGC({
+      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 
+      datasets: [
+        {
+          label: 'Broker 1',
+          data: GCData[0],
+          backgroundColor: ['#d2fdbb'], 
+          borderColor: ['#7cb55e'], 
+          borderWidth: 1,
+        },
+        {
+          label: 'Broker 2',
+          data: GCData[1],
+          backgroundColor: '#22404c', 
+          borderColor: '#03dac5', 
+        },
+      ],
     });
 
+    //Tooltips from ChartJS for customization
     setChartOptions({
       responsive: false,
       maintainAspectRatio: true,
       plugins: {
         legend: {
-          position: "bottom"
-        }, 
+          position: 'bottom',
+        },
         title: {
-          display: true, 
-        }
-      }, 
+          display: true,
+        },
+      },
       scales: {
         y: {
           beginAtZero: true,
           title: {
             display: true,
             text: '% of Time in GC',
-          }
+          },
         },
-      },  
-    })
-  }, [CPUData]);
-
-
+      },
+    });
+  }, [GCData]);
 
   return (
-    <div styles={{width:'600', length:'400'}}>
+    <div styles={{ width: '600', length: '400' }}>
       <div>Time Spent in GC</div>
-      {/* <div>{JSON.stringify(CPUData)}</div> */}
-      <Line data={CPU} options={chartOptions}/>  
+      <Line data={GC} options={chartOptions} />
     </div>
-  )
-}
+  );
+};
 
 export default GCGraph;
