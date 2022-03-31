@@ -20,7 +20,7 @@ const LandingPage = () => {
             id="login box"
           >
             <p className="text-indigo-100 text-center p-4">
-              Welcome to kafkaVision, a modern, intuitive GUI configured to make
+              Welcome to kafkaVision, a modern, intuitive GUI developed to make
               monitoring and making optimization decisions about your Apache
               Kafka cluster easier than ever. Inside, you'll find insights into
               the health metrics and status of your Brokers, Partitions, and
