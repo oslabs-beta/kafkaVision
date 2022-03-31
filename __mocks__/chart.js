@@ -1,18 +1,18 @@
 import { jest } from '@jest/globals';
-import { 
-  Chart as ChartJS, 
-  CategoryScale, 
+import {
+  Chart as ChartJS,
+  CategoryScale,
   LinearScale,
   PointElement,
-  LineElement,  
+  LineElement,
   BarElement,
   BarController,
-  Title, 
-  Tooltip, 
-  Legend 
+  Title,
+  Tooltip,
+  Legend
 } from 'chart.js';
 
-export const chart.js = () => {
+export const chartjs = () => {
   return {
     Chart: () => null,
     CategoryScale: () => null,
