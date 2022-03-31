@@ -63,10 +63,7 @@ The 'Partition Diagrams' page allows users to gain insight into the partitions w
 
 ![partition-diagram](https://user-images.githubusercontent.com/87503302/161089083-957df9da-d88b-4029-9c02-b15f5b50ba23.gif)
 
-## How It Works
-
-**Getting started with KafkaVision is easy:**
-
+## Instructions
 1. Clone this repo on your local machine
 2. Install dependencies with `npm install`
 3. Compile Typescript with `npm run compile-prod`
