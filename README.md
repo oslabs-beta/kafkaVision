@@ -7,20 +7,6 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/oslabs-beta/reactron/LICENSE)
 
-<details>
-	<summary>Table of Contents</summary>
-
-- [About KafkaVision](##About-KafkaVision)
-- [Pre-requisites](##Pre-requisites)
-- [Features](##Features)
-- [How It Works](##How-It-Works)
-- [Demo Testing App](##Demo-Testing-App)
-- [Feature Roadmap](##Feature-Roadmap)
-- [Contributors](##Contributors)
-- [License](##License)
-</details>
-
-
 ## About KafkaVision
 
 KafkaVision simplifies monitoring of a Kafka cluster by allowing developers to:
