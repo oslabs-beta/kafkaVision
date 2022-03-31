@@ -50,6 +50,9 @@ KafkaVision has the following features:
 
 ![topic-metrics](https://user-images.githubusercontent.com/87503302/161080655-ca378124-4496-4700-905f-174e5db9754b.gif)
 
+![topic-metrics-smaller](https://user-images.githubusercontent.com/87503302/161081513-2976020a-94c5-4445-bac8-f7179fa1e180.gif)
+
+
 
 ## How It Works
 
