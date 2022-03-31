@@ -7,26 +7,6 @@ import { jest } from '@jest/globals';
 import { mockChartJs } from '../../__mocks__/chart';
 import { BroswerRouter, BrowserRouter } from'react-router-dom';
 
-// jest.mock('chart.js', () => ({
-//   __esModule: true,
-//   default: () => null,
-//   Chart: () => null,
-//   BarElement: () => null,
-//   BarController: () => null,
-//   CategoryScale: () => null,
-//   LinearScale: () => null,
-//   PointElement: () => null,
-//   LineElement: () => null,
-//   Title: () => null,
-//   Tooltip: () => null,
-//   Legend: () => null
-// }));
-
-// jest.mock('react-chartjs-2', () => ({
-//   __esModule: true,
-//   Bar: () => null,
-//   Line: ()=> null
-// }));
 
 describe('Header component', () => {
   beforeEach(() => {

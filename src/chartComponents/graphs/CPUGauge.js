@@ -9,7 +9,6 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import regeneratorRuntime from 'regenerator-runtime';
 import { appContext } from '../../App.tsx';
 
 Chart.register(
@@ -22,7 +21,7 @@ Chart.register(
 );
 
 const CPUGauge = () => {
-  //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
+  //Unpack connection state for Prometheus query URL
   const {
     state: { connectionState },
   } = useContext(appContext);
@@ -30,49 +29,46 @@ const CPUGauge = () => {
   const queryParams = 'api/v1/query?query=';
   const queryLink = connectionState.url_prometheus + queryParams;
 
+  //Local state being rendered onto graph
+  const [chartOptions, setChartOptions] = useState({});
+  const [CPUData, setCPUData] = useState([10, 10], [15, 15]); 
   const [CPU, setCPU] = useState({
-    // labels: ['CPU Usage'],
-    labels: ['Broker1', 'Broker2'], // 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: ['Broker1', 'Broker2'], 
     datasets: [
       {
         label: 'Broker 1',
         data: [10, 10],
-        backgroundColor: '#22404c', //lime green
-        borderColor: '#d2fdbb', //dark green
+        backgroundColor: '#22404c', 
+        borderColor: '#d2fdbb', 
         borderWidth: 1,
       },
     ],
   });
 
-  const [chartOptions, setChartOptions] = useState({});
-
-  const dataForGraph = [];
-  const indexTracker = 0;
-
-  const [CPUData, setCPUData] = useState([10, 10], [15, 15]); //changed this from [10, 15]
-
+  //Fetches data for CPU Usage on load
   useEffect(() => {
-    //CPU Usage
     const query = 'irate(process_cpu_seconds_total[5m])*100';
 
     const useFetch = async () => {
       try {
         const json = await fetch(queryLink + query);
-        const CPUData = await json.json(); // duplicate name but ok because it's in LEC
+        const CPUData = await json.json(); 
         
-        let filtered = CPUData.data.result.filter(result => (result.metric.job = "kafka-broker"));
-        console.log(filtered)
-        let newState = [
+        //Filtering query for brokers
+        const filtered = CPUData.data.result.filter(result => (result.metric.job = "kafka-broker"));
+  
+        //Rounding metrics returned and setting to state
+        const newState = [
           Math.floor(filtered[0].value[1]),
           Math.floor(filtered[1].value[1]),
         ];
         setCPUData(newState);
       } catch (error) {
-        console.log(connectionState.url_prometheus);
         console.log('ERROR IN CPU GAUGE FETCH: ', error);
       }
     };
 
+    //Allows graphs to update every second
     const timeoutMethod = setInterval(() => {
       useFetch();
     }, 1000);
@@ -82,22 +78,22 @@ const CPUGauge = () => {
     return () => clearInterval(timeoutMethod);
   }, []);
 
+  //Sets graph properties on load
   useEffect(() => {
     console.log('CPU DATA GAUGE: ', CPUData);
     setCPU({
-      // labels: ['CPU Usage'],
-      labels: ['Broker1', 'Broker2'], // 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: ['Broker1', 'Broker2'], 
       datasets: [
         {
-          // label: 'Broker 1',
           data: [CPUData[0], CPUData[1]],
-          backgroundColor: '#22404c', //lime green
-          borderColor: '#d2fdbb', //dark green
+          backgroundColor: '#22404c', 
+          borderColor: '#d2fdbb', 
           borderWidth: 1,
         },
       ],
     });
 
+    //Tooltips from ChartJS for customization
     setChartOptions({
       responsive: false,
       maintainAspectRatio: true,
@@ -108,7 +104,6 @@ const CPUGauge = () => {
         },
         title: {
           display: true,
-          // text: 'CPU Usage Gauge',
         },
       },
       scales: {
@@ -125,6 +120,7 @@ const CPUGauge = () => {
 
   return (
     <div>
+      <p>CPU Usage Gauge </p>
       <Bar data={CPU} options={chartOptions} />
     </div>
   );

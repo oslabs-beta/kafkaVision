@@ -10,19 +10,21 @@ const LoginPage = () => {
   } = useContext(appContext);
   const appState = useContext(appContext);
 
+  // local state used to track user's typing char-by-char
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [status, setStatus] = useState(' ');
-  const history = useHistory();
-
   const handleUsernameInput = (event: any) => {
     setUsername(event.target.value);
   };
-
   const handlePasswordInput = (event: any) => {
     setPassword(event.target.value);
   };
+  // used to show error message
+  const [status, setStatus] = useState(' ');
+  // used for routing post-login attempt
+  const history = useHistory();
 
+  // function used to send backend request on login attempt
   function login(username: String, password?: String) {
     fetch('/api/user/login', {
       method: 'POST',
@@ -34,7 +36,7 @@ const LoginPage = () => {
     })
       .then((res) => res.json())
       .then((userInfo) => {
-        // IF LOGIN ATTEMPT FAILED:
+        // If login attempt fails:
         if (userInfo.err) {
           console.log('error in login');
           setStatus(
@@ -42,7 +44,7 @@ const LoginPage = () => {
           );
           return;
         }
-        // IF IT WORKED, CHANGE STATE
+        // If login worked, update state
         setGlobalState((prevState: any) => {
           return {
             ...prevState,
@@ -58,11 +60,10 @@ const LoginPage = () => {
             past_URLS_Kafka: userInfo.kafkaCluster,
           };
         });
-        // REDIRECT TO CONNECT PAGE
+        // route to /connectCluster page
         history.push('/connectCluster');
       })
       .catch((error) => {
-        // IF ERROR ON SERVER
         setStatus(
           'An error occured on the server. Please check your credentials and try again.'
         );
@@ -70,6 +71,7 @@ const LoginPage = () => {
       });
   }
 
+  // function used to save user credentials in DB when 'signup' clicked
   function signup(username: String, password: String) {
     fetch('/api/user/signup', {
       method: 'POST',
@@ -83,7 +85,6 @@ const LoginPage = () => {
       .then(
         (user) => {
           setStatus('');
-          //setGlobalState({isLoggedIn: true, user_id: `$user`})
         },
         (error) => {
           setStatus('Sorry, that username is already taken.');
@@ -94,14 +95,12 @@ const LoginPage = () => {
 
   return (
     <div className=" h-screen bg-gray-900">
-      {/* //SECRET BUTTON */}
       <div className="text-white">
         <Link to="/connectCluster" className="text-slate-900">
           {' '}
           Back door...{' '}
         </Link>
       </div>
-      {/* // OVERALL SECTION: */}
       <div className="bg-darkBlue/80 m-20 border rounded border-limeGreen/70">
         <div className="bg-clip-text text-transparent py-4 px-3 bg-gradient-to-r from-slateBlue via-seafoam/75 to-slateBlue text-7xl font-black text-center font-logo">
           kafkaVision
@@ -158,7 +157,6 @@ const LoginPage = () => {
               </button>
             </span>
           </form>
-          {/* <br /><span>{status}</span> */}
         </div>
       </div>
     </div>

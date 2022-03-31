@@ -1,18 +1,19 @@
 import React, { useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Partition_Diagram from '../Components/Partition_Diagram';
-// import BrokerDiagram from '../Components/brokerDiagram';
 import { appContext } from '../App';
 
 const RelationshipsContainer = () => {
-  //UNPACKING STATE:
+  //Unpack state
   const {
     state: { connectionState, globalState },
     actions: { setGlobalState },
   } = useContext(appContext);
-  // BELOW - toggle whether diagram renders based on whether user has chosen a topic yet in dropdown
+
+  // 'topic_chosen' used to track whether the parition list will show on page; won't show on first load
   const topic_chosen = useRef(false);
 
+  // create list of options in dropdown menu
   const options = [];
   for (let i = 1; i <= globalState.kafka_topics.length; i += 1) {
     if (i === 1)
@@ -30,6 +31,7 @@ const RelationshipsContainer = () => {
     );
   }
 
+  // if first interaction on page (topic_chosen=0), don't render paritions since no topic selected yet
   let rendered_diagram: any;
   if (topic_chosen.current) {
     rendered_diagram = <Partition_Diagram />;
@@ -37,8 +39,10 @@ const RelationshipsContainer = () => {
     rendered_diagram = '';
   }
 
+  // 'renderedContent' will hold all JSX elements; based on connectionState, there are 3 CASES it could be:
   let renderedContent: any;
   if (!connectionState.isConnected) {
+    // CASE 1) if there is no connection at all...
     renderedContent = (
       <div className="flex-auto justify-center">
         <div className=" m-10 rounded bg-backgroundC-400 text-fontGray/75 text-2xl">
@@ -60,6 +64,7 @@ const RelationshipsContainer = () => {
       </div>
     );
   } else if (connectionState.isConnected && !connectionState.valid_kafka_url){
+    // CASE 2) if there is a Prometheus connection (should be kafkaJS connection)
     renderedContent = (
       <div className="flex-auto justify-center">
         <div className=" m-10 rounded bg-backgroundC-400 text-fontGray/75 text-2xl">
@@ -82,6 +87,7 @@ const RelationshipsContainer = () => {
     );
   }
   else if (connectionState.isConnected && connectionState.valid_kafka_url) {
+    // CASE 3) if there is a good kafkaJS connection (expected)
     renderedContent = (
       <div className="flex-auto justify-center h-full">
         <div className="m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75 h-full">

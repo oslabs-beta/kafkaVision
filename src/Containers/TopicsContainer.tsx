@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom'
 
 interface Props {
   key: number,
-  // value: number, 
   onClick: () => boolean,
   parentRef: {},
   style: string,
@@ -15,38 +14,32 @@ interface Props {
 };  
 
 const TopicsContainer = () => {
-  //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
+  //unpack state for query link & connection status (will determine whether normal or blocked page is rendered)
   const {
     state: { connectionState },
     actions: {setGlobalState}
   } = useContext(appContext);
   const queryParams = 'api/v1/query?query=';
   const queryLink = connectionState.url_prometheus + queryParams;
-  console.log("PROM URL", connectionState.valid_prom_url)
-  //LOCAL STATE
-  const [isOpen, setIsOpen] = useState([false, false, false, false, false]);
-  // const [bytesInName, setBytesInName] = useState(['', '', '', '', '']);
-  // const [bytesIn, setBytesIn] = useState([5, 5, 5, 5, 5]);
-  // const [bytesOutName, setBytesOutName] = useState(['', '', '', '', '']);
-  // const [bytesOut, setBytesOut] = useState([20, 20, 20, 20, 20]);
-  // const [messagesname, setMessagesName] = useState(['', '', '', '', '']);
-  // const [messages, setMessages] = useState([30, 30, 30, 30, 30]);
-  const parentRef = useRef<HTMLDivElement>(null);
 
+  const [isOpen, setIsOpen] = useState([false, false, false, false, false]);
+  const parentRef = useRef<HTMLDivElement>(null);
   const [fetchedTopicNames, setFetchedTopicNames] = useState(['','','','','']);
+
+  // 'fetchReturned' used to delay render of child elements until the TOP 5 topic fetch is done
   const [fetchReturned, setFetchReturned] = useState(false);
 
   useEffect( () => {
-    // fetch to get new topic names...
+    // fetch to get TOP 5 topic names on page load, based on BytesIn (criteria can be changed)
     const query = 'topk(10, sum(rate(kafka_server_brokertopicmetrics_bytesinpersec[5m])) by (topic))'
-    console.log("query link", queryLink+query)
     fetch(queryLink + query)
       .then((data) => data.json())
       .then((result) => {
-        //CLEAN INCOMING QUERY DATA:
+        //clean incoming data containing topic names of 10 highest BytesIn statistics & save in global state
         let cleanedResults = result.data.result.filter((s: any) => Object.keys(s.metric).includes("topic")).slice(0, 5);
         cleanedResults = cleanedResults.map( (s:any) => s.metric.topic)
         setFetchedTopicNames([...cleanedResults])
+        // child elements will render following 'setFetchReturned' below
         setFetchReturned(true);
         })  
       .catch((err) => {
@@ -55,6 +48,7 @@ const TopicsContainer = () => {
   }
   , []);
 
+  // used in for loop below to help render accordian menu sections
   const helperFunction = (i: number) => {
     setIsOpen((prevState) => {
       prevState[i] = !prevState[i];
@@ -62,23 +56,16 @@ const TopicsContainer = () => {
     })
   };
  
+  // create sections of accordian menu
   const topics = [];
   for (let i = 0; i < 5; i++){
+    // 'collapse' used to switch between each component's styling that will show it either as open (scale-100) or closed (scale-0)
     let collapse: string = isOpen[i] ? 'h-70 scale-100 m-3 p-3 border rounded border-seafoam/40 bg-slateBlue/50 transition-all duration-300' : 'h-0 scale-0 transition-all duration-300';
-
     topics.push(
       <div className='border border-fontGray/40 rounded m-3 p-3 bg-zinc-800' ref={parentRef} onClick={()=> helperFunction(i)}> 
         <div className="cursor-default font-bold text-2xl text-limeGreen/70 pl-7" key={i}>
           {fetchedTopicNames[i]}
         </div>
-        {/* <button 
-          key={i}
-          onClick={() => {
-            console.log(i, 'clicked');
-            helperFunction(i);
-          }}> */}
-              
-        {/* </button> */}
         <div className={collapse}>
           <div className='m-5 h-70'>
             <TopicsChart fetchedTopicName={fetchedTopicNames[i]} />
@@ -88,6 +75,8 @@ const TopicsContainer = () => {
     )
   };
 
+  // 3 main div sections below - only one is displayed, based on connectionStatus and 'valid_prom_url'
+  // first 2 are 'block' pages for bad connections, third is normal/expected content
   return (
     <div>
       {!connectionState.isConnected && (
@@ -122,7 +111,7 @@ const TopicsContainer = () => {
               })
             }
           >
-            PromQL Connection
+            Prometheus Connection
           </Link>{' '}
           to see this page
         </div>

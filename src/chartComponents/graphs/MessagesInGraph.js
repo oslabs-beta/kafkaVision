@@ -11,7 +11,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { appContext } from '../../App.tsx';
-import regeneratorRuntime from "regenerator-runtime";
 
 ChartJS.register(
   CategoryScale, 
@@ -24,51 +23,47 @@ ChartJS.register(
 )
 
 const MessagesInGraph = (props) => {
-  //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
+  //Unpack state for query string
   const {
     state: { connectionState },
   } = useContext(appContext);
   const queryParams = 'api/v1/query?query=';
   const queryLink = connectionState.url_prometheus + queryParams;
 
-  console.log("messagesIn rendered with props:", props)
-
+  //Local state being rendered onto graph
+  const [chartOptions, setChartOptions] = useState({});
+  const [badQuery, setbadQuery] = useState(false);
+  const [messagesInData, setMessagesInData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [messagesIn, setMessagesIn] = useState({
     labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     datasets: [{
       label: 'Topic',
       data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      backgroundColor: '#22404c', //lime green
-      borderColor: '#d2fdbb', //dark green
+      backgroundColor: '#22404c', 
+      borderColor: '#d2fdbb', 
       borderWidth: 1
-    }
-    // ,
-    // {
-    //   label: 'Broker 2',
-    //   data: [0,0,0,0,0,0],
-    //   backgroundColor: '#22404c', //lime green
-    //   borderColor: '#d2fdbb', //dark green
-    // }
-  ],
+    }],
   });
 
-  const [chartOptions, setChartOptions] = useState({});
-  const [badQuery, setbadQuery] = useState(false);
-  const [messagesInData, setMessagesInData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
   useEffect( () => {
     const query ='sum(rate(kafka_server_brokertopicmetrics_messagesinpersec[5m])) by (topic)';
-
+    //Awaiting for a query in parent container that gets topics with top five throughput
     const useFetch = async () => {
       try {
         const json = await fetch(queryLink + query)
         const result = await json.json();
+
+        //Selects data based on particular topic
         let newDatapoint = result.data.result.filter(s => s.metric.topic===props.fetchedTopicName);
         newDatapoint = newDatapoint[0].value[1];
-        if (newDatapoint.length === 0){ // if not found in query
-          console.log("that string is not found")
+
+        //Edgecase for if topic name is not found in query
+        if (newDatapoint.length === 0){ 
           setbadQuery(true);
-        }else{
+
+        //Allows state to recieve and shift metrics so there are only 10 datapoints at a time
+        } else {
           setMessagesInData(prevState => {
             let brokerNewState = [...prevState];
             brokerNewState.shift();
@@ -82,9 +77,10 @@ const MessagesInGraph = (props) => {
       }
     }
 
+    //Allows graphs to update every second
     const timeoutMethod = setInterval(() => {
       useFetch();
-    }, 1000);
+    }, 2000);
 
     useFetch();
 
@@ -92,26 +88,20 @@ const MessagesInGraph = (props) => {
   }, []
 )
 
+  // resetting data displayed in graph on 'messagesInData' updates
   useEffect(() => {
         setMessagesIn({
           labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
           datasets: [{
             label: 'Broker 1',
             data: messagesInData,
-            backgroundColor: ['#d2fdbb'], //lime green
-            borderColor: ['#7cb55e'], //dark green
+            backgroundColor: ['#d2fdbb'],
+            borderColor: ['#7cb55e'], 
             borderWidth: 1
-          }
-          // ,
-          // {
-          //   label: 'Broker 2',
-          //   data: messagesInData[1],
-          //   backgroundColor: '#22404c',  //slateBlue
-          //   borderColor: '#03dac5', //seafoam
-          // }
-        ],
+          }],
         });
 
+        //Tooltips from ChartJS for graph customization
         setChartOptions({
           responsive: false,
           maintainAspectRatio: true,
@@ -136,6 +126,7 @@ const MessagesInGraph = (props) => {
       }, [messagesInData]);
 
 
+  //Edgecasing which gets rendered to the page dependent on if a valid query was returned
   return (
     <div styles={{width:'300', length:'300'}}>
       {badQuery && <p className='text-fontGray/40 text-center'>

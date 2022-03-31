@@ -1,55 +1,25 @@
 const initialState: any = {
     dummyGlobalState: {
-        username:null,
-        id:null,
+        //Populates buttons in the sidebar
         sidebarTab:0,
+        //State used to conditionally render pages
         isLoggedIn: true,
+        //Used to dictate which topic is selected from drop down menu in Partitions Diagram
         selected_kafka_topic_index:0,
+        //Array of all topics fetched for Partitions Diagram drop down menu
         kafka_topics: [],
+        //Array of all partitions fetched for Partitions Diagram drop down menu
         kafka_partitions: [],
-        coreData:[ // this is Prometheus's dummy data for Producer-Topic-Consumer diagrams
-            {
-            producers:["Producer 1", "Producer 2"],
-            topic: 'Topic #1',
-            consumers:['Consumer 1'],
-            connectors:null,
-            },
-            {
-            producers:["Producer 1", "Producer 2", "Producer 3"],
-            topic: 'Topic #2',
-            consumers:['Consumer 1'],
-            connectors:null,
-            },
-            {
-            producers:["Producer 1"],
-            topic: 'Topic #3',
-            consumers:['Consumer 1', "Consumer 2", "Consumer 3", "Consumer 4"],
-            connectors:null,
-            },
-            {
-            producers:["Producer 1", "Producer 2","Producer 3", "Producer 4","Producer 5", "Producer 6"],
-            topic: 'Topic #4',
-            consumers:['Consumer 1'],
-            connectors:null,
-            },
-            {
-            producers:["Producer 1", "Producer 2"],
-            topic: 'Topic #5',
-            consumers:['Consumer 1', "Consumer 2"],
-            connectors:null,
-            }
-        ]
     },
     dummyConnectionState: {
-        // url_prometheus: 'https://9090-kayhill-cpdemo-ps7f5q3opnq.ws-us34.gitpod.io/api/v1/query?query=',
-        // url_kafka: "demo.saamsa.io:29093",
+        //Allows user to execute the queries to fetch the proper metrics
         url_prometheus: null,
         url_kafka: null,
-        isConnected:false,
-        valid_prom_url: false,
-        valid_kafka_url:false
-        //past_URLS_Prometheus: [],
-        //past_URLS_Kafka: []
+        //State used to dictate which connected component renders in the header
+        isConnected:true,
+        //If false, an error message will render 
+        valid_prom_url: true,
+        valid_kafka_url: true
     }
 }
 

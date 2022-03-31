@@ -12,7 +12,6 @@ describe('Does Landing page render', () => {
   });
 
   it('renders a link to the page', () => {
-    // console.log('LANDING PAGE LINKS:', screen.getAllByRole('link'))
     expect(screen.getAllByRole('link')).toHaveLength(1);
   });
 });
