@@ -8,18 +8,27 @@ const ConnectClusterPage = () => {
     state: { connectionState, globalState }, actions: { setConnectionState, setGlobalState },
   } = useContext(appContext);
 
-  // local state used to capture user typing character-by-character
+  // local state & methods used to capture user's typing character-by-character
   const [url_kafka_input, setKafka] = useState('');
   const [url_prometheus_input, setProm] = useState('');
+  const handleKafkaInput = (event: any) => {
+    setKafka(event.target.value);
+  };
+  const handlePromInput = (event: any) => {
+    setProm(event.target.value);
+  };
 
   const [show_error_kafka, setErrorKafka] = useState(false);
   const [show_error_prom, setErrorProm] = useState(false);
 
+  // used for routing
   const history = useHistory();
   // state below used for fetch req to get partitions after kafka_url is updated
   const doneRendering = useRef(false);
   const [haveKafkaURL, setHaveKafkaURL] = useState(false);
 
+  // method to handle making a fetch for list of topics when kafkaJS cluster connects and routing to Relationships page
+  // should not be triggered on initial load - 'doneRendering' used to prevent this
   useEffect(() => {
     if (doneRendering.current) {
       console.log('in first use effect cascade');
@@ -41,24 +50,52 @@ const ConnectClusterPage = () => {
         })
         .catch((err) => console.log('error getting topics list'));
     } else {
-      console.log('passing through haveURL useeffect');
       doneRendering.current = true;
     }
   }, [haveKafkaURL]);
 
-  const handleKafkaInput = (event: any) => {
-    setKafka(event.target.value);
-  };
+  // method invoked when user clicks 'Connect' for kafkaJS... saves URL in global state if good URL
+  // if bad URL,it will not save URL in state & instead show error message
+  function verify_kafka() {
+    fetch('/api/kafka/topics', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ bootstrap: `${url_kafka_input}` }),
+    })
+      .then(data=> data.json())
+      .then(data => {
+        // if it is verified
+        setConnectionState((prevState: any) => {
+          return { ...prevState, url_kafka: url_kafka_input, isConnected: true, valid_kafka_url: true };
+        });
+        setGlobalState((prevstate: any) => {
+          return { ...prevstate, sidebarTab: 2 };
+        });
+        setErrorKafka(() => {
+          return false;
+        })
+        // trigger useEffect fetch above to get topics list and then route to next page
+        setHaveKafkaURL(true);
+        // route to next page
+        history.push('/componentRelationships');
+      })
+      .catch( err => {
+        console.log("Invalid Kafka cluster. ERROR:", err)
+        setErrorKafka(() => {
+          return true;
+        })
+      })
+  }
 
-  const handlePromInput = (event: any) => {
-    setProm(event.target.value);
-  };
-
+  // method invoked when user clicks 'Connect' for prometheus connection
   function verify_prom() {
     const queryParams = 'api/v1/query?query=';
     const query = 'irate(process_cpu_seconds_total[5m])*100';
     const fullFetch = url_prometheus_input + queryParams + query
     fetch(fullFetch)
+    // save URL in global state and route to '/health' page
       .then(data=> data.json())
       .then(data => {
         console.log("prom query string good")
@@ -80,90 +117,8 @@ const ConnectClusterPage = () => {
         })
       })
   }
-  /*
-  function saveProm(url_prometheus_input: String) {
-    fetch('/api/user/saveprom', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        url_prometheus_input,
-        id: globalState.id,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // CHECK THE CONNECTION LATER
-        setConnectionState((prevState: any) => {
-          return { ...prevState, url_prometheus:url_prometheus_input, isConnected: true };
-        });
+  
 
-        setGlobalState((prevstate: any) => {
-          return { ...prevstate, sidebarTab: 1 };
-        });
-        history.push('/health'); // move?
-      })
-      .catch((error) => {
-        console.log(error);
-        // change valid_prom_url to
-      });
-  }
-  */
-
-  function verify_kafka() {
-    fetch('/api/kafka/topics', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ bootstrap: `${url_kafka_input}` }),
-    })
-      .then(data=> data.json())
-      .then(data => {
-        setConnectionState((prevState: any) => {
-          return { ...prevState, url_kafka: url_kafka_input, isConnected: true, valid_kafka_url: true };
-        });
-        setGlobalState((prevstate: any) => {
-          return { ...prevstate, sidebarTab: 2 };
-        });
-        // trigger fetch cascade (first, get topics)
-        setHaveKafkaURL(true);
-        setErrorKafka(() => {
-          return false;
-        })
-        history.push('/componentRelationships');
-      })
-      .catch( err => {
-        console.log("Invalid Kafka cluster. ERROR:", err)
-        setErrorKafka(() => {
-          return true;
-        })
-      })
-  }
-  /*
-  function saveKafka(url_kafka_input: String) {
-    fetch('/api/user/savekafka', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        url_kafka_input,
-        id: globalState.id,
-      }),
-    })
-      .then((res) => res.json())
-      .then(
-        (data) => {
-          setConnectionState((prevState: any) => {
-            return { ...prevState, url_kafka: url_kafka_input, isConnected: true };
-          });
-          // trigger fetch cascade (first, get topics)
-          setHaveKafkaURL(true);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  }
-  */
   return (
     <div className="flex flex-col text-fontGray/70 border rounded border-limeGreen/70 m-10 bg-gray-800">
       <div className="flex place-content-center font-bold text-xl m-5 text-fontGray-75">
@@ -190,7 +145,6 @@ const ConnectClusterPage = () => {
             className="self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50"
             onClick={(e) => {
               e.preventDefault();
-              // saveKafka(url_kafka_input);
               setKafka('');
               verify_kafka();
             }}
@@ -218,7 +172,6 @@ const ConnectClusterPage = () => {
             className="self-center h-8 px-4 m-2 text-sm text-indigo-100 transition-colors duration-150 hover:bg-limeGreen hover:text-slateBlue/80 rounded-lg focus:shadow-outline bg-limeGreen/50"
             onClick={(e) => {
               e.preventDefault();
-              // saveProm(url_prometheus_input);
               setProm('');
               verify_prom();
             }}

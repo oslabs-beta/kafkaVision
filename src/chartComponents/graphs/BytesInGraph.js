@@ -11,7 +11,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { appContext } from '../../App.tsx';
-import regeneratorRuntime from "regenerator-runtime";
 
 ChartJS.register(
   CategoryScale, 
@@ -24,14 +23,14 @@ ChartJS.register(
 )
 
 const BytesInGraph = (props) => {
-  //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
+  //Unpack connection state for query URL
   const {
     state: { connectionState },
   } = useContext(appContext);
   const queryParams = 'api/v1/query?query=';
   const queryLink = connectionState.url_prometheus + queryParams;
 
-  //Local state 
+  //Local state being rendered onto graph
   const [bytesIn, setBytesIn] = useState({
     labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     datasets: [{
@@ -46,15 +45,16 @@ const BytesInGraph = (props) => {
   const [badQuery, setbadQuery] = useState(false);
   const [bytesInData, setBytesInData] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
-  
+  // Repeating query triggered on page load that gets list of all topics, selects the specific topic...
+  // passed down to this component as props, and sets/resets data (state) that populates the graphs
   useEffect( () => {
     const query ='sum(rate(kafka_server_brokertopicmetrics_bytesinpersec[5m])) by (topic)';
-
-    //Awaiting for a previous query that gets topics with top five throughput
     const useFetch = async () => {
       try {
         const json = await fetch(queryLink + query)
         const result = await json.json();
+
+        //Selects data based on particular topic
         let newDatapoint = result.data.result.filter(s => s.metric.topic===props.fetchedTopicName);
         newDatapoint = newDatapoint[0].value[1];
 
@@ -80,7 +80,7 @@ const BytesInGraph = (props) => {
     //Allows graphs to update every second
     const timeoutMethod = setInterval(() => {
       useFetch();
-    }, 1000);
+    }, 2000);
 
     useFetch();
 

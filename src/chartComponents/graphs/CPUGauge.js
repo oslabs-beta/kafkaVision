@@ -9,7 +9,6 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import regeneratorRuntime from 'regenerator-runtime';
 import { appContext } from '../../App.tsx';
 
 Chart.register(
@@ -22,7 +21,7 @@ Chart.register(
 );
 
 const CPUGauge = () => {
-  //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
+  //Unpack connection state for Prometheus query URL
   const {
     state: { connectionState },
   } = useContext(appContext);
@@ -121,6 +120,7 @@ const CPUGauge = () => {
 
   return (
     <div>
+      <p>CPU Usage Gauge </p>
       <Bar data={CPU} options={chartOptions} />
     </div>
   );

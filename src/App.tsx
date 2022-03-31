@@ -3,7 +3,6 @@ import React from 'react';
 import { createContext, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-// IMPORTED COMPONENTS/PAGES ----------------------------------
 import Sidebar from './Components/Sidebar';
 import Header from './Components/Header';
 import HealthMetricsContainer from './Containers/HealthMetricsContainer';
@@ -14,27 +13,25 @@ import LoginPage from './LoginPage';
 import LandingPage from './LandingPage'
 import initialState from './initialState';
 const { dummyGlobalState, dummyConnectionState } = initialState;
-// ------------------------------------------------------
 
-// interface Props {
-//   name: string;
-// }
-export const appContext = createContext(initialState); // Best to initialize with null?
+//'initialState' holds all state in "pristine" status - before user interaction
+export const appContext = createContext(initialState);
 
 const App = () => {
+  // packaging data from 'initialState' import into value for Provider context
   const [globalState, setGlobalState] = useState(dummyGlobalState);
   const [connectionState, setConnectionState] = useState(dummyConnectionState);
-
   const providerProps: any = {
     state: { globalState, connectionState },
     actions: { setGlobalState, setConnectionState },
   };
-
+  
+  // all elements wrapped in BrowserRouter & appContext
+  // sidebar contains links to switch between <Routes> below
   return (
     <div>
       <BrowserRouter>
         <div>
-          {/* remove this div?*/}
           <appContext.Provider value={providerProps}>
             <div className="text-2xl text-fontGray-75 bg-zinc-900">
               <Header />

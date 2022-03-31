@@ -5,8 +5,8 @@ import JVMGraph from './graphs/JVMGraph.js';
 import GCGraph from './graphs/GCGraph.js';
 import { appContext } from '../App.tsx';
 
+// intermediate section between 'HealthMetricsContainer' and child graphs
 const HealthMetricsChart = () => {
-  //UNPACK CONNECTION STATE (TO GET whether cluster is Connected)
   const {
     state: { connectionState },
   } = useContext(appContext);
@@ -24,19 +24,19 @@ const HealthMetricsChart = () => {
       {connectionStatus && (
         <div className="flex justify-around">
           <div className="w-fit h-fit grid grid-cols-2 gap-x-40 gap-y-20 ">
-            {/* CPU USAGE GRAPHS */}
+
             <div className="cols-span-1 bg-gray-800 border mb-5 border-fontGray/40 rounded">
               <CPUGraph />
             </div>
+
             <div className="cols-span-1 bg-gray-800 border mb-5 border-fontGray/40 rounded">
-              CPU Usage Gauge
               <CPUGauge />
             </div>
 
-            {/* JVM MEMORY GRAPHS */}
             <div className="col-span-1 bg-gray-800 border mb-5 border-fontGray/40 rounded">
               <JVMGraph />
             </div>
+
             <div className="col-span-1 bg-gray-800 border  mb-5 border-fontGray/40 rounded">
               <GCGraph />
             </div>

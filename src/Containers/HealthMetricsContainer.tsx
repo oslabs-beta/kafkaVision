@@ -58,7 +58,7 @@ const HealthMetricsContainer = () => {
     );
   }
   else if (connectionStatus && connectionState.valid_prom_url) {
-    // CASE 3) if there's a good promQL connection (expected for this page)
+    // CASE 3) if there's a good prometheus connection (expected for this page)
     renderedContent = (
       <div className="text-xl text-center m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75 font-bold">
         <h2 className="m-4 text-center">Health Dashboard</h2>

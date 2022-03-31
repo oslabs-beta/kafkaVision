@@ -11,7 +11,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { appContext } from '../../App.tsx';
-import regeneratorRuntime from 'regenerator-runtime';
 
 ChartJS.register(
   CategoryScale,
@@ -24,7 +23,7 @@ ChartJS.register(
 );
 
 const CPUGraph = () => {
-  //UNPACK CONNECTION STATE (TO GET PROMETHEUS URL)
+  //Unpack connection state for Prometheus query URL
   const {
     state: { connectionState },
   } = useContext(appContext);

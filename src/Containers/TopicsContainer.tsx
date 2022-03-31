@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom'
 
 interface Props {
   key: number,
-  // value: number, 
   onClick: () => boolean,
   parentRef: {},
   style: string,
@@ -112,7 +111,7 @@ const TopicsContainer = () => {
               })
             }
           >
-            PromQL Connection
+            Prometheus Connection
           </Link>{' '}
           to see this page
         </div>
