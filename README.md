@@ -101,7 +101,7 @@ The development team intends to continue improving KafkaVision and adding more f
 <br>
 [Neel Lakshman](https://github.com/nlakshman) - [LinkedIn](https://www.linkedin.com/in/neel-lakshman/)
 <br>
-[Rob Beier](https://github.com/rfbeier) - [LinkedIn](https://www.linkedin.com/in/robert-beier-49795081)
+[Rob Beier](https://github.com/rfbeier) - [LinkedIn](https://www.linkedin.com/in/robert-f-beier/)
 <br>
 
 If you'd like to support the active development of KafkaVision:
