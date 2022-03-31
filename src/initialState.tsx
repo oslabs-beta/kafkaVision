@@ -16,10 +16,10 @@ const initialState: any = {
         url_prometheus: null,
         url_kafka: null,
         //State used to dictate which connected component renders in the header
-        isConnected:true,
-        //If false, an error message will render 
-        valid_prom_url: true,
-        valid_kafka_url: true
+        isConnected:false,
+        //If false, an error message will render
+        valid_prom_url: false,
+        valid_kafka_url: false
     }
 }
 
