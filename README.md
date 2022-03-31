@@ -50,14 +50,14 @@ Users can view the overall health of their cluster at a glance on the 'Health Me
 
 ![health-metrics](https://user-images.githubusercontent.com/87503302/161088866-0ed37690-04f8-46f2-bcbe-1e92d3e090ee.gif)
 
-**2) View Data Throughput at Topic-Level for TOP 5 High-Use Topics (with Prometheus Connection) **
+**2) View Data Throughput at Topic-Level for TOP 5 High-Use Topics (with Prometheus Connection)**
 
-The 'Topic Metrics' page displays real-time throughout metrics for the most active Cluster topics. Click on each topic section to expand and view graphs displaying throughput information at the topic level and click again to collapse.
+The 'Topic Metrics' page displays real-time throughput metrics for the most active Cluster topics. Click on each topic section to expand and view graphs displaying throughput information at the topic level and click again to collapse.
 
 ![topic-metrics](https://user-images.githubusercontent.com/87503302/161089060-b9c40069-ebe4-420b-99f6-cf096906dc5d.gif)
 
 
-**3) Insights into cluster topics, partitions, and consumer offsets (with Broker connection) **
+**3) Insights into cluster topics, partitions, and consumer offsets (with Broker connection)**
 
 The 'Partition Diagrams' page allows users to gain insight into the partitions within each Topic of their Cluster, including the number of partitions, the current offsets, and more!
 
