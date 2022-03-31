@@ -61,7 +61,8 @@ The 'Topic Metrics' page displays real-time throughput metrics for the most acti
 
 The 'Partition Diagrams' page allows users to gain insight into the partitions within each Topic of their Cluster, including the number of partitions, the current offsets, and more!
 
-![partition-diagram](https://user-images.githubusercontent.com/87503302/161089083-957df9da-d88b-4029-9c02-b15f5b50ba23.gif)
+![partition-diagram](https://user-images.githubusercontent.com/87503302/161098210-ac1ec57a-2aa8-4033-b6ac-cc9047049537.gif)
+
 
 ## Instructions
 1. Clone this repo on your local machine
