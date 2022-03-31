@@ -42,11 +42,25 @@ To use this application, you'll need to have at least one of the following:
 
 ## Features
 
-KafkaVision has the following features:
+KafkaVision enables you to view your cluster information in the following ways using an interactive GUI:
 
-- An intuitive and simplified GUI
-- Insights into cluster topics, partitions, and consumer offsets
-- Graphs to visualize & monitor overall cluster health metrics, including CPU Usage, JVM Memory Usage, Time Spent in GC, and more!
+**1) View Cluster Health Metrics (with Prometheus Connection)** 
+
+Users can view the overall health of their cluster at a glance on the 'Health Metrics' page which includes auto-updating graphs displaying real-time data readings for CPU Usage, JVM Memory Used, and Time spent in GC. It also includes static metrics at the bottom of the page for counts of key cluster elements:
+
+GIF 1
+
+**2) View Data Throughput at Topic-Level for TOP 5 High-Use Topics (with Prometheus Connection) **
+
+The 'Topic Metrics' page displays real-time throughout metrics for the most active Cluster topics. Click on each topic section to expand and view graphs displaying throughput information at the topic level and click again to collapse.
+
+GIF 2
+
+**3) Insights into cluster topics, partitions, and consumer offsets (with Broker connection) **
+
+The 'Partition Diagrams' page allows users to gain insight into the partitions within each Topic of their Cluster, including the number of partitions, the current offsets, and more!
+
+GIF 3
 
 ![topic-metrics](https://user-images.githubusercontent.com/87503302/161080655-ca378124-4496-4700-905f-174e5db9754b.gif)
 
@@ -64,9 +78,7 @@ KafkaVision has the following features:
 4. In a new terminal, run the command `npm run build-prod`
 5. Then, run `npm start`
 6. Open localhost:3333 to enter the KafkaVision App
-7. Log in or register a new account
-8. To add a new broker or Prometheus address, add the location in the input field and click _Submit_.
-9. On the ‘Partition Diagrams’ page, you can _Select a topic_ from the dropdown to visualize all partitions of a topic and their offsets
+7. To add a new broker or Prometheus address, add the location in the input field and click _Submit_.
 
 ## Demo Testing App
 If you do not have a Kafka instance but would like to demo KafkaVision, we modified this <a href="https://github.com/confluentinc/cp-demo" onclick="return ! window.open(this.href);">public demo app </a>from Confluent Platform to scrape metrics from the cluster and export them to Prometheus using JMX-Exporter. To quickly get up and running, you can <a href='https://kayhill-cpdemo-aki26esh1q7.ws-us38.gitpod.io/' onclick="return ! window.open(this.href);">open our pre-configured demo cluster with GitPod and follow the boot instructions.</a>
