@@ -48,25 +48,20 @@ KafkaVision enables you to view your cluster information in the following ways u
 
 Users can view the overall health of their cluster at a glance on the 'Health Metrics' page which includes auto-updating graphs displaying real-time data readings for CPU Usage, JVM Memory Used, and Time spent in GC. It also includes static metrics at the bottom of the page for counts of key cluster elements:
 
-GIF 1
+![health-metrics](https://user-images.githubusercontent.com/87503302/161088866-0ed37690-04f8-46f2-bcbe-1e92d3e090ee.gif)
 
 **2) View Data Throughput at Topic-Level for TOP 5 High-Use Topics (with Prometheus Connection) **
 
 The 'Topic Metrics' page displays real-time throughout metrics for the most active Cluster topics. Click on each topic section to expand and view graphs displaying throughput information at the topic level and click again to collapse.
 
-GIF 2
+![topic-metrics](https://user-images.githubusercontent.com/87503302/161089060-b9c40069-ebe4-420b-99f6-cf096906dc5d.gif)
+
 
 **3) Insights into cluster topics, partitions, and consumer offsets (with Broker connection) **
 
 The 'Partition Diagrams' page allows users to gain insight into the partitions within each Topic of their Cluster, including the number of partitions, the current offsets, and more!
 
-GIF 3
-
-![topic-metrics](https://user-images.githubusercontent.com/87503302/161080655-ca378124-4496-4700-905f-174e5db9754b.gif)
-
-![topic-metrics-smaller](https://user-images.githubusercontent.com/87503302/161081513-2976020a-94c5-4445-bac8-f7179fa1e180.gif)
-
-
+![partition-diagram](https://user-images.githubusercontent.com/87503302/161089083-957df9da-d88b-4029-9c02-b15f5b50ba23.gif)
 
 ## How It Works
 
