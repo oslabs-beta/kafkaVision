@@ -92,7 +92,7 @@ const RelationshipsContainer = () => {
       <div className="flex-auto justify-center h-full">
         <div className="m-10 border-2 border-limeGreen/70 rounded bg-backgroundC-400 text-fontGray/75 h-full">
           <h1 className="font-bold text-xl m-4 text-center">
-            Cluster Relations
+            Partition Offsets
           </h1>
           <div className="border-2 border-seafoam/40 rounded m-5 bg-slateBlue/50">
             <p className="m-3">Please Select a Topic:</p>
