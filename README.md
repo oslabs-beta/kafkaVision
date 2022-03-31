@@ -46,7 +46,10 @@ KafkaVision has the following features:
 
 - An intuitive and simplified GUI
 - Insights into cluster topics, partitions, and consumer offsets
-- Graphs to visualize & monitor overall cluster health metrics, including CPU Usage, JVM Memory Usage, Time Spent in GC, and more
+- Graphs to visualize & monitor overall cluster health metrics, including CPU Usage, JVM Memory Usage, Time Spent in GC, and more!
+
+![topic-metrics](https://user-images.githubusercontent.com/87503302/161080655-ca378124-4496-4700-905f-174e5db9754b.gif)
+
 
 ## How It Works
 
