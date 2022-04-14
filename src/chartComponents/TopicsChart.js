@@ -9,15 +9,15 @@ const TopicsChart = (props) => {
   return (
     <div className='flex flex-row justify-around h-full items-center'>
       <div className="h-full w-full bg-gray-800 border border-fontGray/40 text-fontGray/75 font-bold rounded">
-        <BytesInGraph bytesIn={props.bytesIn}/>
+        <BytesInGraph fetchedTopicName={props.fetchedTopicName}/>
       </div>
 
       <div className="h-full w-full bg-gray-800 border border-fontGray/40 fontGray/40 rounded gap-10 ">
-        <BytesOutGraph/>
+        <BytesOutGraph fetchedTopicName={props.fetchedTopicName}/>
       </div>
 
       <div className="h-full w-full bg-gray-800 border border-fontGray/40 rounded gap-10 ">
-        <MessagesInGraph/>
+        <MessagesInGraph fetchedTopicName={props.fetchedTopicName}/>
       </div>
 
     </div>
