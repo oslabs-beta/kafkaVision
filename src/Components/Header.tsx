@@ -2,6 +2,7 @@
 import React, { useContext } from 'react';
 import { appContext } from '../App';
 import disconnected_icon from '../../public/images/no-plug.png';
+import { ConnectionState } from '../Types/types';
 
 const Header = () => {
   //unpack state for connection status

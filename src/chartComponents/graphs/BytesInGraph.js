@@ -47,7 +47,7 @@ const BytesInGraph = (props) => {
 
   // Repeating query triggered on page load that gets list of all topics, selects the specific topic...
   // passed down to this component as props, and sets/resets data (state) that populates the graphs
-  useEffect( () => {
+  useEffect(() => {
     const query ='sum(rate(kafka_server_brokertopicmetrics_bytesinpersec[5m])) by (topic)';
     const useFetch = async () => {
       try {
