@@ -2,26 +2,37 @@
 import React from 'react';
 import { createContext, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
 import Sidebar from './Components/Sidebar';
 import Header from './Components/Header';
 import HealthMetricsContainer from './Containers/HealthMetricsContainer';
 import RelationshipsContainer from './Containers/RelationshipsContainer';
 import TopicsContainer from './Containers/TopicsContainer';
 import ConnectClusterPage from './ConnectClusterPage';
-import LoginPage from './LoginPage';
+// import LoginPage from './LoginPage';
 import LandingPage from './LandingPage'
 import initialState from './initialState';
-const { dummyGlobalState, dummyConnectionState } = initialState;
+import { ConnectionState, GlobalSliceState, GlobalContext } from './Types/types';
+const { dummyGlobalState, dummyConnectionState }: GlobalContext = initialState;
 
 //'initialState' holds all state in "pristine" status - before user interaction
-export const appContext = createContext(initialState);
+type ProviderForContext = {
+  state: {
+    globalState: GlobalSliceState, 
+    connectionState: ConnectionState
+  },
+  actions: {
+    setGlobalState: React.Dispatch<React.SetStateAction<GlobalSliceState>>,
+    setConnectionState: React.Dispatch<React.SetStateAction<ConnectionState>>
+  }
+}
+
+export const appContext = createContext<ProviderForContext>(initialState);
 
 const App = () => {
   // packaging data from 'initialState' import into value for Provider context
-  const [globalState, setGlobalState] = useState(dummyGlobalState);
-  const [connectionState, setConnectionState] = useState(dummyConnectionState);
-  const providerProps: any = {
+  const [globalState, setGlobalState] = useState<GlobalSliceState>(dummyGlobalState);
+  const [connectionState, setConnectionState] = useState<ConnectionState>(dummyConnectionState);
+  const providerProps: ProviderForContext = {
     state: { globalState, connectionState },
     actions: { setGlobalState, setConnectionState },
   };

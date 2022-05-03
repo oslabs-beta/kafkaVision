@@ -14,6 +14,7 @@ export type GlobalContext = {
         valid_kafka_url: boolean
     }   
 }
+
 export type ConnectionState = {
     url_prometheus: string | null,
     url_kafka: string | null,
