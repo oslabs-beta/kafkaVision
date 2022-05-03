@@ -14,7 +14,7 @@ const RelationshipsContainer = () => {
   const topic_chosen = useRef(false);
 
   // create list of options in dropdown menu
-  const options = [];
+  const options: JSX.Element[] = [];
   for (let i = 1; i <= globalState.kafka_topics.length; i += 1) {
     if (i === 1)
       options.push(
@@ -32,7 +32,7 @@ const RelationshipsContainer = () => {
   }
 
   // if first interaction on page (topic_chosen=0), don't render paritions since no topic selected yet
-  let rendered_diagram: any;
+  let rendered_diagram: JSX.Element | string;
   if (topic_chosen.current) {
     rendered_diagram = <Partition_Diagram />;
   } else {
@@ -40,7 +40,7 @@ const RelationshipsContainer = () => {
   }
 
   // 'renderedContent' will hold all JSX elements; based on connectionState, there are 3 CASES it could be:
-  let renderedContent: any;
+  let renderedContent: JSX.Element;
   if (!connectionState.isConnected) {
     // CASE 1) if there is no connection at all...
     renderedContent = (

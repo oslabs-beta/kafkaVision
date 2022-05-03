@@ -10,10 +10,10 @@ const HealthMetricsContainer = () => {
     state: { connectionState },
     actions: { setGlobalState },
   } = useContext(appContext);
-  const connectionStatus = connectionState.isConnected;
+  const connectionStatus: boolean = connectionState.isConnected;
 
   // 'renderedContent' will hold all JSX elements; based on connectionState, there are 3 CASES it could be:
-  let renderedContent: any;
+  let renderedContent: JSX.Element;
   if (connectionStatus === false) {
     // CASE 1) if there is no connection at all...
     renderedContent = (

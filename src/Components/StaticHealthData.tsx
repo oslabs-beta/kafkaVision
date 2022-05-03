@@ -6,8 +6,8 @@ const StaticHealthData = () => {
     const {
         state: { connectionState },
       } = useContext(appContext);
-    const queryParams = 'api/v1/query?query='; 
-    const queryLink = connectionState.url_prometheus + queryParams;
+    const queryParams: string = 'api/v1/query?query='; 
+    const queryLink: string = connectionState.url_prometheus + queryParams;
     const connectionStatus = connectionState.isConnected
 
     // local state variables whose values will be displayed on screeen (key metrics)
@@ -20,75 +20,75 @@ const StaticHealthData = () => {
 
     //fetches count of active controllers on page load
     useEffect(() => {
-        const query = 'kafka_controller_kafkacontroller_activecontrollercount';
+        const query: string = 'kafka_controller_kafkacontroller_activecontrollercount';
         fetch(queryLink + query)
         .then((data) => data.json())
         .then((result) => {
             setControllers(result.data.result[0].value[1]);
         })
-        .catch((err) => {
+        .catch((err: string) => {
             console.log('ERROR IN CONTROLLERS USEEFFECT: ', err);
         });
     }, [controllers]);
 
     // 6 fetches below grab counts of key metrics on page load and store in local state
     useEffect(() => {
-        const query = 'count(kafka_server_replicamanager_leadercount)';
+        const query: string = 'count(kafka_server_replicamanager_leadercount)';
         fetch(queryLink + query)
         .then((data) => data.json())
         .then((result) => {
             setBrokers(result.data.result[0].value[1]);
         })
-        .catch((err) => {
+        .catch((err: string) => {
             console.log('ERROR IN BROKERS USEEFFECT: ', err);
         });
     }, [brokers]);
 
     useEffect(() => {
-        const query = 'sum(kafka_controller_kafkacontroller_globalpartitioncount)';
+        const query: string = 'sum(kafka_controller_kafkacontroller_globalpartitioncount)';
         fetch(queryLink + query)
         .then((data) => data.json())
         .then((result) => {
             setPartitions(result.data.result[0].value[1]);
         })
-        .catch((err) => {
+        .catch((err: string) => {
             console.log('ERROR IN PARTITION COUNT USEEFFECT: ', err);
         });
     }, [partitions]);
 
     useEffect(() => {
-        const query = 'sum(kafka_controller_kafkacontroller_globaltopiccount)';
+        const query: string = 'sum(kafka_controller_kafkacontroller_globaltopiccount)';
         fetch(queryLink + query)
         .then((data) => data.json())
         .then((result) => {
             setTopics(result.data.result[0].value[1]);
         })
-        .catch((err) => {
+        .catch((err: string) => {
             console.log('ERROR IN TOPICS COUNT USEEFFECT: ', err);
         });
     }, [topics]);
 
     useEffect(() => {
-        const query = 'sum(kafka_server_replicamanager_underreplicatedpartitions)';
+        const query: string = 'sum(kafka_server_replicamanager_underreplicatedpartitions)';
         fetch(queryLink + query)
         .then((data) => data.json())
         .then((result) => {
             setUnderReplicated(result.data.result[0].value[1]);
         })
-        .catch((err) => {
+        .catch((err: string) => {
             console.log('ERROR IN UNDER REPLICATED PARTITIONS USEEFFECT: ', err);
         });
     }, [underReplicated]);
 
     useEffect(() => {
-        const query =
+        const query: string =
         'sum(kafka_controller_kafkacontroller_offlinepartitionscount)';
         fetch(queryLink + query)
         .then((data) => data.json())
         .then((result) => {
             setOfflinePartitions(result.data.result[0].value[1]);
         })
-        .catch((err) => {
+        .catch((err: string) => {
             console.log('ERROR IN OFFLINE PARTITIONS USEEFFECT: ', err);
         });
     }, [offlinePartitions]);

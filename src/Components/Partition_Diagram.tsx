@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { appContext } from '../App';
 
+
 const Partition_Diagram = () => {
   //unpacking state from context
   const {
@@ -13,7 +14,7 @@ const Partition_Diagram = () => {
   );
 
   // creating elements for each partition of a certain topic (topic is selected in parent element)
-  let renderedContent = [];
+  let renderedContent: JSX.Element[] = [];
   for (let i = 0; i < localPartitionState.length; i += 1) {
     renderedContent.push(
       <div className="bg-zinc-800 h-9 border border-fontGray/40 text-sm text-seafoam/50 rounded flex flex-row justify-around w-full">

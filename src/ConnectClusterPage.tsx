@@ -5,16 +5,17 @@ import { appContext } from './App';
 const ConnectClusterPage = () => {
   //unpack state 
   const {
-    state: { connectionState, globalState }, actions: { setConnectionState, setGlobalState },
+    state: { connectionState, globalState }, 
+    actions: { setConnectionState, setGlobalState },
   } = useContext(appContext);
 
   // local state & methods used to capture user's typing character-by-character
   const [url_kafka_input, setKafka] = useState('');
   const [url_prometheus_input, setProm] = useState('');
-  const handleKafkaInput = (event: any) => {
+  const handleKafkaInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKafka(event.target.value);
   };
-  const handlePromInput = (event: any) => {
+  const handlePromInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setProm(event.target.value);
   };
 
@@ -43,7 +44,7 @@ const ConnectClusterPage = () => {
         .then((data) => {
           console.log('got topics list w/ first cascade fetch');
           console.log(data);
-          setGlobalState((prevstate: any) => {
+          setGlobalState((prevstate) => {
             return { ...prevstate, kafka_topics: data, sidebarTab: 2 };
           });
           history.push('/componentRelationships'); // move?
@@ -65,12 +66,12 @@ const ConnectClusterPage = () => {
       body: JSON.stringify({ bootstrap: `${url_kafka_input}` }),
     })
       .then(data=> data.json())
-      .then(data => {
+      .then(() => {
         // if it is verified
-        setConnectionState((prevState: any) => {
+        setConnectionState((prevState) => {
           return { ...prevState, url_kafka: url_kafka_input, isConnected: true, valid_kafka_url: true };
         });
-        setGlobalState((prevstate: any) => {
+        setGlobalState((prevstate) => {
           return { ...prevstate, sidebarTab: 2 };
         });
         setErrorKafka(() => {
@@ -91,18 +92,18 @@ const ConnectClusterPage = () => {
 
   // method invoked when user clicks 'Connect' for prometheus connection
   function verify_prom() {
-    const queryParams = 'api/v1/query?query=';
-    const query = 'irate(process_cpu_seconds_total[5m])*100';
-    const fullFetch = url_prometheus_input + queryParams + query
+    const queryParams: string = 'api/v1/query?query=';
+    const query: string = 'irate(process_cpu_seconds_total[5m])*100';
+    const fullFetch: string = url_prometheus_input + queryParams + query
     fetch(fullFetch)
     // save URL in global state and route to '/health' page
-      .then(data=> data.json())
-      .then(data => {
+      .then(data => data.json())
+      .then(() => {
         console.log("prom query string good")
-        setConnectionState((prevState: any) => {
+        setConnectionState((prevState) => {
           return { ...prevState, url_prometheus:url_prometheus_input, isConnected: true, valid_prom_url: true };
         });
-        setGlobalState((prevstate: any) => {
+        setGlobalState((prevstate) => {
           return { ...prevstate, sidebarTab: 1 };
         });
         setErrorProm(() => {
@@ -111,7 +112,7 @@ const ConnectClusterPage = () => {
         history.push('/health');
       })
       .catch( err => {
-        console.log("test query string came back false!");
+        console.log("test query string came back false: ", err);
         setErrorProm(() => {
           return true;
         })

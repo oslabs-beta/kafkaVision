@@ -3,15 +3,15 @@ import TopicsChart from '../chartComponents/TopicsChart';
 import { appContext } from '../App';
 import {Link} from 'react-router-dom'
 
-interface Props {
-  key: number,
-  onClick: () => boolean,
-  parentRef: {},
-  style: string,
-  collapse: {
-    height: string
-  }
-};  
+// interface Props {
+//   key: number,
+//   onClick: () => boolean,
+//   parentRef: {},
+//   style: string,
+//   collapse: {
+//     height: string
+//   }
+// };  
 
 const TopicsContainer = () => {
   //unpack state for query link & connection status (will determine whether normal or blocked page is rendered)
@@ -19,7 +19,8 @@ const TopicsContainer = () => {
     state: { connectionState },
     actions: {setGlobalState}
   } = useContext(appContext);
-  const queryParams = 'api/v1/query?query=';
+
+  const queryParams: string = "api/v1/query?query=";
   const queryLink = connectionState.url_prometheus + queryParams;
 
   const [isOpen, setIsOpen] = useState([false, false, false, false, false]);
@@ -31,7 +32,7 @@ const TopicsContainer = () => {
 
   useEffect( () => {
     // fetch to get TOP 5 topic names on page load, based on BytesIn (criteria can be changed)
-    const query = 'topk(10, sum(rate(kafka_server_brokertopicmetrics_bytesinpersec[5m])) by (topic))'
+    const query: string = 'topk(10, sum(rate(kafka_server_brokertopicmetrics_bytesinpersec[5m])) by (topic))'
     fetch(queryLink + query)
       .then((data) => data.json())
       .then((result) => {
