@@ -93,7 +93,7 @@ const MessagesInGraph = (props) => {
         setMessagesIn({
           labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
           datasets: [{
-            label: 'Broker 1',
+            label: `${props.fetchedTopicName}`,
             data: messagesInData,
             backgroundColor: ['#d2fdbb'],
             borderColor: ['#7cb55e'], 
